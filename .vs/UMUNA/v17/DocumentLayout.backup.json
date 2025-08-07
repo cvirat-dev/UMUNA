@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Github\\UMUNA\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Github\\UMUNA\\UUP\\Runtime\\Common\\Components\\DataBindingController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:UUP\\Runtime\\Common\\Components\\DataBindingController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DB7CE6D3-696A-0C63-2013-2E029DB4AF46}|UMUNA_Unity\\UUP.csproj|c:\\github\\umuna\\uup\\runtime\\common\\components\\databindingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB7CE6D3-696A-0C63-2013-2E029DB4AF46}|UMUNA_Unity\\UUP.csproj|solutionrelative:uup\\runtime\\common\\components\\databindingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|solutionrelative:UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|solutionrelative:UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|solutionrelative:UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
