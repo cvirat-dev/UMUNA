@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y /I &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Unity_Projects\UMUNA\UMUNA_Unity\Assets\Plugins&quot;&#xD;&#xA;xcopy /Y /I &quot;$(TargetDir)$(TargetName).pdb&quot; &quot;C:\Unity_Projects\UMUNA\UMUNA_Unity\Assets\Plugins&quot;&#xD;&#xA;" />
+  </Target>
+
+</Project>

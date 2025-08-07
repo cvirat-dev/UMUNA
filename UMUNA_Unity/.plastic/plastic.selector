@@ -1,0 +1,3 @@
+repository "UMUNA/UMUNA@9071903592565@cloud"
+  path "/"
+    smartbranch "/main/uGui_Version/UiToolkit"

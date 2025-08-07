@@ -1,0 +1,3 @@
+[submodule "UUP"]
+	path = UUP
+	url = https://github.com/ClementVirat95/Unity-Utilities.git
