@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7edba0a3773e8e4890a3b15c382e02f, type: 3}
+  m_Name: CameraPositionRegister
+  m_EditorClassIdentifier: 
+  soRegister:
+  - {fileID: 11400000, guid: 49df105f926535f4dbec54a88a13de5b, type: 2}
+  - {fileID: 11400000, guid: 20c579f912eae644cb38675c25d2bcdc, type: 2}
+  - {fileID: 11400000, guid: 706b5aac5492e614d8a2ef9308273132, type: 2}
+  - {fileID: 11400000, guid: 9d166f9e9e1546e46a7a17719567d828, type: 2}

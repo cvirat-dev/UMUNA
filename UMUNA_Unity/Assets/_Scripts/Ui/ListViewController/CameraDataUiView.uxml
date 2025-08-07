@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="CameraDataUi.uss" />
+    <ui:VisualElement name="RootContainer">
+        <ui:ListView name="SavedPositionsListView" />
+        <ui:TextField name="PositionField" label="Position (x,y,z)" />
+        <ui:TextField name="RotationField" label="Rotation (x,y,z)" />
+        <ui:Button name="AddButton" text="Add" />
+        <ui:Button name="UpdateButton" text="Update" />
+        <ui:Button name="RemoveButton" text="Remove" />
+        <ui:Button name="ClearButton" text="Clear" />
+    </ui:VisualElement>
+</ui:UXML>

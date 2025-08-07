@@ -1,0 +1,73 @@
+using Umuna.Core.Data;
+using UMUNA.Bindings;
+using UMUNA.EventManagement;
+using UMUNA.SavingSystem;
+using UMUNA.Singletons;
+using UMUNA.Utils;
+using UnityEngine;
+
+namespace UMUNA
+{
+    public class BindSystem
+    {
+        #region Fields
+        private CameraDataBinder _cameraDataBinder;
+        #endregion
+
+        #region Properties
+        public CameraDataBinder CameraDataBinder => _cameraDataBinder;
+        #endregion
+
+        #region Constructors
+        public BindSystem(UmunaData umunaData)
+        {
+            UpdateBindings(umunaData);
+        }
+        #endregion
+
+        #region Public Methods
+        public void UpdateBindings(UmunaData umunaData)
+        {
+            Bind(umunaData.CameraData, out _cameraDataBinder);
+            EventManager.SaveLoad.OnBindingCompleted.Invoke();
+        }
+        #endregion
+
+        #region private methods
+        private void Bind<TBinder, TData>(TData data, out TBinder binder) where TBinder : MonoBehaviour, IBind<TData>
+        {
+            binder = BindingLocator.Instance.GetComponentInChildren<TBinder>();
+            if (binder != null)
+            {
+                Debug.Log($"Binding {typeof(TBinder)} with {typeof(TData)}");
+                binder.Bind(data);
+                return;
+            }
+
+            // If the binder is not found in children of BindingLocator, try to find it in the scene
+            binder = SceneHelper.Instance.FindMonoBehaviour<TBinder>();
+            if (binder == null)
+                throw new System.Exception($"No {typeof(TBinder)} found in children of {nameof(BindingLocator)} or in scene");
+
+            Debug.LogWarning($"No {typeof(TBinder)} found in children of {nameof(BindingLocator)} but found in scene");
+            binder.Bind(data);
+        }
+
+        //private void Bind<TBinder, TData>(List<TData> dataList) where TBinder : MonoBehaviour, IBind<TData>, new()
+        //{
+        //    TBinder[] entities = SceneHelper.Instance.FindAllMonoBehaviours<TBinder>();
+
+        //    foreach (var entity in entities)
+        //    {
+        //        TData data = dataList.FirstOrDefault(d => d.Id == entity.Id);
+        //        if (data == null)
+        //        {
+        //            data = new TData { Id = entity.Id };
+        //            dataList.Add(data);
+        //        }
+        //        entity.Bind(data);
+        //    }
+        //}
+        #endregion
+    }
+}

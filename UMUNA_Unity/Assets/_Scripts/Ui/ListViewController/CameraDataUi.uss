@@ -1,0 +1,49 @@
+#RootContainer {
+    width: 30%;
+    height: 75%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* Optional: Set a background color */
+    border-right: 1px solid #ccc; /* Optional: Add a border to separate the UI */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+/* Style for the ListView */
+#SavedPositionsListView {
+    height: 200px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+/* Style for the TextFields */
+#PositionField, #RotationField {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid gray;
+}
+
+/* Style for Buttons */
+#AddButton, #UpdateButton, #RemoveButton, #ClearButton {
+    margin: 5px;
+    padding: 10px;
+    background-color: #007acc;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+#AddButton:hover, #UpdateButton:hover, #RemoveButton:hover, #ClearButton:hover {
+    background-color: #005f99;
+}
+
+.default-item {
+    color: white;
+    background-color: darkgrey;
+}
+
+.selected-item {
+    color: white;
+    background-color: green;
+}

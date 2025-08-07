@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5b5b82ff790a8fd4f999df4008ba25a5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - WindowIndex: {instanceID: 0}
+  - NextWindowIndex: {fileID: 11400000, guid: 22bde989a83e431419606faa29d0aa41, type: 2}
+  - WindowChangeIntEvent: {fileID: 11400000, guid: 5f74ef23b465bd545a019310066c06c4, type: 2}
+  - WindowChangeDuration: {fileID: 11400000, guid: d66dcfceb3612d4468005288a160d2cb, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
