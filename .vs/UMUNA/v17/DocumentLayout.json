@@ -1,24 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Github\\UMUNA\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{DB7CE6D3-696A-0C63-2013-2E029DB4AF46}|UMUNA_Unity\\UUP.csproj|c:\\github\\umuna\\uup\\runtime\\common\\components\\databindingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DB7CE6D3-696A-0C63-2013-2E029DB4AF46}|UMUNA_Unity\\UUP.csproj|solutionrelative:uup\\runtime\\common\\components\\databindingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|solutionrelative:UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|solutionrelative:UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|solutionrelative:UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -26,60 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DataBindingController.cs",
-              "DocumentMoniker": "C:\\Github\\UMUNA\\UUP\\Runtime\\Common\\Components\\DataBindingController.cs",
-              "RelativeDocumentMoniker": "UUP\\Runtime\\Common\\Components\\DataBindingController.cs",
-              "ToolTip": "C:\\Github\\UMUNA\\UUP\\Runtime\\Common\\Components\\DataBindingController.cs",
-              "RelativeToolTip": "UUP\\Runtime\\Common\\Components\\DataBindingController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-07T06:28:45.145Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CameraDataUiController.cs",
-              "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs",
-              "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs",
-              "ToolTip": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs",
-              "RelativeToolTip": "UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAywDgAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-06T18:39:09.294Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ListItemsManager.cs",
-              "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs",
-              "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs",
-              "ToolTip": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs",
-              "RelativeToolTip": "UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAiwCUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-06T18:38:30.419Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CameraSystemController.cs",
-              "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs",
-              "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs",
-              "ToolTip": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs",
-              "RelativeToolTip": "UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAiwBMAAABjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-06T18:36:51.002Z"
             }
           ]
         }
