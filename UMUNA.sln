@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core", "Umuna.Core\Um
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core.Tests", "Umuna.Core.Tests\Umuna.Core.Tests\Umuna.Core.Tests.csproj", "{525CF902-A046-D3DE-A39A-7E24EC1189DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.ApiServer", "Umuna.ApiServer\Umuna.ApiServer.csproj", "{3EC597D3-7576-48CE-A20D-6C922817BFE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{525CF902-A046-D3DE-A39A-7E24EC1189DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{525CF902-A046-D3DE-A39A-7E24EC1189DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{525CF902-A046-D3DE-A39A-7E24EC1189DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EC597D3-7576-48CE-A20D-6C922817BFE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EC597D3-7576-48CE-A20D-6C922817BFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EC597D3-7576-48CE-A20D-6C922817BFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EC597D3-7576-48CE-A20D-6C922817BFE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

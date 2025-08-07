@@ -1,7 +1,44 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Github\\UMUNA\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|c:\\github\\umuna\\umuna.apiserver\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|solutionrelative:umuna.apiserver\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|c:\\github\\umuna\\umuna.apiserver\\dtos\\userdatadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|solutionrelative:umuna.apiserver\\dtos\\userdatadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}|Umuna.Core\\Umuna.Core.csproj|c:\\github\\umuna\\umuna.core\\umuna.core.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}|Umuna.Core\\Umuna.Core.csproj|solutionrelative:umuna.core\\umuna.core.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|c:\\github\\umuna\\umuna.apiserver\\dtos\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|solutionrelative:umuna.apiserver\\dtos\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|c:\\github\\umuna\\umuna.apiserver\\services\\userstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|solutionrelative:umuna.apiserver\\services\\userstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|c:\\github\\umuna\\umuna.apiserver\\mappings\\data\\playerdatamap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|solutionrelative:umuna.apiserver\\mappings\\data\\playerdatamap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|c:\\github\\umuna\\umuna.apiserver\\mappings\\idtomapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|solutionrelative:umuna.apiserver\\mappings\\idtomapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}|Umuna.Core\\Umuna.Core.csproj|c:\\github\\umuna\\umuna.core\\data\\umuna\\userdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}|Umuna.Core\\Umuna.Core.csproj|solutionrelative:umuna.core\\data\\umuna\\userdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|c:\\github\\umuna\\umuna.apiserver\\controllers\\hellocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3EC597D3-7576-48CE-A20D-6C922817BFE5}|Umuna.ApiServer\\Umuna.ApiServer.csproj|solutionrelative:umuna.apiserver\\controllers\\hellocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +46,127 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Umuna.Core",
+              "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.Core\\Umuna.Core.csproj",
+              "RelativeDocumentMoniker": "Umuna.Core\\Umuna.Core.csproj",
+              "ToolTip": "C:\\Github\\UMUNA\\Umuna.Core\\Umuna.Core.csproj",
+              "RelativeToolTip": "Umuna.Core\\Umuna.Core.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-08-07T16:31:43.688Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Umuna.ApiServer\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Umuna.ApiServer\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-07T16:25:58.491Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LoginRequestDto.cs",
+              "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Dtos\\LoginRequestDto.cs",
+              "RelativeDocumentMoniker": "Umuna.ApiServer\\Dtos\\LoginRequestDto.cs",
+              "ToolTip": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Dtos\\LoginRequestDto.cs",
+              "RelativeToolTip": "Umuna.ApiServer\\Dtos\\LoginRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-07T16:24:36.967Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserStore.cs",
+              "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Services\\UserStore.cs",
+              "RelativeDocumentMoniker": "Umuna.ApiServer\\Services\\UserStore.cs",
+              "ToolTip": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Services\\UserStore.cs",
+              "RelativeToolTip": "Umuna.ApiServer\\Services\\UserStore.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-07T15:27:13.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PlayerDataMap.cs",
+              "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Mappings\\Data\\PlayerDataMap.cs",
+              "RelativeDocumentMoniker": "Umuna.ApiServer\\Mappings\\Data\\PlayerDataMap.cs",
+              "ToolTip": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Mappings\\Data\\PlayerDataMap.cs",
+              "RelativeToolTip": "Umuna.ApiServer\\Mappings\\Data\\PlayerDataMap.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-07T15:17:48.017Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IDtoMapper.cs",
+              "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Mappings\\IDtoMapper.cs",
+              "RelativeDocumentMoniker": "Umuna.ApiServer\\Mappings\\IDtoMapper.cs",
+              "ToolTip": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Mappings\\IDtoMapper.cs",
+              "RelativeToolTip": "Umuna.ApiServer\\Mappings\\IDtoMapper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAA0wAYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-07T15:12:45.701Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserDataDto.cs",
+              "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Dtos\\UserDataDto.cs",
+              "RelativeDocumentMoniker": "Umuna.ApiServer\\Dtos\\UserDataDto.cs",
+              "ToolTip": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Dtos\\UserDataDto.cs",
+              "RelativeToolTip": "Umuna.ApiServer\\Dtos\\UserDataDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAA0wAsAAABhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-07T14:56:51.205Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserData.cs",
+              "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.Core\\Data\\Umuna\\UserData.cs",
+              "RelativeDocumentMoniker": "Umuna.Core\\Data\\Umuna\\UserData.cs",
+              "ToolTip": "C:\\Github\\UMUNA\\Umuna.Core\\Data\\Umuna\\UserData.cs",
+              "RelativeToolTip": "Umuna.Core\\Data\\Umuna\\UserData.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAiwAgAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-07T14:41:04.378Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "HelloController.cs",
+              "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Controllers\\HelloController.cs",
+              "RelativeDocumentMoniker": "Umuna.ApiServer\\Controllers\\HelloController.cs",
+              "ToolTip": "C:\\Github\\UMUNA\\Umuna.ApiServer\\Controllers\\HelloController.cs",
+              "RelativeToolTip": "Umuna.ApiServer\\Controllers\\HelloController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-07T14:32:29.828Z",
+              "EditorCaption": ""
             }
           ]
         }

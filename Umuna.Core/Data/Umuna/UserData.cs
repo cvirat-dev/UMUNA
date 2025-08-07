@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Umuna.Core.Data.Umuna
 {
@@ -10,7 +6,9 @@ namespace Umuna.Core.Data.Umuna
     public class UserData
     {
         private string _playerName = "default_name";
-        private string _playerId = "default_id";
+        private string _playerId = string.Empty;
+        private string? _playerEmail;
+        private string _playerPassword = "default_password";
 
         public string PlayerName
         {
@@ -22,6 +20,18 @@ namespace Umuna.Core.Data.Umuna
         {
             get => _playerId;
             set => _playerId = value;
+        }
+
+        public string? PlayerEmail
+        {
+            get => _playerEmail;
+            set => _playerEmail = value;
+        }
+
+        public string PlayerPassword
+        {
+            get => _playerPassword;
+            set => _playerPassword = value;
         }
     }
 }
