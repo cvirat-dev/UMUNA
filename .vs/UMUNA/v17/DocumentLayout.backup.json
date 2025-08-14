@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Github\\UMUNA\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}|Umuna.Core\\Umuna.Core.csproj|c:\\github\\umuna\\umuna.core\\services\\filedataservice\\fileserializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}|Umuna.Core\\Umuna.Core.csproj|solutionrelative:umuna.core\\services\\filedataservice\\fileserializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|c:\\github\\umuna\\umuna_unity\\assets\\_scripts\\configuration\\configurator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B121BAE9-F82B-06A8-F932-ECD403B078A6}|UMUNA_Unity\\Assembly-CSharp.csproj|solutionrelative:umuna_unity\\assets\\_scripts\\configuration\\configurator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}|Umuna.Core\\Umuna.Core.csproj|c:\\github\\umuna\\umuna.core\\services\\dataservicefactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}|Umuna.Core\\Umuna.Core.csproj|solutionrelative:umuna.core\\services\\dataservicefactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}|Umuna.Core\\Umuna.Core.csproj|c:\\github\\umuna\\umuna.core\\services\\filedataservice\\fileserializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}|Umuna.Core\\Umuna.Core.csproj|solutionrelative:umuna.core\\services\\filedataservice\\fileserializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}|Umuna.Core\\Umuna.Core.csproj|c:\\github\\umuna\\umuna.core\\helpers\\directoryhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -122,11 +126,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "AppManager.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\AppManagement\\AppManager.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\AppManagement\\AppManager.cs",
@@ -140,7 +144,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "LoginViewController.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Ui\\LoginView\\LoginViewController.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Ui\\LoginView\\LoginViewController.cs",
@@ -153,7 +157,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "LoginView.uxml",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Ui\\LoginView\\LoginView.uxml",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Ui\\LoginView\\LoginView.uxml",
@@ -166,7 +170,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "IDataProvider.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\AppManagement\\DataProviders\\IDataProvider.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\AppManagement\\DataProviders\\IDataProvider.cs",
@@ -179,7 +183,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "DataServiceFactory.cs",
+              "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.Core\\Services\\DataServiceFactory.cs",
+              "RelativeDocumentMoniker": "Umuna.Core\\Services\\DataServiceFactory.cs",
+              "ToolTip": "C:\\Github\\UMUNA\\Umuna.Core\\Services\\DataServiceFactory.cs",
+              "RelativeToolTip": "Umuna.Core\\Services\\DataServiceFactory.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAADgvxgAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-14T19:44:25.287Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "FileSerializer.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.Core\\Services\\FileDataService\\FileSerializer.cs",
               "RelativeDocumentMoniker": "Umuna.Core\\Services\\FileDataService\\FileSerializer.cs",
@@ -192,20 +209,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Configurator.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Configuration\\Configurator.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Configuration\\Configurator.cs",
-              "ToolTip": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Configuration\\Configurator.cs*",
-              "RelativeToolTip": "UMUNA_Unity\\Assets\\_Scripts\\Configuration\\Configurator.cs*",
-              "ViewState": "AgIAAAIAAAAAAAAAAADgvxkAAAA5AAAAAAAAAA==",
+              "ToolTip": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Configuration\\Configurator.cs",
+              "RelativeToolTip": "UMUNA_Unity\\Assets\\_Scripts\\Configuration\\Configurator.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAADgvyEAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-14T19:36:18.885Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "DirectoryHelper.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.Core\\Helpers\\DirectoryHelper.cs",
               "RelativeDocumentMoniker": "Umuna.Core\\Helpers\\DirectoryHelper.cs",
@@ -222,7 +239,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ListItemsManager.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\ListItemsManager.cs",
@@ -235,7 +252,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "WrapperBase.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Data\\Wrappers\\WrapperBase.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Data\\Wrappers\\WrapperBase.cs",
@@ -247,7 +264,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "CameraDataUiController.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Ui\\ListViewController\\CameraDataUiController.cs",
@@ -260,7 +277,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "SaveLoadSystem.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\SavingSystem\\SaveLoadSystem.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\SavingSystem\\SaveLoadSystem.cs",
@@ -273,7 +290,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "CameraSystemController.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\CameraSystem\\CameraSystemController.cs",
@@ -285,7 +302,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "CameraDataWrapper.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Data\\Wrappers\\Umuna\\CameraDataWrapper.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Data\\Wrappers\\Umuna\\CameraDataWrapper.cs",
@@ -297,7 +314,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "DataProvider.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\AppManagement\\DataProviders\\DataProvider.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\AppManagement\\DataProviders\\DataProvider.cs",
@@ -309,7 +326,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "CameraData.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.Core\\Data\\Umuna\\CameraData.cs",
               "RelativeDocumentMoniker": "Umuna.Core\\Data\\Umuna\\CameraData.cs",
@@ -321,7 +338,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "UmunaData.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.Core\\Data\\UmunaData.cs",
               "RelativeDocumentMoniker": "Umuna.Core\\Data\\UmunaData.cs",
@@ -333,7 +350,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "SettingsData.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.Core\\Data\\Umuna\\SettingsData.cs",
               "RelativeDocumentMoniker": "Umuna.Core\\Data\\Umuna\\SettingsData.cs",
@@ -345,7 +362,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "UserData.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.Core\\Data\\Umuna\\UserData.cs",
               "RelativeDocumentMoniker": "Umuna.Core\\Data\\Umuna\\UserData.cs",
@@ -357,7 +374,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "IFileDescriptor.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\Umuna.Core\\Services\\FileDataService\\IFileDescriptor.cs",
               "RelativeDocumentMoniker": "Umuna.Core\\Services\\FileDataService\\IFileDescriptor.cs",
@@ -369,7 +386,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "WrapperBase.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Data\\Notifiers\\WrapperBase.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Data\\Notifiers\\WrapperBase.cs",
@@ -381,7 +398,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "UiLabelsManager.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\UiLabelsManager.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\02_CameraObservableList\\UiLabelsManager.cs",
@@ -393,7 +410,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "UiLabelsManager.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\01_CameraPointedRegister\\UiLabelsManager.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\01_CameraPointedRegister\\UiLabelsManager.cs",
@@ -405,7 +422,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "BindingLocator.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Singletons\\BindingLocator.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Singletons\\BindingLocator.cs",
@@ -417,7 +434,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "UmunaDataBinder.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Bindings\\Binders\\UmunaDataBinder.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Bindings\\Binders\\UmunaDataBinder.cs",
@@ -429,7 +446,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "BindSystem.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Data\\BindSystem.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Data\\BindSystem.cs",
@@ -441,7 +458,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "ConfigConstants.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Constants\\Configuration\\ConfigConstants.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Constants\\Configuration\\ConfigConstants.cs",
@@ -453,7 +470,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "LoginRequestDto.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Data\\DTOs\\LoginRequestDto.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Data\\DTOs\\LoginRequestDto.cs",
@@ -465,7 +482,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "UserDataDto.cs",
               "DocumentMoniker": "C:\\Github\\UMUNA\\UMUNA_Unity\\Assets\\_Scripts\\Data\\DTOs\\UserDataDto.cs",
               "RelativeDocumentMoniker": "UMUNA_Unity\\Assets\\_Scripts\\Data\\DTOs\\UserDataDto.cs",

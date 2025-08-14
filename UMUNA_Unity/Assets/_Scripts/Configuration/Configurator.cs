@@ -11,8 +11,8 @@ namespace UMUNA.Configuration
     public class Configurator
     {
         #region Fields
-        AppConfiguration _appConfiguration;
-        IFileSerializer<AppConfiguration> _appconfigDataService;
+        readonly AppConfiguration _appConfiguration;
+        readonly IFileSerializer<AppConfiguration> _appconfigDataService;
         #endregion
 
         #region Properties
