@@ -7,26 +7,34 @@ namespace Umuna.Core.Services
 {
     public static class DataServiceFactory
     {
-        public static IDataService<TData> Create<TData>(SerializerType serializerType) where TData : class
+        public static IFileSerializer<TData> Create<TData>(SerializerType serializerType = SerializerType.Json) where TData : class
         {
             switch (serializerType)
             {
                 case SerializerType.Json:
                     var jsonSerializer = new JsonSerializer<TData>();
-                    return new FileLoaderService<JsonSerializer<TData>, TData>(jsonSerializer);
+                    return new FileSerializer<JsonSerializer<TData>, TData>(jsonSerializer);
                 case SerializerType.Xml:
                     var xmlSerializer = new XmlSerializer<TData>();
-                    return new FileLoaderService<XmlSerializer<TData>, TData>(xmlSerializer);
+                    return new FileSerializer<XmlSerializer<TData>, TData>(xmlSerializer);
                 default:
                     throw new System.NotImplementedException($"Serializer type {serializerType} is not implemented.");
             }
         }
 
-        public static IDataService<TData> Create<TData>(SerializerType serializerType, string fileName) where TData : class
+        public static IFileSerializer<TData> Create<TData>(string path, SerializerType serializerType = SerializerType.Json) where TData : class
         {
-            var dataService = Create<TData>(serializerType);
-            dataService.FileName = fileName;
-            return dataService;
+            switch (serializerType)
+            {
+                case SerializerType.Json:
+                    var jsonSerializer = new JsonSerializer<TData>();
+                    return new FileSerializer<JsonSerializer<TData>, TData>(jsonSerializer, relativePath: path);
+                case SerializerType.Xml:
+                    var xmlSerializer = new XmlSerializer<TData>();
+                    return new FileSerializer<XmlSerializer<TData>, TData>(xmlSerializer, relativePath: path);
+                default:
+                    throw new System.NotImplementedException($"Serializer type {serializerType} is not implemented.");
+            }
         }
     }
 }

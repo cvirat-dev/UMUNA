@@ -30,8 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1324743483247157557}
-  - {fileID: 2341746706437985850}
+  - {fileID: 1106236431163393682}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5012855879094339644
@@ -47,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UnparentOnAwake: 1
---- !u!1 &6978607439173244662
+--- !u!1 &7953673219071127722
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,87 +54,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1324743483247157557}
-  - component: {fileID: 5078301644627630127}
+  - component: {fileID: 1106236431163393682}
+  - component: {fileID: 3129355986322751895}
   m_Layer: 0
-  m_Name: CameraDataBinder
+  m_Name: UmunaDataBinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1324743483247157557
+--- !u!4 &1106236431163393682
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6978607439173244662}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5241908054855490451}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5078301644627630127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6978607439173244662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51f8530e885b68141a459d8a1d4762c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Id>k__BackingField:
-    Part1: 4218434331
-    Part2: 1153937361
-    Part3: 2531048614
-    Part4: 3500521538
-  data:
-    <Id>k__BackingField:
-      Part1: 0
-      Part2: 0
-      Part3: 0
-      Part4: 0
-    SavedPositionsList:
-      <Id>k__BackingField:
-        Part1: 0
-        Part2: 0
-        Part3: 0
-        Part4: 0
-      CurrentCameraIndex: 0
-      SavedPositions: []
-  cameraPositionTracker: {fileID: 11400000, guid: 1299afde251360a44b48c929aaddf523, type: 2}
-  cameraPositions: {fileID: 11400000, guid: 4628b3e9cc118c1409bde063535f8954, type: 2}
---- !u!1 &8140087003863419908
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2341746706437985850}
-  - component: {fileID: 567781619120898262}
-  m_Layer: 0
-  m_Name: ExportNotesBinder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2341746706437985850
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8140087003863419908}
+  m_GameObject: {fileID: 7953673219071127722}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -144,31 +78,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5241908054855490451}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &567781619120898262
+--- !u!114 &3129355986322751895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8140087003863419908}
+  m_GameObject: {fileID: 7953673219071127722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e5b572e5e179024c9a71d6c743db8c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b454286d45082941a9c237e24b26f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Id>k__BackingField:
-    Part1: 3535655791
-    Part2: 1155544840
-    Part3: 2479760776
-    Part4: 2729061138
-  data:
-    <Id>k__BackingField:
-      Part1: 0
-      Part2: 0
-      Part3: 0
-      Part4: 0
-    ExportName: default_name
+    Part1: 2111641427
+    Part2: 1220764656
+    Part3: 2527067558
+    Part4: 3500979384
+  _data:
+    GameName: default_name
     UserName: default_user_name
-    NumberOfExports: 0
-    NumberOfCameraPositions: 0
-    ExportNotesText: default_notes

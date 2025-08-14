@@ -1,14 +1,16 @@
 using UUP.ScriptableObjects.Data.Variables;
 using UnityEngine;
-using UMUNA.ScriptableObjects;
+using Umuna.Core.Data.Umuna;
+using UMUNA.EventManagement;
+using Umuna.Core.Data;
 
 namespace UMUNA._Scripts.CameraObservableList
 {
     public class UiLabelsManager : MonoBehaviour
     {
+        CameraData _cameraData = new();
         [SerializeField] StringVariableSO currentPositionIndexMssg;
         [SerializeField] StringVariableSO numberOfDefinedPositionsMssg;
-        [SerializeField] CameraDataSO cameraDataSO;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -20,18 +22,24 @@ namespace UMUNA._Scripts.CameraObservableList
 
         private void OnEnable()
         {
-            cameraDataSO.OnCameraDataChanged += OnRegisterChange;
+            EventManager.SaveLoad.UmunaData.OnUmunaDataLoaded.AddListener(Bind);
+        }
+
+        private void Bind(UmunaData arg0)
+        {
+            _cameraData = arg0.CameraData;
+            OnRegisterChange();
         }
 
         private void OnDisable()
         {
-            cameraDataSO.OnCameraDataChanged -= OnRegisterChange;
+            EventManager.SaveLoad.UmunaData.OnUmunaDataLoaded.RemoveListener(Bind);
         }
 
         private void OnRegisterChange()
         {
-            numberOfDefinedPositionsMssg.Value = $"{cameraDataSO.Count} positions defined";
-            UpdateCurrentPositionMssg(cameraDataSO.CurrentCameraIndex);
+            numberOfDefinedPositionsMssg.Value = $"{_cameraData.SavedPositions.Count} positions defined";
+            UpdateCurrentPositionMssg(_cameraData.CurrentCameraIndex);
         }
 
         private void UpdateCurrentPositionMssg(int index)

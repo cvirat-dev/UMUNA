@@ -9,7 +9,7 @@ namespace Umuna.Core.Tests.Services.FileDataService
     public class FileLoaderServiceTests
     {
         private JsonSerializer<UmunaData> _serializer;
-        private FileLoaderService<JsonSerializer<UmunaData>, UmunaData> _fileLoaderService;
+        private FileSerializer<JsonSerializer<UmunaData>, UmunaData> _fileLoaderService;
         private UmunaData _testData;
         private List<string> _testFilePaths = new List<string>();
 
@@ -17,8 +17,8 @@ namespace Umuna.Core.Tests.Services.FileDataService
         public void Setup()
         {
             _serializer = new JsonSerializer<UmunaData>();
-            _fileLoaderService = new FileLoaderService<JsonSerializer<UmunaData>, UmunaData>(_serializer, nameof(FileLoaderServiceTests));
-            _fileLoaderService.ExportDirPath = Path.Combine(_fileLoaderService.ExportDirPath, "Tests");
+            _fileLoaderService = new FileSerializer<JsonSerializer<UmunaData>, UmunaData>(_serializer, nameof(FileLoaderServiceTests));
+            _fileLoaderService.FileDirectory = Path.Combine(_fileLoaderService.FileDirectory, "Tests");
 
             _testData = TestDataFactory.CreateTestData();
 
@@ -33,9 +33,9 @@ namespace Umuna.Core.Tests.Services.FileDataService
         {
             foreach (var filePath in _testFilePaths)
             {
-                if (File.Exists(filePath))
+                if (System.IO.File.Exists(filePath))
                 {
-                    File.Delete(filePath);
+                    System.IO.File.Delete(filePath);
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace Umuna.Core.Tests.Services.FileDataService
             // Arrange
             _fileLoaderService.FileName = nameof(Load_FileIsCorrupted_ReturnsError);
             _testFilePaths.Add(_fileLoaderService.FilePath);
-            File.WriteAllText(_fileLoaderService.FilePath, "This is not valid JSON");
+            System.IO.File.WriteAllText(_fileLoaderService.FilePath, "This is not valid JSON");
             // Act
             UmunaData? result = _fileLoaderService.Load(_fileLoaderService.FilePath);
             // Assert

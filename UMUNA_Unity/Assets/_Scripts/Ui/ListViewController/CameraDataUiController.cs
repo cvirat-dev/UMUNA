@@ -1,16 +1,16 @@
 using System.Collections.Generic;
-using Umuna.Core.Data.Umuna;
+using System.Linq;
+using Umuna.Core.Data;
+using UMUNA.Data.Wrappers.Umuna;
 using UMUNA.EventManagement;
-using UMUNA.Extensions;
-using UMUNA.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UUP.CustomDataTypes;
 
 public class CameraDataUiController : MonoBehaviour
 {
-    [SerializeField] private CameraDataSO cameraData;
-
+    #region Fields
+    private CameraDataWrapper _cameraData;
     private ListView savedPositionsListView;
     private TextField positionField;
     private TextField rotationField;
@@ -18,8 +18,23 @@ public class CameraDataUiController : MonoBehaviour
     private Button updateButton;
     private Button removeButton;
     private Button clearButton;
-
     private int _currentIndex = -1;
+    #endregion
+
+    #region Properties
+    public CameraDataWrapper CameraData
+    {
+        get => _cameraData;
+        set
+        {
+            _cameraData = value;
+            if (_cameraData != null)
+            {
+                RefreshListView();
+            }
+        }
+    }
+    #endregion
 
     private void OnEnable()
     {
@@ -34,9 +49,6 @@ public class CameraDataUiController : MonoBehaviour
         removeButton = root.Q<Button>("RemoveButton");
         clearButton = root.Q<Button>("ClearButton");
 
-        // Populate list view
-        RefreshListView();
-
         // Add button listeners
         addButton.clicked += AddPosition;
         updateButton.clicked += UpdatePosition;
@@ -44,15 +56,21 @@ public class CameraDataUiController : MonoBehaviour
         clearButton.clicked += ClearPositions;
 
         savedPositionsListView.selectionChanged += OnPositionChange;
-        cameraData.OnCameraDataChanged += RefreshListView;
+        EventManager.SaveLoad.UmunaData.OnUmunaDataLoaded.AddListener(Bind);
         EventManager.CameraSystem.OnNotifyCameraMovement.AddListener(DeselectAll);
+    }
+
+    private void Bind(UmunaData data)
+    {
+        _cameraData = new(data.CameraData);
+        RefreshListView();
     }
 
     private void OnDisable()
     {
         // Unbind UI elements
         savedPositionsListView.selectionChanged -= OnPositionChange;
-        cameraData.OnCameraDataChanged -= RefreshListView;
+        EventManager.SaveLoad.UmunaData.OnUmunaDataLoaded.RemoveListener(Bind);
         EventManager.CameraSystem.OnNotifyCameraMovement.RemoveListener(DeselectAll);
         // Remove button listeners
         addButton.clicked -= AddPosition;
@@ -68,7 +86,7 @@ public class CameraDataUiController : MonoBehaviour
         // find the index of the selected item
         int index = savedPositionsListView.selectedIndex;
 
-        if (index < 0 || index >= cameraData.CameraData.SavedPositions.Count)
+        if (index < 0 || index >= CameraData.SavedPositions.Count)
         {
             _currentIndex = -1; // Reset current index if selection is invalid
             return;
@@ -80,15 +98,15 @@ public class CameraDataUiController : MonoBehaviour
 
     private void RefreshListView()
     {
-        savedPositionsListView.itemsSource = cameraData.CameraData.SavedPositions;
+        savedPositionsListView.itemsSource = CameraData.SavedPositions.ToList();
         savedPositionsListView.makeItem = () => new Label();
         savedPositionsListView.bindItem = (element, i) =>
         {
             var label = (Label)element;
-            label.text = cameraData.CameraData.SavedPositions[i].ToSpatialOrientation().ToString();
+            label.text = CameraData.SavedPositions[i].ToString();
 
             // Apply style class based on selection
-            if (i == cameraData.CameraData.CurrentCameraIndex)
+            if (i == CameraData.CurrentCameraIndex)
             {
                 _currentIndex = i;
                 label.AddToClassList("selected-item");
@@ -128,7 +146,7 @@ public class CameraDataUiController : MonoBehaviour
         var rotation = ParseVector3(rotationField.value);
         if (position != null && rotation != null)
         {
-            cameraData.ModifySavedPositions(ListOperation.Add, new SpatialOrientation(position.Value, Quaternion.Euler(rotation.Value)));
+            CameraData.AddPosition(new SpatialOrientation(position.Value, Quaternion.Euler(rotation.Value)));
             RefreshListView();
         }
     }
@@ -139,20 +157,20 @@ public class CameraDataUiController : MonoBehaviour
         var rotation = ParseVector3(rotationField.value);
         if (position != null && rotation != null)
         {
-            cameraData.ModifySavedPositions(ListOperation.Update, new SpatialOrientation(position.Value, Quaternion.Euler(rotation.Value)));
+            CameraData.UpdatePosition(_currentIndex, new SpatialOrientation(position.Value, Quaternion.Euler(rotation.Value)));
             RefreshListView();
         }
     }
 
     private void RemovePosition()
     {
-        cameraData.ModifySavedPositions(ListOperation.Remove, null);
-        RefreshListView();
+        // To be implemented
+        // Withot an index, we cannot remove a specific position
     }
 
     private void ClearPositions()
     {
-        cameraData.ModifySavedPositions(ListOperation.Clear, null);
+        CameraData.ClearPositions();
         RefreshListView();
     }
 

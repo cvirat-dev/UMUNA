@@ -1,6 +1,4 @@
-using Umuna.Core.Data;
-using UMUNA.Bindings;
-using UMUNA.EventManagement;
+using System;
 using UMUNA.SavingSystem;
 using UMUNA.Singletons;
 using UMUNA.Utils;
@@ -11,30 +9,16 @@ namespace UMUNA
     public class BindSystem
     {
         #region Fields
-        private CameraDataBinder _cameraDataBinder;
         #endregion
 
         #region Properties
-        public CameraDataBinder CameraDataBinder => _cameraDataBinder;
         #endregion
 
         #region Constructors
-        public BindSystem(UmunaData umunaData)
-        {
-            UpdateBindings(umunaData);
-        }
         #endregion
 
         #region Public Methods
-        public void UpdateBindings(UmunaData umunaData)
-        {
-            Bind(umunaData.CameraData, out _cameraDataBinder);
-            EventManager.SaveLoad.OnBindingCompleted.Invoke();
-        }
-        #endregion
-
-        #region private methods
-        private void Bind<TBinder, TData>(TData data, out TBinder binder) where TBinder : MonoBehaviour, IBind<TData>
+        public void Bind<TBinder, TData>(TData data, out TBinder binder, Action onBindingCompleted = null) where TBinder : MonoBehaviour, IBind<TData>
         {
             binder = BindingLocator.Instance.GetComponentInChildren<TBinder>();
             if (binder != null)
@@ -51,6 +35,8 @@ namespace UMUNA
 
             Debug.LogWarning($"No {typeof(TBinder)} found in children of {nameof(BindingLocator)} but found in scene");
             binder.Bind(data);
+
+            onBindingCompleted?.Invoke();
         }
 
         //private void Bind<TBinder, TData>(List<TData> dataList) where TBinder : MonoBehaviour, IBind<TData>, new()

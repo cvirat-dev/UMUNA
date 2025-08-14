@@ -1,9 +1,7 @@
-﻿using System;
-
+﻿
 namespace Umuna.Core.Data.Umuna
 {
-    [Serializable]
-    public class UserData
+    public class UserData : IUserData
     {
         private string _playerName = "default_name";
         private string _playerId = string.Empty;

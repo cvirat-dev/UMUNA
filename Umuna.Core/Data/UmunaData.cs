@@ -6,6 +6,7 @@ namespace Umuna.Core.Data
     [Serializable]
     public class UmunaData
     {
+        public int version = 1;
         public string GameName = "default_name";
         public string UserName = "default_user_name";
         public UserData UserData = new UserData();

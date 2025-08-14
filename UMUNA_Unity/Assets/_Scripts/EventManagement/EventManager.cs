@@ -1,4 +1,4 @@
-using UnityEngine;
+using Umuna.Core.Data;
 using UnityEngine.Events;
 
 namespace UMUNA.EventManagement
@@ -38,11 +38,14 @@ namespace UMUNA.EventManagement
 
         public class SaveLoadEvents
         {
-            public UnityEvent OnBeforeSave = new();
-            public UnityEvent OnAfterSave = new();
-            public UnityEvent OnBeforeLoad = new();
-            public UnityEvent OnAfterLoad = new();
-            public UnityEvent OnBindingCompleted = new();
+
+            public UmunaDataEvents UmunaData = new();
+
+            public class UmunaDataEvents
+            {
+                public UnityEvent OnUmunaDataSaved = new();
+                public UnityEvent<UmunaData> OnUmunaDataLoaded = new();
+            }
         }
     }
 }

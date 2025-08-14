@@ -5,100 +5,87 @@ using Umuna.Core.Data.Common;
 
 namespace Umuna.Core.Data.Umuna
 {
-    [Serializable]
-    public class CameraData
+    public class CameraData : ICameraData
     {
+        #region Fields
+        private const int NoCameraSelected = -1;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// The list-index of the currently selected camera.
+        /// </summary>
+        public int CurrentCameraIndex { get; set; } = NoCameraSelected;
+
+        /// <summary>
+        /// The last camera position.
+        /// </summary>
         public SpatialOrientationData LastCameraPosition { get; set; } = new SpatialOrientationData();
-        public int CurrentCameraIndex { get; set; }
-        public List<SpatialOrientationData> SavedPositions { get; set; } = new List<SpatialOrientationData>();
 
-        public void SetNextCameraIndex()
-        {
-            CurrentCameraIndex++;
-            if (CurrentCameraIndex >= SavedPositions.Count)
-            {
-                CurrentCameraIndex = 0;
-            }
-        }
+        /// <summary>
+        /// Public read-only access to saved positions.
+        /// </summary>
+        public List<SpatialOrientationData> SavedPositions { get; private set; } = new List<SpatialOrientationData>();
+        #endregion
 
-        public void ModifySavedPositions(ListOperation op, params object[] param)
-        {
-            switch (op)
-            {
-                case ListOperation.Add:
-                    if (param.Length == 1 && param[0] is SpatialOrientationData spAdd)
-                    {
-                        SavedPositions.Add(spAdd);
-                    }
-                    else
-                    {
-                        throw new ArgumentException($"Invalid parameters for Add operation. Expected a {nameof(SpatialOrientationData)} object.");
-                    }
-                        break;
-                case ListOperation.Update:
-                    if (param.Length == 2 && param[0] is SpatialOrientationData spUpdate && param[1] is int index && index >= 0 && index < SavedPositions.Count)
-                    {
-                        SavedPositions[index] = spUpdate;
-                        CurrentCameraIndex = index;
-                    }
-                    else
-                    {
-                        throw new ArgumentException($"Invalid parameters for Update operation. Expected a {nameof(SpatialOrientationData)} object and a valid index.");
-                    }
-                        break;
-                case ListOperation.Remove:
-                    if (param.Length == 1 && param[0] is int indexRemove && indexRemove >= 0 && indexRemove < SavedPositions.Count)
-                    {
-                        SavedPositions.RemoveAt(indexRemove);
-                        if (CurrentCameraIndex >= SavedPositions.Count)
-                        {
-                            CurrentCameraIndex = SavedPositions.Count - 1;
-                        }
-                    }
-                    else
-                    {
-                        throw new ArgumentException($"Invalid parameters for Remove operation. Expected a valid index.");
-                    }
-                    break;
-                case ListOperation.Clear:
-                    SavedPositions.Clear();
-                    CurrentCameraIndex = -1;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(op), op, null);
-            }
-        }
-
+        #region Public Methods
+        /// <summary>
+        /// Adds a new spatial position to the list.
+        /// </summary>
         public void AddPosition(SpatialOrientationData position)
         {
+            if (position == null) throw new ArgumentNullException(nameof(position));
             SavedPositions.Add(position);
         }
 
-        public void UpdateSavedPosition(int index, SpatialOrientationData position)
+        /// <summary>
+        /// Updates an existing spatial position at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the position to update.</param>
+        /// <param name="position">The new position data.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Raised if the index is out of bounds.</exception>
+        /// <exception cref="ArgumentNullException">Raised if the position is null.</exception>
+        public void UpdatePosition(int index, SpatialOrientationData position)
         {
-            if (index >= 0 && index < SavedPositions.Count)
+            if (index < 0 || index >= SavedPositions.Count)
             {
-                SavedPositions[index] = position;
-                CurrentCameraIndex = index;
+                throw new ArgumentOutOfRangeException(nameof(index), "Invalid index for saved positions.");
             }
+
+            SavedPositions[index] = position ?? throw new ArgumentNullException(nameof(position));
         }
 
-        public void RemovePosition(int index)
+        /// <summary>
+        /// Removes a spatial position from the list.
+        /// </summary>
+        public void RemovePositionAt(int index)
         {
-            if (index >= 0 && index < SavedPositions.Count)
+            if (index < 0 || index >= SavedPositions.Count)
             {
-                SavedPositions.RemoveAt(index);
-                if (CurrentCameraIndex >= SavedPositions.Count)
-                {
-                    CurrentCameraIndex = SavedPositions.Count - 1;
-                }
+                throw new ArgumentOutOfRangeException(nameof(index), "Invalid index for saved positions.");
             }
+            SavedPositions.RemoveAt(index);
         }
 
-        public void Clear()
+        /// <summary>
+        /// Clears all saved positions.
+        /// </summary>
+        public void ClearPositions()
         {
             SavedPositions.Clear();
-            CurrentCameraIndex = -1;
         }
+
+        /// <summary>
+        /// Sets the currently selected camera by index.
+        /// </summary>
+        public void SetSelectedCamera(int cameraIndex)
+        {
+            if (cameraIndex < 0 || cameraIndex >= SavedPositions.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(cameraIndex), "Invalid camera index.");
+            }
+            CurrentCameraIndex = cameraIndex;
+        }
+        #endregion
     }
 }
