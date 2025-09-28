@@ -581,3 +581,4 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/UMUNA_Unity/Assets/_00_Tests/_BindListviewToAListWithRuntimeBinding
