@@ -11,6 +11,9 @@ namespace Umuna.Ui.ViewModels
 
         [ObservableProperty]
         private string status = "Disconnected";
+
+        [ObservableProperty]
+        private bool isBusy;
         #endregion
 
         #region Constructors
@@ -22,13 +25,28 @@ namespace Umuna.Ui.ViewModels
         #endregion
 
         #region Commands
-
         [RelayCommand]
-        private void Connect()
+        private async Task ConnectAsync()
         {
-            Status = "Connecting...";
-        }
+            try
+            {
+                IsBusy = true;
+                Status = "Connecting...";
 
+                // Simulate a long operation (e.g., TCP connect, DB call)
+                await Task.Delay(3000);
+
+                Status = "Connected successfully!";
+            }
+            catch (Exception ex)
+            {
+                Status = $"Connection failed: {ex.Message}";
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
         #endregion
 
     }
