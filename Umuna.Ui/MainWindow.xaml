@@ -6,7 +6,8 @@
         xmlns:views="clr-namespace:Umuna.Ui.Views"
         xmlns:local="clr-namespace:Umuna.Ui"
         mc:Ignorable="d"
-        Title="UMUNA" Height="450" Width="800">
+        Title="UMUNA" Height="450" Width="800"
+        Background="{StaticResource Brush.Background}">
     <Grid>
         <views:MainView />
     </Grid>
