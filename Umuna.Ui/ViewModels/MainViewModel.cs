@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Windows.Documents;
 using Umuna.Ui.Services.Communication;
 
 namespace Umuna.Ui.ViewModels
@@ -14,13 +15,19 @@ namespace Umuna.Ui.ViewModels
 
         [ObservableProperty]
         private bool isBusy;
+
+        [ObservableProperty]
+        private string log = "Server starting...";
+        #endregion
+
+        #region Properties
         #endregion
 
         #region Constructors
-        public MainViewModel()
+        public MainViewModel(ICommunicationService communicationService)
         {
-            _communicationService = new MockCommunicationService();
-            _communicationService.MessageReceived += msg => status = msg;
+            _communicationService = communicationService;
+            _communicationService.MessageReceived +=  msg => Log += $"\nClient: {msg}";
         }
         #endregion
 
@@ -33,8 +40,8 @@ namespace Umuna.Ui.ViewModels
                 IsBusy = true;
                 Status = "Connecting...";
 
-                // Simulate a long operation (e.g., TCP connect, DB call)
-                await Task.Delay(3000);
+                await _communicationService.StartAsync(5000);
+                Log += "\nServer listening on port 5000...";
 
                 Status = "Connected successfully!";
             }

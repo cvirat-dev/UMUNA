@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Umuna.Ui.Services.Communication
@@ -10,13 +11,13 @@ namespace Umuna.Ui.Services.Communication
     {
         public event Action<string>? MessageReceived;
 
-        public Task ConnectAsync(string host, int port)
+        public Task StartAsync(int port, CancellationToken cancellationToken = default)
         {
-            MessageReceived?.Invoke("Mock connection established.");
+            MessageReceived?.Invoke("Mock communication started.");
             return Task.CompletedTask;
         }
 
-        public Task SendMessageAsync(string message)
+        public Task SendAsync(string message, CancellationToken cancellationToken = default)
         {
             MessageReceived?.Invoke($"Mock sent: {message}");
             return Task.CompletedTask;

@@ -6,10 +6,45 @@
         xmlns:local="clr-namespace:Umuna.Ui.Views"
         xmlns:vm="clr-namespace:Umuna.Ui.ViewModels"
         mc:Ignorable="d">
+    
+    <Grid Background="{DynamicResource AppBackgroundBrush}" Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <StackPanel Margin="10">
-        <TextBlock Text="UMUNA Control Center" FontSize="20" FontWeight="Bold" />
-        <TextBox Text="{Binding Status}" Width="200" />
-        <Button Content="Connect" Command="{Binding ConnectCommand}" Width="100"/>
-    </StackPanel>
+        <!-- HEADER AREA -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center">
+            <TextBlock Text="UMUNA Control Center" 
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"/>
+
+            <TextBox Text="{Binding Status}" 
+                     Width="200" 
+                     IsReadOnly="True"
+                     Margin="10,0,0,0"
+                     VerticalAlignment="Center"
+                     BorderThickness="1"
+                     Padding="4,2"/>
+
+            <Button Content="Connect" 
+                    Command="{Binding ConnectCommand}"
+                    Width="100"
+                    Height="28"
+                    BorderThickness="1"
+                    Padding="4,0"
+                    Cursor="Hand"/>
+        </StackPanel>
+        
+        <!-- LOG / CONSOLE AREA -->
+        <Border Grid.Row="1"
+                BorderThickness="1"
+                CornerRadius="6"
+                Padding="8">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <TextBlock Text="{Binding Log}"
+                           TextWrapping="Wrap"/>
+            </ScrollViewer>
+        </Border>
+    </Grid>
 </UserControl>
