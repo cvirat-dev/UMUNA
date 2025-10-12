@@ -1,49 +1,123 @@
 #RootContainer {
     width: 30%;
-    height: 75%;
     position: absolute;
-    left: 0;
-    top: 0;
-    background-color: rgba(0, 0, 0, 0.4); /* Optional: Set a background color */
-    border-right: 1px solid #ccc; /* Optional: Add a border to separate the UI */
-    overflow: hidden; /* Prevent content overflow */
+    left: 5px;
+    top: 5px;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    border-radius: 15px;
 }
 
-/* Style for the ListView */
 #SavedPositionsListView {
-    height: 200px;
-    border: 1px solid black;
+    min-height: 50px;
+    justify-content: space-evenly;
+    background-color: rgba(40, 45, 60, 0.5);
+    border-radius: 10px;
+    margin-right: 6px;
+    margin-left: 6px;
     margin-bottom: 10px;
+    margin-top: 10px;
+    align-items: auto;
+    align-content: auto;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
 }
 
-/* Style for the TextFields */
-#PositionField, #RotationField {
+#PositionField {
     margin-bottom: 10px;
     padding: 5px;
-    border: 1px solid gray;
 }
 
-/* Style for Buttons */
-#AddButton, #UpdateButton, #RemoveButton, #ClearButton {
+#RotationField {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+#AddButton {
     margin: 5px;
     padding: 10px;
-    background-color: #007acc;
+    background-color: rgb(0, 122, 204);
     color: white;
     border-radius: 5px;
-    border: none;
-    cursor: pointer;
 }
 
-#AddButton:hover, #UpdateButton:hover, #RemoveButton:hover, #ClearButton:hover {
-    background-color: #005f99;
-}
-
-.default-item {
+#UpdateButton {
+    margin: 5px;
+    padding: 10px;
+    background-color: rgb(0, 122, 204);
     color: white;
-    background-color: darkgrey;
+    border-radius: 5px;
 }
 
-.selected-item {
+#RemoveButton {
+    margin: 5px;
+    padding: 10px;
+    background-color: rgb(0, 122, 204);
     color: white;
-    background-color: green;
+    border-radius: 5px;
+}
+
+#ClearButton {
+    margin: 5px;
+    padding: 10px;
+    background-color: rgb(0, 122, 204);
+    color: white;
+    border-radius: 5px;
+}
+
+#AddButton:hover {
+    background-color: rgb(0, 95, 153);
+}
+
+#UpdateButton:hover {
+    background-color: rgb(0, 95, 153);
+}
+
+#RemoveButton:hover {
+    background-color: rgb(0, 95, 153);
+}
+
+#ClearButton:hover {
+    background-color: rgb(0, 95, 153);
+}
+
+#NameField {
+    flex-grow: 1;
+}
+
+#NameField .unity-base-field__input {
+    color: white;
+}
+
+#NameField .unity-text-element {
+    color: white;
+}
+
+#NameField .unity-base-field__input {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.ListItem {
+    flex-direction: row;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 20px;
+    margin-right: 5px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    align-self: auto;
+    justify-content: space-around;
+    flex-shrink: 1;
+    flex-grow: 0;
+    align-items: stretch;
+    overflow: visible;
+    height: 60px;
+    align-content: stretch;
+    min-height: auto;
 }

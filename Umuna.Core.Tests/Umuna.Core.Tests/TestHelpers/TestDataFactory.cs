@@ -1,5 +1,5 @@
-using Umuna.Core.Data;
-using Umuna.Core.Data.Common;
+using Umuna.Core.SharedData;
+using Umuna.Core.SharedData.Common;
 
 namespace Umuna.Core.Tests.TestHelpers
 {

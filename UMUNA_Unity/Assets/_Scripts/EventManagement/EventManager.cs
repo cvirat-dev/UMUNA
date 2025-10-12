@@ -1,4 +1,4 @@
-using Umuna.Core.Data;
+using Umuna.Core.SharedData;
 using UnityEngine.Events;
 
 namespace UMUNA.EventManagement

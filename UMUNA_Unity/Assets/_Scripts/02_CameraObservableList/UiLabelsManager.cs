@@ -1,8 +1,8 @@
 using UUP.ScriptableObjects.Data.Variables;
 using UnityEngine;
-using Umuna.Core.Data.Umuna;
+using Umuna.Core.SharedData.Umuna;
 using UMUNA.EventManagement;
-using Umuna.Core.Data;
+using Umuna.Core.SharedData;
 
 namespace UMUNA._Scripts.CameraObservableList
 {

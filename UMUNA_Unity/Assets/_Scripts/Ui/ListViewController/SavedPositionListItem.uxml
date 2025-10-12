@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Scripts/Ui/ListViewController/CameraDataUi.uss?fileID=7433441132597879392&amp;guid=6576300f3823470409a1c95e5a2d9651&amp;type=3#CameraDataUi" />
+    <ui:VisualElement name="ItemRoot" class="ListItem">
+        <ui:Toggle name="SelectToggle" />
+        <ui:TextField name="NameField" class="item-name" />
+        <ui:Button name="GoButton" text="Go" class="item-go" />
+    </ui:VisualElement>
+</ui:UXML>

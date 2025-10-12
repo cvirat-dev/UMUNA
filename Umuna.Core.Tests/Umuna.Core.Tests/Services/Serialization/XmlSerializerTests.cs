@@ -1,4 +1,4 @@
-﻿using Umuna.Core.Data;
+﻿using Umuna.Core.SharedData;
 using Umuna.Core.Services.Serialization.Xml;
 using Umuna.Core.Tests.TestHelpers;
 

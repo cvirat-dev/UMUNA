@@ -1,6 +1,6 @@
 using System;
 
-namespace Umuna.Core.Data.Common
+namespace Umuna.Core.SharedData.Common
 {
     [Serializable]
     public struct Vector3Data

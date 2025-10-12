@@ -1,4 +1,4 @@
-using Umuna.Core.Data;
+using Umuna.Core.SharedData;
 using Umuna.Core.Services.FileDataService;
 using Umuna.Core.Services.Serialization.Json;
 using Umuna.Core.Tests.TestHelpers;
@@ -16,10 +16,9 @@ namespace Umuna.Core.Tests.Services.FileDataService
         [TestInitialize]
         public void Setup()
         {
-            _serializer = new JsonSerializer<UmunaData>();
+            _serializer = new();
             _fileLoaderService = new FileSerializer<JsonSerializer<UmunaData>, UmunaData>(_serializer, nameof(FileLoaderServiceTests));
-            _fileLoaderService.FileDirectory = Path.Combine(_fileLoaderService.FileDirectory, "Tests");
-
+            _fileLoaderService = _fileLoaderService.WithNewDirectory(Path.Combine(_fileLoaderService.FileDirectory, "Tests"));
             _testData = TestDataFactory.CreateTestData();
 
             // Delete all files in the export directory before each test
@@ -44,23 +43,23 @@ namespace Umuna.Core.Tests.Services.FileDataService
         public void Save_ValidData_CreatesFile()
         {
             // Act + Assert
-            _fileLoaderService.FileName = nameof(Save_ValidData_CreatesFile);
+            _fileLoaderService = _fileLoaderService.WithNewName(nameof(Save_ValidData_CreatesFile));
             _testFilePaths.Add(_fileLoaderService.FilePath);
-            _fileLoaderService.Save(_testData, _fileLoaderService.FilePath, overWrite: true);
+            _fileLoaderService.Save(_testData);
         }
 
         [TestMethod]
         public void Save_FileExistsAndOverwriteFalse_ReturnsFalse()
         {
             // Arrange
-            _fileLoaderService.FileName = nameof(Save_FileExistsAndOverwriteFalse_ReturnsFalse);
+            _fileLoaderService = _fileLoaderService.WithNewName(nameof(Save_FileExistsAndOverwriteFalse_ReturnsFalse));
             _testFilePaths.Add(_fileLoaderService.FilePath);
             bool success = true;
 
             // Act
             try
             {
-                _fileLoaderService.Save(_testData, _fileLoaderService.FilePath, overWrite: false);
+                _fileLoaderService.Save(_testData);
             }
             catch (IOException)
             {
@@ -75,7 +74,7 @@ namespace Umuna.Core.Tests.Services.FileDataService
         public void Load_FileExists_ReturnsData()
         {
             // Arrange
-            _fileLoaderService.FileName = nameof(Load_FileExists_ReturnsData);
+            _fileLoaderService = _fileLoaderService.WithNewName(nameof(Load_FileExists_ReturnsData));
             _testFilePaths.Add(_fileLoaderService.FilePath);
             _fileLoaderService.Save(_testData);
 
@@ -93,7 +92,7 @@ namespace Umuna.Core.Tests.Services.FileDataService
         public void Load_FileIsCorrupted_ReturnsError()
         {
             // Arrange
-            _fileLoaderService.FileName = nameof(Load_FileIsCorrupted_ReturnsError);
+            _fileLoaderService = _fileLoaderService.WithNewName(nameof(Load_FileIsCorrupted_ReturnsError));
             _testFilePaths.Add(_fileLoaderService.FilePath);
             System.IO.File.WriteAllText(_fileLoaderService.FilePath, "This is not valid JSON");
             // Act

@@ -1,11 +1,11 @@
-using Umuna.Core.Services.FileDataService;
+using System;
 using Umuna.Core.Services.Serialization;
 using Umuna.Core.Services.Serialization.Json;
 using Umuna.Core.Services.Serialization.Xml;
 
-namespace Umuna.Core.Services
+namespace Umuna.Core.Services.FileDataService
 {
-    public static class DataServiceFactory
+    public static class FileSerializerFactory
     {
         public static IFileSerializer<TData> Create<TData>(SerializerType serializerType = SerializerType.Json) where TData : class
         {
@@ -22,6 +22,11 @@ namespace Umuna.Core.Services
             }
         }
 
+        public static IFileSerializer<TData> Create<TData>(string serializerType = "json") where TData : class
+        {
+            return Create<TData>(Enum.Parse<SerializerType>(serializerType, true));
+        }
+
         public static IFileSerializer<TData> Create<TData>(string path, SerializerType serializerType = SerializerType.Json) where TData : class
         {
             switch (serializerType)
@@ -35,6 +40,11 @@ namespace Umuna.Core.Services
                 default:
                     throw new System.NotImplementedException($"Serializer type {serializerType} is not implemented.");
             }
+        }
+
+        public static IFileSerializer<TData> Create<TData>(string path, string serializerType = "json") where TData : class
+        {
+            return Create<TData>(path, Enum.Parse<SerializerType>(serializerType, true));
         }
     }
 }

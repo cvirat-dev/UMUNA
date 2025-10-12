@@ -8,29 +8,41 @@ using UnityEngine;
 
 namespace UMUNA.Configuration
 {
-    public class Configurator
+    public class Configurator<T> : IConfigurator<T> where T : class
     {
         #region Fields
-        readonly AppConfiguration _appConfiguration;
-        readonly IFileSerializer<AppConfiguration> _appconfigDataService;
+        readonly T _data;
+        readonly IFileSerializer<T> _dataService;
         #endregion
 
         #region Properties
-        public AppConfiguration AppConfiguration => _appConfiguration;
-        public IFileSerializer<AppConfiguration> AppConfigDataService => _appconfigDataService;
+        public T Data => _data;
+        public IFileSerializer<T> DataService => _dataService;
         #endregion
 
         #region Constructors
-        public Configurator(Dictionary<string, IFileDescriptor> fileServices)
+        public Configurator()
         {
             string fullPath = Path.Combine(Application.persistentDataPath, ConfigConstants.ConfigFileRelativePath);
-            _appconfigDataService = DataServiceFactory.Create<AppConfiguration>(fullPath);
-            _appConfiguration = _appconfigDataService.Load();
-            if (_appConfiguration == null)
+            _dataService = FileSerializerFactory.Create<T>(fullPath);
+            _data = _dataService.Load();
+            if (_data == null)
             {
                 throw new FileNotFoundException($"Configuration file not found at {ConfigConstants.ConfigFileRelativePath}. Please ensure the file exists.");
             }
-            fileServices.Add(nameof(AppConfiguration), _appconfigDataService);
+        }
+        #endregion
+
+        #region Public Methods
+        public bool TryReload(out T data)
+        {
+            data = _dataService.Load();
+            if (data == null)
+            {
+                Debug.LogError($"Failed to reload configuration from {ConfigConstants.ConfigFileRelativePath}. Please ensure the file exists and is valid.");
+                return false;
+            }
+            return true;
         }
         #endregion
     }

@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Umuna.Core.Data;
+using Umuna.Core.SharedData;
 using Umuna.Core.Services;
 using Umuna.Core.Services.FileDataService;
 using Umuna.Core.Services.Serialization;
+using UMUNA.Configuration;
 using UMUNA.Data;
 using UnityEngine;
 
@@ -14,14 +15,16 @@ namespace UMUNA.SavingSystem
     {
         #region Fields
         private ExportNotes _exportNotes;
-        private BindSystem _bindSystem;
+        private readonly BindSystem _bindSystem;
         private UmunaData _umunaData;
         private UmunaDataBinder _binder;
-        private IFileSerializer<UmunaData> _umunaDataService;
-        private IFileSerializer<ExportNotes> _exportNotesDataService;
+        private readonly IFileSerializer<UmunaData> _umunaDataService;
+        private readonly IFileSerializer<ExportNotes> _exportNotesDataService;
+        private readonly SerializationFormat _fileonfig;
         #endregion
 
         #region Properties
+        public SerializationFormat FileConfiguration => _fileonfig;
         public IFileSerializer<UmunaData> UmunaDataService => _umunaDataService;
         public IFileSerializer<ExportNotes> ExportNotesDataService => _exportNotesDataService;
 
@@ -40,16 +43,14 @@ namespace UMUNA.SavingSystem
             UmunaData umunaData,
             ExportNotes exportNotes,
             BindSystem bindSystem,
-            Dictionary<string, IFileDescriptor> fileServices,
-            SerializerType serializerType = SerializerType.Json)
+            SerializationFormat serializationFormat)
         {
             _umunaData = umunaData;
             _exportNotes = exportNotes;
             _bindSystem = bindSystem;
-            _umunaDataService = DataServiceFactory.Create<UmunaData>(nameof(UmunaData), serializerType);
-            fileServices.Add(nameof(UmunaData), _umunaDataService);
-            _exportNotesDataService = DataServiceFactory.Create<ExportNotes>(nameof(ExportNotes), serializerType);
-            fileServices.Add(nameof(ExportNotes), _exportNotesDataService);
+            _fileonfig = serializationFormat;
+            _umunaDataService = FileSerializerFactory.Create<UmunaData>(nameof(UmunaData), serializationFormat.Value);
+            _exportNotesDataService = FileSerializerFactory.Create<ExportNotes>(nameof(ExportNotes), serializationFormat.Value);
         }
         #endregion
 
@@ -87,8 +88,7 @@ namespace UMUNA.SavingSystem
             _umunaData = UmunaDataService.Load();
             if(_binder == null)
                 _bindSystem.Bind(_umunaData, out _binder);
-            else
-                _binder.Bind(_umunaData);
+            _binder.Bind(_umunaData);
             Debug.Log("Loaded data"); // Dont forget to add Logging at a later point
         }
         #endregion

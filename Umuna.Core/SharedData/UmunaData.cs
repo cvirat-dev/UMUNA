@@ -1,7 +1,7 @@
 ﻿using System;
-using Umuna.Core.Data.Umuna;
+using Umuna.Core.SharedData.Umuna;
 
-namespace Umuna.Core.Data
+namespace Umuna.Core.SharedData
 {
     [Serializable]
     public class UmunaData

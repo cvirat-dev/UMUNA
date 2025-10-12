@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Umuna.Core.Data.Common;
-using Umuna.Core.Data.Umuna;
+using Umuna.Core.SharedData.Common;
+using Umuna.Core.SharedData.Umuna;
 using UMUNA.Extensions;
 using UUP.CustomDataTypes;
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Umuna.Core.Data;
+using Umuna.Core.SharedData;
 using UMUNA.Data.Wrappers.Umuna;
 using UMUNA.EventManagement;
 using UnityEngine;
@@ -12,6 +12,7 @@ public class CameraDataUiController : MonoBehaviour
     #region Fields
     private CameraDataWrapper _cameraData;
     private ListView savedPositionsListView;
+    [SerializeField] private VisualTreeAsset _listItemUxml;
     private TextField positionField;
     private TextField rotationField;
     private Button addButton;
@@ -63,6 +64,7 @@ public class CameraDataUiController : MonoBehaviour
     private void Bind(UmunaData data)
     {
         _cameraData = new(data.CameraData);
+        CameraData.OnValueChanged += () => RefreshListView();
         RefreshListView();
     }
 
@@ -99,26 +101,103 @@ public class CameraDataUiController : MonoBehaviour
     private void RefreshListView()
     {
         savedPositionsListView.itemsSource = CameraData.SavedPositions.ToList();
-        savedPositionsListView.makeItem = () => new Label();
+        if (_listItemUxml == null)
+        {
+            Debug.LogError("List item UXML template not found in Resources.");
+            return;
+        }
+
+        savedPositionsListView.makeItem = () =>
+        {
+            var ve = _listItemUxml.Instantiate();
+            // Cache child controls in userData for faster bind
+            var toggle = ve.Q<Toggle>("SelectToggle");
+            var nameField = ve.Q<TextField>("NameField");
+            var goButton = ve.Q<Button>("GoButton");
+
+            // Store references for bindItem
+            ve.userData = new ItemRefs
+            {
+                Toggle = toggle,
+                NameField = nameField,
+                GoButton = goButton
+            };
+
+            // Register persistent handlers once; they will use element.userData for index
+            toggle?.RegisterValueChangedCallback(evt =>
+            {
+                if (ve.userData is ItemRefs r && r.Index >= 0)
+                {
+                    // Keep ListView selection in sync with toggle
+                    if (evt.newValue)
+                    {
+                        savedPositionsListView.SetSelection(r.Index);
+                    }
+                    else if (savedPositionsListView.selectedIndex == r.Index)
+                    {
+                        savedPositionsListView.ClearSelection();
+                    }
+                }
+            });
+
+            if (goButton != null)
+            {
+                goButton.clicked += () =>
+                {
+                    if (ve.userData is ItemRefs r && r.Index >= 0)
+                    {
+                        // Raise same event as selecting the item
+                        EventManager.Ui.OnPositionSelected.Invoke(r.Index);
+                        savedPositionsListView.SetSelection(r.Index);
+                    }
+                };
+            }
+
+            return ve;
+        };
         savedPositionsListView.bindItem = (element, i) =>
         {
-            var label = (Label)element;
-            label.text = CameraData.SavedPositions[i].ToString();
+            // Unpack helpers
+            var refs = element.userData as ItemRefs;
+            if (refs == null)
+            {
+                // In case element was created before code update, rebuild refs
+                refs = new ItemRefs
+                {
+                    Toggle = element.Q<Toggle>("SelectToggle"),
+                    NameField = element.Q<TextField>("NameField"),
+                    GoButton = element.Q<Button>("GoButton")
+                };
+                element.userData = refs;
+            }
 
-            // Apply style class based on selection
-            if (i == CameraData.CurrentCameraIndex)
+            refs.Index = i;
+            var item = CameraData.SavedPositions[i];
+
+            // Display: use ToString or custom name when available
+            if (refs.NameField != null)
             {
-                _currentIndex = i;
-                label.AddToClassList("selected-item");
-                label.RemoveFromClassList("default-item");
+                refs.NameField.SetValueWithoutNotify(item.ToString());
+                refs.NameField.isReadOnly = true; // prevent editing for now
             }
-            else
-            {
-                label.AddToClassList("default-item");
-                label.RemoveFromClassList("selected-item");
-            }
+
+            //// Style based on current camera index
+            //bool isCurrent = i == CameraData.CurrentCameraIndex;
+            //element.EnableInClassList("selected-item", isCurrent);
+            //element.EnableInClassList("default-item", !isCurrent);
+
+            refs.Toggle?.SetValueWithoutNotify(savedPositionsListView.selectedIndex == i);
         };
+        savedPositionsListView.fixedItemHeight = 34f;
         savedPositionsListView.Rebuild();
+    }
+
+    private class ItemRefs
+    {
+        public Toggle Toggle;
+        public TextField NameField;
+        public Button GoButton;
+        public int Index = -1;
     }
 
     /// <summary>
@@ -147,7 +226,6 @@ public class CameraDataUiController : MonoBehaviour
         if (position != null && rotation != null)
         {
             CameraData.AddPosition(new SpatialOrientation(position.Value, Quaternion.Euler(rotation.Value)));
-            RefreshListView();
         }
     }
 
@@ -158,7 +236,6 @@ public class CameraDataUiController : MonoBehaviour
         if (position != null && rotation != null)
         {
             CameraData.UpdatePosition(_currentIndex, new SpatialOrientation(position.Value, Quaternion.Euler(rotation.Value)));
-            RefreshListView();
         }
     }
 
@@ -171,7 +248,6 @@ public class CameraDataUiController : MonoBehaviour
     private void ClearPositions()
     {
         CameraData.ClearPositions();
-        RefreshListView();
     }
 
     private Vector3? ParseVector3(string input)

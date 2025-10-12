@@ -1,9 +1,9 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using Umuna.Core.Data.Common;
+using Umuna.Core.SharedData.Common;
 
-namespace Umuna.Core.Data.Umuna
+namespace Umuna.Core.SharedData.Umuna
 {
     public class CameraData : ICameraData
     {

@@ -1,5 +1,5 @@
 ﻿using Umuna.ApiServer.Dtos;
-using Umuna.Core.Data.Umuna;
+using Umuna.Core.SharedData.Umuna;
 
 namespace Umuna.ApiServer.Mappings.Data
 {

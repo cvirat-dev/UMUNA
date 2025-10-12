@@ -86,10 +86,7 @@ namespace Umuna.Core.Services.Serialization.Json
 
         public void ClearConverters()
         {
-            if (_settings != null)
-            {
-                _settings.Converters.Clear();
-            }
+            _settings?.Converters.Clear();
         }
 
         public T? Deserialize(string json) => JsonConvert.DeserializeObject<T>(json, _settings);

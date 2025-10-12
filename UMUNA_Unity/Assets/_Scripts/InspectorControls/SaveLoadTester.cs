@@ -1,4 +1,4 @@
-using Umuna.Core.Data;
+using Umuna.Core.SharedData;
 using UMUNA.Data;
 using UnityEngine;
 using UUP.CustomAttributes;

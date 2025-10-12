@@ -1,4 +1,4 @@
-﻿namespace Umuna.Core.Data.Umuna
+﻿namespace Umuna.Core.SharedData.Umuna
 {
     public enum ListOperation
     {

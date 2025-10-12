@@ -16,6 +16,11 @@ namespace UMUNA
             Debug.Log($"{nameof(ServiceLocator)}: {nameof(GlobalAppManager)} created.");
         }
 
+        private void Start()
+        {
+            GlobalAppManager.Initialize();
+        }
+
         public AppManager AppManager => GlobalAppManager ??= new AppManager();
     }
 }

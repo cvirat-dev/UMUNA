@@ -32,6 +32,12 @@ namespace Umuna.Core.Services.FileDataService
             _fileDescriptor = new FileDescriptor(DirectoryHelper.GetMainDirectory(), "data", serializer.GetExtension());
         }
 
+        public FileSerializer(TSerializer serializer, FileDescriptor fileDescriptor)
+        {
+            Serializer = serializer;
+            _fileDescriptor = fileDescriptor;
+        }
+
         public FileSerializer(TSerializer serializer, string relativePath)
         {
             Serializer = serializer;
@@ -154,5 +160,15 @@ namespace Umuna.Core.Services.FileDataService
                 throw new InvalidDataException($"File extension '{FileExtension}' does not match serializer's expected extension '{_serializer.GetExtension()}'.");
             }
         }
+
+        // Helper methods
+        public FileSerializer<TSerializer, TData> WithNewDirectory(string newDirectory) => 
+            new FileSerializer<TSerializer, TData>(_serializer, _fileDescriptor.WithNewDirectory(newDirectory));
+
+        public FileSerializer<TSerializer, TData> WithNewName(string newName) =>
+            new FileSerializer<TSerializer, TData>(_serializer, _fileDescriptor.WithNewName(newName));
+
+        public FileSerializer<TSerializer, TData> WithNewExtension(string newExtension) =>
+            new FileSerializer<TSerializer, TData>(_serializer, _fileDescriptor.WithNewExtension(newExtension));
     }
 }

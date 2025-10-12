@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="CameraDataUi.uss" />
     <ui:VisualElement name="RootContainer">
-        <ui:ListView name="SavedPositionsListView" />
+        <ui:ListView name="SavedPositionsListView" fixedItemHeight="28" />
         <ui:TextField name="PositionField" label="Position (x,y,z)" />
         <ui:TextField name="RotationField" label="Rotation (x,y,z)" />
         <ui:Button name="AddButton" text="Add" />
