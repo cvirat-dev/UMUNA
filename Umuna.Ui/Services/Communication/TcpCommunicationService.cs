@@ -95,14 +95,14 @@ namespace Umuna.Ui.Services.Communication
             if (_client?.Connected != true)
                 return; // Nothing to send if no client is connected
 
-            var stream = _client.GetStream();
-            var data = Encoding.UTF8.GetBytes(message + "\n");
+            NetworkStream stream = _client.GetStream();
+            byte[] data = Encoding.UTF8.GetBytes(message + "\n");
             await stream.WriteAsync(data, cancellationToken);
         }
 
         private async Task ListenForMessagesAsync(TcpClient client, CancellationToken cancellationToken)
         {
-            var stream = client.GetStream();
+            NetworkStream stream = client.GetStream();
             var buffer = new byte[1024];
 
             while (!cancellationToken.IsCancellationRequested)
@@ -111,7 +111,7 @@ namespace Umuna.Ui.Services.Communication
                 if (bytesRead <= 0)
                     break;
 
-                var message = Encoding.UTF8.GetString(buffer, 0, bytesRead).Trim();
+                string message = Encoding.UTF8.GetString(buffer, 0, bytesRead).Trim();
                 MessageReceived?.Invoke(message);
             }
         }
