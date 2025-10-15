@@ -27,6 +27,14 @@ namespace Umuna.Core.Services.FileDataService
             return Create<TData>(Enum.Parse<SerializerType>(serializerType, true));
         }
 
+        /// <summary>
+        /// Creates a file serializer for the specified data type and file path.
+        /// </summary>
+        /// <typeparam name="TData">The type of data to be serialized/deserialized. Must be a class.</typeparam>
+        /// <param name="path">The full path or relative path to the file. If relative, it will be relative to the main directory.</param>
+        /// <param name="serializerType">The type of serializer to use (e.g., Json, Xml). Default is Json.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public static IFileSerializer<TData> Create<TData>(string path, SerializerType serializerType = SerializerType.Json) where TData : class
         {
             switch (serializerType)
@@ -42,6 +50,13 @@ namespace Umuna.Core.Services.FileDataService
             }
         }
 
+        /// <summary>
+        /// Creates a file serializer for the specified data type and file path.
+        /// </summary>
+        /// <typeparam name="TData">The type of data to be serialized/deserialized. Must be a class.</typeparam>
+        /// <param name="path">The full path or relative path to the file. If relative, it will be relative to the main directory.</param>
+        /// <param name="serializerType">The type of serializer to use (e.g., Json, Xml). Default is Json.</param>
+        /// <returns></returns>
         public static IFileSerializer<TData> Create<TData>(string path, string serializerType = "json") where TData : class
         {
             return Create<TData>(path, Enum.Parse<SerializerType>(serializerType, true));
