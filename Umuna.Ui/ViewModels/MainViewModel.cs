@@ -40,7 +40,7 @@ namespace Umuna.Ui.ViewModels
                 IsBusy = true;
                 Status = "Connecting...";
 
-                await _communicationService.StartAsync(5000);
+                await _communicationService.StartAsync();
                 Log += "\nServer listening on port 5000...";
 
                 Status = "Connected successfully!";
@@ -48,6 +48,27 @@ namespace Umuna.Ui.ViewModels
             catch (Exception ex)
             {
                 Status = $"Connection failed: {ex.Message}";
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task DisconnectAsync()
+        {
+            try
+            {
+                IsBusy = true;
+                Status = "Disconnecting...";
+                await _communicationService.StopAsync();
+                Log += "\nServer stopped.";
+                Status = "Disconnected";
+            }
+            catch (Exception ex)
+            {
+                Status = $"Disconnection failed: {ex.Message}";
             }
             finally
             {

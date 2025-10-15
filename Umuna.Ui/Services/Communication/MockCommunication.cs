@@ -11,7 +11,7 @@ namespace Umuna.Ui.Services.Communication
     {
         public event Action<string>? MessageReceived;
 
-        public Task StartAsync(int port, CancellationToken cancellationToken = default)
+        public Task StartAsync(CancellationToken cancellationToken = default)
         {
             MessageReceived?.Invoke("Mock communication started.");
             return Task.CompletedTask;
@@ -20,6 +20,12 @@ namespace Umuna.Ui.Services.Communication
         public Task SendAsync(string message, CancellationToken cancellationToken = default)
         {
             MessageReceived?.Invoke($"Mock sent: {message}");
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken = default)
+        {
+            MessageReceived?.Invoke("Mock communication stopped.");
             return Task.CompletedTask;
         }
     }

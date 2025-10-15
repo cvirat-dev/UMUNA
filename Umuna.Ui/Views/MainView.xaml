@@ -34,6 +34,15 @@
                     BorderThickness="1"
                     Padding="4,0"
                     Cursor="Hand"/>
+
+            <Button Content="Disconnect"
+                    Command="{Binding DisconnectCommand}"
+                    Width="100"
+                    Height="28"
+                    Margin="10,0,0,0"
+                    BorderThickness="1"
+                    Padding="4,0"
+                    Cursor="Hand"/>
         </StackPanel>
         
         <!-- LOG / CONSOLE AREA -->
