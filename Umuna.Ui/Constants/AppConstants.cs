@@ -9,7 +9,9 @@ namespace Umuna.Ui.Constants
 
         private static readonly Lazy<string> _configFilePath = new Lazy<string>(() =>
             Environment.GetEnvironmentVariable("APP_CONFIG_PATH")
-            ?? throw new InvalidOperationException("The environment variable 'APP_CONFIG_PATH' is not set."));
+            ?? throw new InvalidOperationException(
+                "The environment variable 'APP_CONFIG_PATH' is not set. " +
+                "Please set it to the absolute path of the configuration file."));
 
         public static string ConfigFilePath => _configFilePath.Value;
     }
