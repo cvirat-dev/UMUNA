@@ -9,7 +9,10 @@ namespace Umuna.Ui.Constants
     {
         public const string AppTitle = "Umuna";
 
-        public static string ConfigFilePath => Environment.GetEnvironmentVariable("APP_CONFIG_PATH") 
-            ?? throw new InvalidOperationException("The environment variable 'APP_CONFIG_PATH' is not set.");
+        private static readonly Lazy<string> _configFilePath = new Lazy<string>(() =>
+            Environment.GetEnvironmentVariable("APP_CONFIG_PATH")
+            ?? throw new InvalidOperationException("The environment variable 'APP_CONFIG_PATH' is not set."));
+
+        public static string ConfigFilePath => _configFilePath.Value;
     }
 }
