@@ -23,7 +23,7 @@ namespace Umuna.Ui
             // Setup Dependency Injection
             var services = new ServiceCollection();
 
-            services.AddSingleton(provider => FileSerializerFactory.Create<AppConfig>(AppConstants.ConfigFileRelativePath, SerializerType.Json));
+            services.AddSingleton(provider => FileSerializerFactory.Create<AppConfig>(AppConstants.ConfigFilePath, SerializerType.Json));
             services.AddSingleton<ICommunicationService, TcpCommunicationService>();
             services.AddSingleton<MainViewModel>();
             Services = services.BuildServiceProvider();
