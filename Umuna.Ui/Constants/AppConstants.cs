@@ -1,7 +1,5 @@
 ﻿
 using System;
-using System.Runtime.CompilerServices;
-using System.Security.RightsManagement;
 
 namespace Umuna.Ui.Constants
 {
