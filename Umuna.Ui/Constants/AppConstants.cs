@@ -11,7 +11,8 @@ namespace Umuna.Ui.Constants
             Environment.GetEnvironmentVariable("APP_CONFIG_PATH")
             ?? throw new InvalidOperationException(
                 "The environment variable 'APP_CONFIG_PATH' is not set. " +
-                "Please set it to the absolute path of the configuration file."));
+                "Please set it to the absolute path of the configuration file."),
+            LazyThreadSafetyMode.ExecutionAndPublication);
 
         public static string ConfigFilePath => _configFilePath.Value;
     }
