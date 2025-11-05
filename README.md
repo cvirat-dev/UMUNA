@@ -1,3 +1,5 @@
+Tested using Unity 6, Visual Studio 2022, Windows OS
+
 Todos when starting:
 
 
