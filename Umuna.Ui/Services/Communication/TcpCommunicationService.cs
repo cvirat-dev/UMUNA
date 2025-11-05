@@ -13,23 +13,16 @@ namespace Umuna.Ui.Services.Communication
     /// - It calls <c>AcceptTcpClientAsync()</c> to accept a client connection.
     /// - Can handle multple clients if needed.
     /// </summary>
-    class TcpCommunicationService : ICommunicationService
+    class TcpCommunicationService(IFileSerializer<AppConfig> fileSerializer) : ICommunicationService
     {
         #region Fields
         private TcpListener? _listener;
         private TcpClient? _client;
-        private AppConfig _config;
+        private AppConfig _config = fileSerializer.Load() ?? new AppConfig();
         #endregion
 
         #region Events
         public event Action<string>? MessageReceived;
-        #endregion
-
-        #region Constructors
-        public TcpCommunicationService(IFileSerializer<AppConfig> fileSerializer)
-        {
-            _config = fileSerializer.Load() ?? new AppConfig();
-        }
         #endregion
 
         public async Task StartAsync(CancellationToken cancellationToken = default)

@@ -4,15 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:Umuna.Ui.Views"
+        xmlns:vm="clr-namespace:Umuna.Ui.ViewModels"
         xmlns:local="clr-namespace:Umuna.Ui"
         mc:Ignorable="d"
         Title="UMUNA" Height="450" Width="800"
+        WindowState="Maximized"
         Background="{StaticResource Brush.Background}">
-    
+
+    <Window.Resources>
+        <!-- Map ViewModels to Views -->
+        <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+            <views:LoginView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MainViewModel}">
+            <views:MainView />
+        </DataTemplate>
+    </Window.Resources>
+
     <Window.Style>
         <Style TargetType="{x:Type Window}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                <!-- Bind wait cursor to the active view model's IsBusy -->
+                <DataTrigger Binding="{Binding CurrentViewModel.IsBusy}" Value="True">
                     <Setter Property="Cursor" Value="Wait" />
                 </DataTrigger>
             </Style.Triggers>
@@ -20,6 +33,6 @@
     </Window.Style>
 
     <Grid>
-        <views:MainView />
+        <ContentControl Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

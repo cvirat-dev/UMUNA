@@ -23,11 +23,17 @@ namespace Umuna.Ui
 
             services.AddSingleton(provider => FileSerializerFactory.Create<AppConfig>(AppConstants.ConfigFilePath, SerializerType.Json));
             services.AddSingleton<ICommunicationService, TcpCommunicationService>();
+
+            // ViewModels
             services.AddSingleton<MainViewModel>();
+            services.AddSingleton<LoginViewModel>();
+            services.AddSingleton<RootViewModel>();
+
+            // Build ServiceProvider
             Services = services.BuildServiceProvider();
 
             // Show Main Window
-            var mainWindow = new MainWindow { DataContext = Services.GetRequiredService<MainViewModel>() };
+            var mainWindow = new MainWindow { DataContext = Services.GetRequiredService<RootViewModel>() };
             mainWindow.Show();
         }
     }
