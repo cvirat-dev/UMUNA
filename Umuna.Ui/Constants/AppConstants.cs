@@ -1,12 +1,19 @@
 ﻿
-using System.Runtime.CompilerServices;
-using System.Security.RightsManagement;
+using System;
 
 namespace Umuna.Ui.Constants
 {
     public static class AppConstants
     {
         public const string AppTitle = "Umuna";
-        public const string ConfigFileRelativePath = "UmunaUI/AppConfig.json";
+
+        private static readonly Lazy<string> _configFilePath = new Lazy<string>(() =>
+            Environment.GetEnvironmentVariable("APP_CONFIG_PATH")
+            ?? throw new InvalidOperationException(
+                "The environment variable 'APP_CONFIG_PATH' is not set. " +
+                "Please set it to the absolute path of the configuration file."),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        public static string ConfigFilePath => _configFilePath.Value;
     }
 }
