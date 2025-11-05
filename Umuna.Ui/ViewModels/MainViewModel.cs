@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Windows.Documents;
 using Umuna.Ui.Services.Communication;
 
 namespace Umuna.Ui.ViewModels

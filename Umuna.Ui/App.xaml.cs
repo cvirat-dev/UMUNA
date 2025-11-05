@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Data;
 using System.Windows;
 using Umuna.Core.Services.FileDataService;
 using Umuna.Core.Services.Serialization;
-using Umuna.Core.SharedData;
 using Umuna.Ui.Constants;
 using Umuna.Ui.Models;
 using Umuna.Ui.Services.Communication;
