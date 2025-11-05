@@ -3,7 +3,7 @@
     "Umuna.Ui": {
       "commandName": "Project",
       "environmentVariables": {
-        "APP_CONFIG_PATH": "C:\\Users\\Clement\\AppData\\Local\\DefaultCompany\\UMUNA\\UmunaUI\\AppConfig.json"
+        "APP_CONFIG_PATH": "%LOCALAPPDATA%\\DefaultCompany\\UMUNA\\UmunaUI\\AppConfig.json"
       }
     }
   }
