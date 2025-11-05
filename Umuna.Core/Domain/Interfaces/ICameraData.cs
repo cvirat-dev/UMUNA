@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Umuna.Core.SharedData.Common;
+using Umuna.Core.Common.Math;
 
-namespace Umuna.Core.SharedData.Umuna
+namespace Umuna.Core.Domain.Interfaces
 {
     public interface ICameraData
     {

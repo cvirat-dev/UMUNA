@@ -1,6 +1,6 @@
-using System;  
+using System;
 
-namespace Umuna.Core.SharedData.Common
+namespace Umuna.Core.Common.Math
 {
     [Serializable]
     public class SpatialOrientationData

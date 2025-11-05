@@ -1,4 +1,4 @@
-﻿using Umuna.Core.SharedData.Umuna;
+﻿using Umuna.Core.Domain.Entities;
 
 namespace Umuna.ApiServer.Dtos
 {

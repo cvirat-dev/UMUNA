@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Umuna.Core.SharedData.Communication
+namespace Umuna.Core.Communication.Contracts
 {
     [Serializable]
     public class MessageDto

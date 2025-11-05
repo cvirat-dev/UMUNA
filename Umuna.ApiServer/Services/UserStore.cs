@@ -6,9 +6,10 @@ namespace Umuna.ApiServer.Services
     {
         public static List<UserDataDto> Users { get; } =
         [
-            new("testuser", "1", "test@example.com", "123"),
-            new("admin", "2", "admin@mail.com", "admin123"),
-            new("guest", "3", "guest@mail.com", "guest123")
+            new("SlimShady", "1", "test@example.com", "realshady"),
+            new("testuser", "2", "test@example.com", "123"),
+            new("admin", "3", "admin@mail.com", "admin123"),
+            new("guest", "4", "guest@mail.com", "guest123")
             // Add more users as needed
         ];
 

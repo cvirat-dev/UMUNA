@@ -1,5 +1,6 @@
-﻿
-namespace Umuna.Core.SharedData.Umuna
+﻿using Umuna.Core.Domain.Interfaces;
+
+namespace Umuna.Core.Domain.Entities
 {
     public class UserData : IUserData
     {

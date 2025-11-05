@@ -14,36 +14,62 @@
         </Grid.RowDefinitions>
 
         <!-- HEADER AREA -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center">
-            <TextBlock Text="UMUNA Control Center" 
-                       FontWeight="Bold"
-                       VerticalAlignment="Center"/>
+        <Grid Grid.Row="0" Margin="0,0,0,10" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-            <TextBox Text="{Binding Status}" 
-                     Width="200" 
-                     IsReadOnly="True"
-                     Margin="10,0,0,0"
-                     VerticalAlignment="Center"
-                     BorderThickness="1"
-                     Padding="4,2"/>
+            <!-- Left group -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="UMUNA Control Center" 
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"/>
 
-            <Button Content="Connect" 
-                    Command="{Binding ConnectCommand}"
-                    Width="100"
-                    Height="28"
-                    BorderThickness="1"
-                    Padding="4,0"
-                    Cursor="Hand"/>
+                <TextBox Text="{Binding Status}" 
+                         Width="200" 
+                         IsReadOnly="True"
+                         Margin="10,0,0,0"
+                         VerticalAlignment="Center"
+                         BorderThickness="1"
+                         Padding="4,2"/>
 
-            <Button Content="Disconnect"
-                    Command="{Binding DisconnectCommand}"
-                    Width="100"
-                    Height="28"
-                    Margin="10,0,0,0"
-                    BorderThickness="1"
-                    Padding="4,0"
-                    Cursor="Hand"/>
-        </StackPanel>
+                <Button Content="Connect" 
+                        Command="{Binding ConnectCommand}"
+                        Width="100"
+                        Height="28"
+                        BorderThickness="1"
+                        Padding="4,0"
+                        Cursor="Hand"/>
+
+                <Button Content="Disconnect"
+                        Command="{Binding DisconnectCommand}"
+                        Width="100"
+                        Height="28"
+                        Margin="10,0,0,0"
+                        BorderThickness="1"
+                        Padding="4,0"
+                        Cursor="Hand"/>
+            </StackPanel>
+
+            <!-- Right group: User display and Log off -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                <TextBlock Text="|" Margin="10,0,10,0" VerticalAlignment="Center" Opacity="0.5"/>
+                <TextBlock Text="Signed in as:" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding DataContext.CurrentUser, RelativeSource={RelativeSource AncestorType=Window}}"
+                           FontWeight="SemiBold"
+                           Margin="6,0,0,0"
+                           VerticalAlignment="Center"/>
+                <Button Content="Log off"
+                        Command="{Binding DataContext.LogoutCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                        Width="100"
+                        Height="28"
+                        Margin="10,0,0,0"
+                        BorderThickness="1"
+                        Padding="4,0"
+                        Cursor="Hand"/>
+            </StackPanel>
+        </Grid>
         
         <!-- LOG / CONSOLE AREA -->
         <Border Grid.Row="1"

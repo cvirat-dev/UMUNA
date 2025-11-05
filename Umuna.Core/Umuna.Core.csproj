@@ -10,6 +10,11 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Helpers\" />
+    <Folder Include="Common\Constants\" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Y /I &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Github\UMUNA\UMUNA_Unity\Assets\Plugins&quot;&#xD;&#xA;xcopy /Y /I &quot;$(TargetDir)$(TargetName).pdb&quot; &quot;C:\Github\UMUNA\UMUNA_Unity\Assets\Plugins&quot;&#xD;&#xA;" />
   </Target>

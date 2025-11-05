@@ -1,9 +1,10 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using Umuna.Core.SharedData.Common;
+using Umuna.Core.Common.Math;
+using Umuna.Core.Domain.Interfaces;
 
-namespace Umuna.Core.SharedData.Umuna
+namespace Umuna.Core.Domain.Entities
 {
     public class CameraData : ICameraData
     {

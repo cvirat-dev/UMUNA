@@ -1,4 +1,4 @@
-﻿namespace Umuna.Core.SharedData.Umuna
+﻿namespace Umuna.Core.Domain.Interfaces
 {
     public interface IUserData
     {

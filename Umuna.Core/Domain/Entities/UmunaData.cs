@@ -1,5 +1,5 @@
 ﻿using System;
-using Umuna.Core.SharedData.Umuna;
+using Umuna.Core.Domain.Entities;
 
 namespace Umuna.Core.SharedData
 {

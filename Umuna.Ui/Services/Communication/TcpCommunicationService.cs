@@ -27,7 +27,7 @@ namespace Umuna.Ui.Services.Communication
 
         public async Task StartAsync(CancellationToken cancellationToken = default)
         {
-            _listener = new TcpListener(IPAddress.Loopback, _config.ServerConfiguration.Port);
+            _listener = new TcpListener(IPAddress.Loopback, _config.TcpService.Port);
             _listener.Start();
 
             // Start accepting in background — don't await here
