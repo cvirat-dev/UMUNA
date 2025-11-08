@@ -1,4 +1,4 @@
-using Umuna.ApiServer.Dtos;
+using Umuna.ApiServer.DTOs;
 
 namespace Umuna.ApiServer.Services
 {

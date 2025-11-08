@@ -1,26 +1,26 @@
-﻿using Umuna.ApiServer.Dtos;
-using Umuna.Core.Domain.Entities;
+﻿using Umuna.ApiServer.DTOs;
+using Umuna.Core.Domain.Data;
 
 namespace Umuna.ApiServer.Mappings.Data
 {
-    public class PlayerDataMap : IDtoMapper<UserDataDto, UserData>
+    public class PlayerDataMap : IDtoMapper<UserDataDto, User>
     {
-        public UserData ToDomainData(UserDataDto dto)
+        public User ToDomainData(UserDataDto dto)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<UserData> ToDomainDataList(IEnumerable<UserDataDto> dtoList)
+        public IEnumerable<User> ToDomainDataList(IEnumerable<UserDataDto> dtoList)
         {
             throw new NotImplementedException();
         }
 
-        public UserDataDto ToDto(UserData domainData)
+        public UserDataDto ToDto(User domainData)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<UserDataDto> ToDtos(IEnumerable<UserData> domainDataList)
+        public IEnumerable<UserDataDto> ToDtos(IEnumerable<User> domainDataList)
         {
             throw new NotImplementedException();
         }

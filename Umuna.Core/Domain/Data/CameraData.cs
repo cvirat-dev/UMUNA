@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Umuna.Core.Common.Math;
 using Umuna.Core.Domain.Interfaces;
 
-namespace Umuna.Core.Domain.Entities
+namespace Umuna.Core.Domain.Data
 {
     public class CameraData : ICameraData
     {

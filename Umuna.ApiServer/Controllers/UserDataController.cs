@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Umuna.ApiServer.Dtos;
+using Umuna.ApiServer.DTOs;
 using Umuna.ApiServer.Services;
 
 namespace Umuna.ApiServer.Controllers

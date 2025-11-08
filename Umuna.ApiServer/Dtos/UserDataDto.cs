@@ -1,6 +1,6 @@
-﻿using Umuna.Core.Domain.Entities;
+﻿using Umuna.Core.Domain.Data;
 
-namespace Umuna.ApiServer.Dtos
+namespace Umuna.ApiServer.DTOs
 {
     public class UserDataDto
     {
@@ -16,10 +16,10 @@ namespace Umuna.ApiServer.Dtos
             UserEmail = userEmail;
             UserPassword = userPassword;
         }
-        public UserDataDto(UserData userData)
+        public UserDataDto(User userData)
         {
             UserName = userData.PlayerName;
-            UserId = userData.PlayerId;
+            UserId = userData.Id;
             UserEmail = userData.PlayerEmail;
             UserPassword = userData.PlayerPassword;
         }

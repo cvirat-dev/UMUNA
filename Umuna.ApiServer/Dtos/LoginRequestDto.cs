@@ -1,4 +1,4 @@
-namespace Umuna.ApiServer.Dtos
+namespace Umuna.ApiServer.DTOs
 {
     public class LoginRequestDto
     {

@@ -1,11 +1,11 @@
 ﻿using Umuna.Core.Domain.Interfaces;
 
-namespace Umuna.Core.Domain.Entities
+namespace Umuna.Core.Domain.Data
 {
-    public class UserData : IUserData
+    public class User : IUserData
     {
         private string _playerName = "default_name";
-        private string _playerId = string.Empty;
+        private string _id = string.Empty;
         private string? _playerEmail;
         private string _playerPassword = "default_password";
 
@@ -15,10 +15,10 @@ namespace Umuna.Core.Domain.Entities
             set => _playerName = value;
         }
 
-        public string PlayerId
+        public string Id
         {
-            get => _playerId;
-            set => _playerId = value;
+            get => _id;
+            set => _id = value;
         }
 
         public string? PlayerEmail

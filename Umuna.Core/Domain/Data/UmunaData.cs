@@ -1,5 +1,5 @@
 ﻿using System;
-using Umuna.Core.Domain.Entities;
+using Umuna.Core.Domain.Data;
 
 namespace Umuna.Core.SharedData
 {
@@ -9,7 +9,7 @@ namespace Umuna.Core.SharedData
         public int version = 1;
         public string GameName = "default_name";
         public string UserName = "default_user_name";
-        public UserData UserData = new UserData();
+        public User UserData = new User();
         public CameraData CameraData = new CameraData();
         public SettingsData SettingsData = new SettingsData();
     }

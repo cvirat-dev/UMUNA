@@ -1,4 +1,4 @@
-﻿namespace Umuna.Core.Domain.Entities
+﻿namespace Umuna.Core.Domain.Data
 {
     public class SettingsData
     {
