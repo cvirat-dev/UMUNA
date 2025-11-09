@@ -9,6 +9,12 @@ namespace Umuna.ApiServer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CameraPosition>(entity =>
+            {
+                entity.OwnsOne(e => e.Position);
+                entity.OwnsOne(e => e.Rotation);
+            });
+
             // Configure relationships, constraints, etc.
             base.OnModelCreating(modelBuilder);
         }

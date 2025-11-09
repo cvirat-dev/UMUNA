@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Umuna.Core.Domain.Data;
 
 namespace Umuna.Core.Domain.Interfaces
 {
@@ -8,5 +10,6 @@ namespace Umuna.Core.Domain.Interfaces
         string Id { get; set; }
         string Name { get; set; }
         string Password { get; set; }
+        ICollection<CameraPosition> CameraPositions { get; set; }
     }
 }

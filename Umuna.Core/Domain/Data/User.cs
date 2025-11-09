@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Umuna.Core.Domain.Interfaces;
 
 namespace Umuna.Core.Domain.Data
@@ -34,6 +35,7 @@ namespace Umuna.Core.Domain.Data
             set => _playerPassword = value;
         }
 
+        public ICollection<CameraPosition> CameraPositions { get; set; } = new List<CameraPosition>();
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
