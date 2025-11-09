@@ -5,40 +5,106 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:attached="clr-namespace:Umuna.Ui.Controls.Attached"
 	mc:Ignorable="d"
-	d:DesignHeight="400" d:DesignWidth="600">
+	d:DesignHeight="450" d:DesignWidth="800">
 	
-	<Grid Margin="20">
+	<Grid Background="{StaticResource Brush.Background}" Margin="16">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 	 
-		<TextBlock Text="Create User" FontSize="20" FontWeight="Bold"/>
-		<StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10,0,0">
-			<TextBlock Text="Username:" Width="100" VerticalAlignment="Center"/>
-			<TextBox Width="200" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+		<!-- HEADER AREA -->
+		<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center">
+			<TextBlock Text="UMUNA User Registration" FontWeight="Bold" FontSize="16"
+					   VerticalAlignment="Center"/>
+			<Button Content="Back to Login" Margin="20,0,0,0" Width="140" Height="28"
+					Command="{Binding NavigateToLoginCommand}"/>
 		</StackPanel>
-		<StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
-			<TextBlock Text="Email:" Width="100" VerticalAlignment="Center"/>
-			<TextBox Width="200" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
-		</StackPanel>
-		<StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
-			<TextBlock Text="Password:" Width="100" VerticalAlignment="Center"/>
-            <PasswordBox Width="200" x:Name="PasswordBox" 
-                         attached:PasswordBoxHelper.BindPassword="True"
-                         attached:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}"/>
-		</StackPanel>
-			<Button Grid.Row="4" Content="Create" Width="120" Margin="0,10,0,0"
-				Command="{Binding CreateUserCommand}"/>
-			<StackPanel Grid.Row="5" Margin="0,10,0,0">
-			<TextBlock Foreground="Red" Text="{Binding ErrorMessage}"/>
-			<TextBlock Foreground="Green" Text="{Binding SuccessMessage}"/>
-		</StackPanel>
-		
+
+		<!-- CONTENT -->
+		<Border Grid.Row="1"
+				BorderThickness="1"
+				BorderBrush="{StaticResource Brush.Accent}"
+				Background="{StaticResource Brush.Surface}"
+				CornerRadius="6"
+				Padding="24"
+				VerticalAlignment="Top"
+				MaxWidth="500"
+				HorizontalAlignment="Center">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="120"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<!-- Username Field -->
+				<TextBlock Grid.Row="0" Grid.Column="0" 
+						   VerticalAlignment="Center" 
+						   Text="Username:"
+						   Margin="0,0,10,12"/>
+				<TextBox Grid.Row="0" Grid.Column="1"
+						 Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"
+						 MinWidth="240"
+						 Margin="0,0,0,12"/>
+
+				<!-- Email Field -->
+				<TextBlock Grid.Row="1" Grid.Column="0" 
+						   VerticalAlignment="Center" 
+						   Text="Email:"
+						   Margin="0,0,10,12"/>
+				<TextBox Grid.Row="1" Grid.Column="1"
+						 Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+						 MinWidth="240"
+						 Margin="0,0,0,12"/>
+
+				<!-- Password Field -->
+				<TextBlock Grid.Row="2" Grid.Column="0" 
+						   VerticalAlignment="Center" 
+						   Text="Password:"
+						   Margin="0,0,10,12"/>
+				<PasswordBox Grid.Row="2" Grid.Column="1"
+							 x:Name="PasswordBox" 
+							 attached:PasswordBoxHelper.BindPassword="True"
+							 attached:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}"
+							 MinWidth="240"
+							 Margin="0,0,0,12"/>
+
+				<!-- Error Message -->
+				<TextBlock Grid.Row="3" Grid.ColumnSpan="2"
+						   Foreground="OrangeRed"
+						   Text="{Binding ErrorMessage}"
+						   TextWrapping="Wrap"
+						   Margin="0,0,0,8"
+						   Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Collapsed}"/>
+
+				<!-- Success Message -->
+				<TextBlock Grid.Row="4" Grid.ColumnSpan="2"
+						   Foreground="LightGreen"
+						   Text="{Binding SuccessMessage}"
+						   TextWrapping="Wrap"
+						   Margin="0,0,0,8"
+						   Visibility="{Binding SuccessMessage, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Collapsed}"/>
+
+				<!-- Action Buttons -->
+				<StackPanel Grid.Row="5" Grid.ColumnSpan="2"
+							Orientation="Horizontal" 
+							HorizontalAlignment="Center" 
+							Margin="0,12,0,0">
+					<Button Content="Create Account"
+							Width="140" 
+							Height="32"
+							Command="{Binding CreateUserCommand}"/>
+				</StackPanel>
+			</Grid>
+		</Border>
 	</Grid>
 	
 </UserControl>

@@ -33,6 +33,7 @@ namespace Umuna.Ui.ViewModels
             _userCreationViewModel = userCreationViewModel;
 
             _loginViewModel.LoginSucceeded += OnLoginSucceeded;
+            _userCreationViewModel.NavigationToLoginRequested += OnNavigationToLoginRequested;
 
             // Show Login first
             CurrentViewModel = _loginViewModel;
@@ -86,6 +87,14 @@ namespace Umuna.Ui.ViewModels
         {
             CurrentUser = _loginViewModel.UserName;
             CurrentViewModel = _mainViewModel;
+        }
+
+        private void OnNavigationToLoginRequested(object? sender, EventArgs e)
+        {
+            // Clear any success/error messages when navigating back to login
+            _userCreationViewModel.ErrorMessage = string.Empty;
+            _userCreationViewModel.SuccessMessage = string.Empty;
+            CurrentViewModel = _loginViewModel;
         }
         #endregion
 

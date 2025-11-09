@@ -65,4 +65,13 @@
         <Setter Property="Margin" Value="4" />
     </Style>
 
+    <Style TargetType="PasswordBox">
+        <Setter Property="Background" Value="{StaticResource Brush.Surface}" />
+        <Setter Property="Foreground" Value="{StaticResource Brush.PrimaryText}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Brush.Accent}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="Margin" Value="4" />
+    </Style>
+
 </ResourceDictionary>

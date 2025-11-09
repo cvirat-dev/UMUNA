@@ -12,62 +12,73 @@ namespace Umuna.Ui.ViewModels
     // User creation logic ViewModel without source generator attributes (manual properties)
     public class UserCreationViewModel : ObservableObject
     {
-         private readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
 
-         private string _userName = string.Empty;
-         public string UserName
-         {
-             get => _userName;
-             set => SetProperty(ref _userName, value);
-         }
+        private string _userName = string.Empty;
+        public string UserName
+        {
+            get => _userName;
+            set => SetProperty(ref _userName, value);
+        }
 
-         private string _email = string.Empty;
-         public string Email
-         {
-             get => _email;
-             set => SetProperty(ref _email, value);
-         }
+        private string _email = string.Empty;
+        public string Email
+        {
+            get => _email;
+            set => SetProperty(ref _email, value);
+        }
 
-         private string _password = string.Empty;
-         public string Password
-         {
-             get => _password;
-             set => SetProperty(ref _password, value);
-         }
+        private string _password = string.Empty;
+        public string Password
+        {
+            get => _password;
+            set => SetProperty(ref _password, value);
+        }
 
-         private string _errorMessage = string.Empty;
-         public string ErrorMessage
-         {
-             get => _errorMessage;
-             set => SetProperty(ref _errorMessage, value);
-         }
+        private string _errorMessage = string.Empty;
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set => SetProperty(ref _errorMessage, value);
+        }
 
-         private string _successMessage = string.Empty;
-         public string SuccessMessage
-         {
-             get => _successMessage;
-             set => SetProperty(ref _successMessage, value);
-         }
+        private string _successMessage = string.Empty;
+        public string SuccessMessage
+        {
+            get => _successMessage;
+            set => SetProperty(ref _successMessage, value);
+        }
 
-         private bool _isBusy;
-         public bool IsBusy
-         {
-             get => _isBusy;
-             set => SetProperty(ref _isBusy, value);
-         }
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
 
-         public IRelayCommand CreateUserCommand { get; }
+        public IRelayCommand CreateUserCommand { get; }
+        public IRelayCommand NavigateToLoginCommand { get; }
 
-         public UserCreationViewModel(IFileSerializer<AppConfig> fileSerializer)
-         {
-             var config = fileSerializer.Load() ?? new AppConfig();
-             var baseUrl = config.Backend.BaseUrl?.TrimEnd('/') + "/";
-             _httpClient = new HttpClient { BaseAddress = new Uri(baseUrl!) };
+        // Event raised when navigation to login view is requested
+        public event EventHandler? NavigationToLoginRequested;
+
+        public UserCreationViewModel(IFileSerializer<AppConfig> fileSerializer)
+        {
+            var config = fileSerializer.Load() ?? new AppConfig();
+            var baseUrl = config.Backend.BaseUrl?.TrimEnd('/') + "/";
+            _httpClient = new HttpClient { BaseAddress = new Uri(baseUrl!) };
 
             CreateUserCommand = new AsyncRelayCommand(CreateUserAsync, () => !IsBusy);
-         }
+            NavigateToLoginCommand = new RelayCommand(NavigateToLoginView);
+        }
 
-         private async Task CreateUserAsync()
+        private void NavigateToLoginView()
+        {
+            // Raise event to request navigation to login view
+            NavigationToLoginRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private async Task CreateUserAsync()
          {
              ErrorMessage = string.Empty;
              SuccessMessage = string.Empty;
