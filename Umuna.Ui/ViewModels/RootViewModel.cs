@@ -9,6 +9,7 @@ namespace Umuna.Ui.ViewModels
         #region Fields
         private readonly MainViewModel _mainViewModel;
         private readonly LoginViewModel _loginViewModel;
+        private readonly UserCreationViewModel _userCreationViewModel;
         private RootData _rootData = new();
         #endregion
 
@@ -20,15 +21,16 @@ namespace Umuna.Ui.ViewModels
         private string? currentUser;
         partial void OnCurrentUserChanged(string? value)
         {
-            _rootData.User.PlayerName = value ?? string.Empty;
+            _rootData.User.Name = value ?? string.Empty;
         }
         #endregion
 
         #region Constructors
-        public RootViewModel(MainViewModel mainViewModel, LoginViewModel loginViewModel)
+        public RootViewModel(MainViewModel mainViewModel, LoginViewModel loginViewModel, UserCreationViewModel userCreationViewModel)
         {
             _mainViewModel = mainViewModel;
             _loginViewModel = loginViewModel;
+            _userCreationViewModel = userCreationViewModel;
 
             _loginViewModel.LoginSucceeded += OnLoginSucceeded;
 
@@ -61,6 +63,18 @@ namespace Umuna.Ui.ViewModels
 
                 CurrentViewModel = _loginViewModel;
             }
+        }
+
+        [RelayCommand]
+        private void ShowUserCreation()
+        {
+            CurrentViewModel = _userCreationViewModel;
+        }
+
+        [RelayCommand]
+        private void ShowLogin()
+        {
+            CurrentViewModel = _loginViewModel;
         }
         #endregion
 

@@ -1,9 +1,9 @@
-﻿using Umuna.Core.Domain.Entities;
+﻿using Umuna.Core.Domain.Data;
 
 namespace Umuna.Ui.Models.Root
 {
     public class RootData
     {
-        public UserData User { get; set; } = new UserData();
+        public User User { get; set; } = new User();
     }
 }

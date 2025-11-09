@@ -27,6 +27,7 @@ namespace Umuna.Ui
             // ViewModels
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<LoginViewModel>();
+            services.AddSingleton<UserCreationViewModel>();
             services.AddSingleton<RootViewModel>();
 
             // Build ServiceProvider

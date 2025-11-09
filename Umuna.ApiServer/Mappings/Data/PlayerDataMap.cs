@@ -3,24 +3,24 @@ using Umuna.Core.Domain.Data;
 
 namespace Umuna.ApiServer.Mappings.Data
 {
-    public class PlayerDataMap : IDtoMapper<UserDataDto, User>
+    public class PlayerDataMap : IDtoMapper<UserDto, User>
     {
-        public User ToDomainData(UserDataDto dto)
+        public User ToDomainData(UserDto dto)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> ToDomainDataList(IEnumerable<UserDataDto> dtoList)
+        public IEnumerable<User> ToDomainDataList(IEnumerable<UserDto> dtoList)
         {
             throw new NotImplementedException();
         }
 
-        public UserDataDto ToDto(User domainData)
+        public UserDto ToDto(User domainData)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<UserDataDto> ToDtos(IEnumerable<User> domainDataList)
+        public IEnumerable<UserDto> ToDtos(IEnumerable<User> domainDataList)
         {
             throw new NotImplementedException();
         }

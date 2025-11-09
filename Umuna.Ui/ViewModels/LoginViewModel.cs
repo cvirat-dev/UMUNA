@@ -14,7 +14,7 @@ namespace Umuna.Ui.ViewModels
     public partial class LoginViewModel : ObservableObject
     {
         #region Fields
-        private readonly HttpClient _http;
+        private readonly HttpClient _httpClient;
         private readonly AppConfig _config;
         #endregion
 
@@ -41,7 +41,7 @@ namespace Umuna.Ui.ViewModels
             _config = fileSerializer.Load() ?? new AppConfig();
 
             var baseUrl = _config.Backend.BaseUrl?.TrimEnd('/') + "/";
-            _http = new HttpClient { BaseAddress = new Uri(baseUrl!) };
+            _httpClient = new HttpClient { BaseAddress = new Uri(baseUrl!) };
         }
         #endregion
 
@@ -67,7 +67,7 @@ namespace Umuna.Ui.ViewModels
                 using var content = new StringContent(
                     JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
 
-                using var response = await _http.PostAsync(ApiRoutes.AuthLogin, content);
+                using var response = await _httpClient.PostAsync(ApiRoutes.AuthLogin, content);
 
                 if (response.IsSuccessStatusCode)
                 {

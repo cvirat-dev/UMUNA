@@ -1,15 +1,16 @@
-﻿using Umuna.Core.Domain.Interfaces;
+﻿using System;
+using Umuna.Core.Domain.Interfaces;
 
 namespace Umuna.Core.Domain.Data
 {
-    public class User : IUserData
+    public class User : IUser
     {
         private string _playerName = "default_name";
         private string _id = string.Empty;
-        private string? _playerEmail;
+        private string _playerEmail = "default_email";
         private string _playerPassword = "default_password";
 
-        public string PlayerName
+        public string Name
         {
             get => _playerName;
             set => _playerName = value;
@@ -21,16 +22,18 @@ namespace Umuna.Core.Domain.Data
             set => _id = value;
         }
 
-        public string? PlayerEmail
+        public string Email
         {
             get => _playerEmail;
             set => _playerEmail = value;
         }
 
-        public string PlayerPassword
+        public string Password
         {
             get => _playerPassword;
             set => _playerPassword = value;
         }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

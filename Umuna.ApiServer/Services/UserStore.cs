@@ -4,7 +4,7 @@ namespace Umuna.ApiServer.Services
 {
     public static class UserStore
     {
-        public static List<UserDataDto> Users { get; } =
+        public static List<UserDto> Users { get; } =
         [
             new("SlimShady", "1", "test@example.com", "realshady"),
             new("testuser", "2", "test@example.com", "123"),
@@ -13,9 +13,9 @@ namespace Umuna.ApiServer.Services
             // Add more users as needed
         ];
 
-        public static UserDataDto? FindUser(string playerName, string password)
+        public static UserDto? FindUser(string playerName, string password)
         {
-            return Users.FirstOrDefault(u => u.UserName == playerName && u.UserPassword == password);
+            return Users.FirstOrDefault(u => u.Name == playerName && u.Password == password);
         }
     }
 }

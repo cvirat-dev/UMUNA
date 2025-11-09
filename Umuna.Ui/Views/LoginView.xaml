@@ -13,9 +13,10 @@
 
         <!-- HEADER AREA (styling aligned with MainView's header) -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center">
-            <TextBlock Text="UMUNA Login"
-                       FontWeight="Bold"
+            <TextBlock Text="UMUNA Login" FontWeight="Bold"
                        VerticalAlignment="Center"/>
+            <Button Content="Create Account" Margin="20,0,0,0" Width="140" Height="28"
+                    Command="{Binding DataContext.ShowUserCreationCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
         </StackPanel>
 
         <!-- CONTENT -->

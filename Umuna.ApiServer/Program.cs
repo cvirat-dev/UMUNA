@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Umuna.ApiServer.Data;
+using Umuna.ApiServer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // For SQLite:
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=app.db"));
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Add services to the container.
 
@@ -24,9 +27,9 @@ var app = builder.Build();
 //    app.UseSwaggerUI();
 //}
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
-//app.UseAuthorization();
+app.UseAuthorization();
 
 app.MapControllers();
 
