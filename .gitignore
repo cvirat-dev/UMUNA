@@ -582,3 +582,14 @@ FodyWeavers.xsd
 *.msm
 *.msp
 /UMUNA_Unity/Assets/_00_Tests/
+
+# SQLite database files
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# SQL Server local database files
+*.mdf
+*.ldf
