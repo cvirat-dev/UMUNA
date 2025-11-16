@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Umuna.Ui.Interop;
 
 namespace Umuna.Ui.Views
 {
@@ -10,6 +11,13 @@ namespace Umuna.Ui.Views
         public MainView()
         {
             InitializeComponent();
+
+            var host = new ExternalAppHost
+            {
+                ExecutablePath = @"C:\Github\UMUNA\UMUNA_Unity\builds\UMUNA.exe"
+            };
+
+            MainGrid.Children.Add(host);
         }
     }
 }

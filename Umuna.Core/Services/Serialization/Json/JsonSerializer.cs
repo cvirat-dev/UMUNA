@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Umuna.Core.Services.Serialization.Json
 {
-    [SerializerOfType(SerializerType.Json)]
+    [SerializerOfType(SerializerType.json)]
     public class JsonSerializer<T> : SerializerBase, ISerializer<T> where T : class
     {
         #region Fields

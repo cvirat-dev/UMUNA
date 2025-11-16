@@ -4,13 +4,13 @@ namespace Umuna.Core.Services.Serialization
 {
     public static class SerializerFactory
     {
-        public static ISerializer<TData> Create<TData>(SerializerType serializerType = SerializerType.Json) where TData : class
+        public static ISerializer<TData> Create<TData>(SerializerType serializerType = SerializerType.json) where TData : class
         {
             switch (serializerType)
             {
-                case SerializerType.Json:
+                case SerializerType.json:
                     return new Json.JsonSerializer<TData>();
-                case SerializerType.Xml:
+                case SerializerType.xml:
                     return new Xml.XmlSerializer<TData>();
                 default:
                     throw new NotImplementedException($"Serializer type {serializerType} is not implemented.");

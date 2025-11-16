@@ -7,14 +7,14 @@ namespace Umuna.Core.Services.FileDataService
 {
     public static class FileSerializerFactory
     {
-        public static IFileSerializer<TData> Create<TData>(SerializerType serializerType = SerializerType.Json) where TData : class
+        public static IFileSerializer<TData> Create<TData>(SerializerType serializerType = SerializerType.json) where TData : class
         {
             switch (serializerType)
             {
-                case SerializerType.Json:
+                case SerializerType.json:
                     var jsonSerializer = new JsonSerializer<TData>();
                     return new FileSerializer<JsonSerializer<TData>, TData>(jsonSerializer);
-                case SerializerType.Xml:
+                case SerializerType.xml:
                     var xmlSerializer = new XmlSerializer<TData>();
                     return new FileSerializer<XmlSerializer<TData>, TData>(xmlSerializer);
                 default:
@@ -30,14 +30,14 @@ namespace Umuna.Core.Services.FileDataService
         /// <param name="serializerType">The type of serializer to use (e.g., Json, Xml). Default is Json.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public static IFileSerializer<TData> Create<TData>(string path, SerializerType serializerType = SerializerType.Json) where TData : class
+        public static IFileSerializer<TData> Create<TData>(string path, SerializerType serializerType = SerializerType.json) where TData : class
         {
             switch (serializerType)
             {
-                case SerializerType.Json:
+                case SerializerType.json:
                     var jsonSerializer = new JsonSerializer<TData>();
                     return new FileSerializer<JsonSerializer<TData>, TData>(jsonSerializer, relativePath: path);
-                case SerializerType.Xml:
+                case SerializerType.xml:
                     var xmlSerializer = new XmlSerializer<TData>();
                     return new FileSerializer<XmlSerializer<TData>, TData>(xmlSerializer, relativePath: path);
                 default:

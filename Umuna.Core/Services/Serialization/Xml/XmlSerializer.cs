@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace Umuna.Core.Services.Serialization.Xml
 {
-    [SerializerOfType(SerializerType.Xml)]
+    [SerializerOfType(SerializerType.xml)]
     public class XmlSerializer<T> : SerializerBase, ISerializer<T> where T : class
     {
         #region Fields

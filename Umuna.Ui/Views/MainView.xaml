@@ -11,6 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- HEADER AREA -->
@@ -70,9 +71,20 @@
                         Cursor="Hand"/>
             </StackPanel>
         </Grid>
-        
-        <!-- LOG / CONSOLE AREA -->
+
+        <!-- CONTENT AREA -->
+
         <Border Grid.Row="1"
+                BorderThickness="1"
+                CornerRadius="6"
+                Padding="8">
+            <Grid Name="MainGrid">
+            </Grid>
+        </Border>
+
+
+        <!-- LOG / CONSOLE AREA -->
+        <Border Grid.Row="2"
                 BorderThickness="1"
                 CornerRadius="6"
                 Padding="8">
