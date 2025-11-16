@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace UMUNA
 {
-    public class BindSystem
+    public class BindSystem : IBindSystem
     {
         #region Fields
         #endregion
@@ -38,22 +38,6 @@ namespace UMUNA
 
             onBindingCompleted?.Invoke();
         }
-
-        //private void Bind<TBinder, TData>(List<TData> dataList) where TBinder : MonoBehaviour, IBind<TData>, new()
-        //{
-        //    TBinder[] entities = SceneHelper.Instance.FindAllMonoBehaviours<TBinder>();
-
-        //    foreach (var entity in entities)
-        //    {
-        //        TData data = dataList.FirstOrDefault(d => d.Id == entity.Id);
-        //        if (data == null)
-        //        {
-        //            data = new TData { Id = entity.Id };
-        //            dataList.Add(data);
-        //        }
-        //        entity.Bind(data);
-        //    }
-        //}
         #endregion
     }
 }

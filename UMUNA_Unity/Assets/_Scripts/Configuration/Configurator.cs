@@ -1,7 +1,5 @@
 
-using System.Collections.Generic;
 using System.IO;
-using Umuna.Core.Services;
 using Umuna.Core.Services.FileDataService;
 using UMUNA.Constants.Configuration;
 using UnityEngine;
@@ -23,8 +21,8 @@ namespace UMUNA.Configuration
         #region Constructors
         public Configurator()
         {
-            string fullPath = Path.Combine(Application.persistentDataPath, ConfigConstants.ConfigFileRelativePath);
-            _dataService = FileSerializerFactory.Create<T>(fullPath);
+            _dataService = FileSerializerFactory.Create<T>(
+                Path.Combine(Application.persistentDataPath, ConfigConstants.ConfigFileRelativePath));
             _data = _dataService.Load();
             if (_data == null)
             {

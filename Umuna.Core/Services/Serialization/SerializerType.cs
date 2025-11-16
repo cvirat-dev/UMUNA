@@ -2,8 +2,8 @@
 {
     public enum SerializerType
     {
-        Json,
-        Xml,
-        Binary
+        json,
+        xml,
+        binary
     }
 }

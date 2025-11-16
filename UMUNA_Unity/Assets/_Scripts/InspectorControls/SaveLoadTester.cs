@@ -1,43 +1,27 @@
 using Umuna.Core.SharedData;
-using UMUNA.Data;
+using UMUNA.AppManagement;
 using UnityEngine;
 using UUP.CustomAttributes;
 using UUP.CustomAttributes.CustomTargets;
+using VContainer;
 
 namespace UMUNA.InspectorControls
 {
     public class SaveLoadTester : MonoBehaviourT
     {
-        [InspectorButton]
-        public void Save()
-        {
-            ServiceLocator.Instance.AppManager.SaveLoadSystem.Save();
-        }
+        [Inject]
+        private AppManager appManager;
 
         [InspectorButton]
-        public void SaveAsync()
-        {
-            ServiceLocator.Instance.AppManager.SaveLoadSystem.SaveAsync();
-        }
+        public void Save() => appManager.SaveLoadSystem.Save();
 
         [InspectorButton]
-        public void Load()
-        {
-            ServiceLocator.Instance.AppManager.SaveLoadSystem.Load();
-        }
+        public void SaveAsync() => appManager.SaveLoadSystem.SaveAsync();
 
         [InspectorButton]
-        public void DebugInventory()
-        {
-            UmunaData umunData = ServiceLocator.Instance.AppManager.UmunaData;
-            string currentData = ServiceLocator.Instance.AppManager.SaveLoadSystem.UmunaDataService.GetSerializedData(umunData);
-            Debug.Log(currentData);
-        }
+        public void Load() => appManager.SaveLoadSystem.Load();
 
         [InspectorButton]
-        public void OpenInExplorer()
-        {
-            ServiceLocator.Instance.AppManager.SaveLoadSystem.UmunaDataService.OpenInExplorer();
-        }
+        public void OpenInExplorer() => appManager.SaveLoadSystem.UmunaDataService.OpenInExplorer();
     }
 }

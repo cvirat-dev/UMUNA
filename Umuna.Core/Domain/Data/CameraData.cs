@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using Umuna.Core.Common.Math;
 using Umuna.Core.Domain.Interfaces;
 
 namespace Umuna.Core.Domain.Data
@@ -21,19 +20,19 @@ namespace Umuna.Core.Domain.Data
         /// <summary>
         /// The last camera position.
         /// </summary>
-        public SpatialOrientationData LastCameraPosition { get; set; } = new SpatialOrientationData();
+        public SpatialOrientation LastCameraPosition { get; set; } = new SpatialOrientation();
 
         /// <summary>
         /// Public read-only access to saved positions.
         /// </summary>
-        public List<SpatialOrientationData> SavedPositions { get; private set; } = new List<SpatialOrientationData>();
+        public List<SpatialOrientation> SavedPositions { get; private set; } = new List<SpatialOrientation>();
         #endregion
 
         #region Public Methods
         /// <summary>
         /// Adds a new spatial position to the list.
         /// </summary>
-        public void AddPosition(SpatialOrientationData position)
+        public void AddPosition(SpatialOrientation position)
         {
             if (position == null) throw new ArgumentNullException(nameof(position));
             SavedPositions.Add(position);
@@ -46,7 +45,7 @@ namespace Umuna.Core.Domain.Data
         /// <param name="position">The new position data.</param>
         /// <exception cref="ArgumentOutOfRangeException">Raised if the index is out of bounds.</exception>
         /// <exception cref="ArgumentNullException">Raised if the position is null.</exception>
-        public void UpdatePosition(int index, SpatialOrientationData position)
+        public void UpdatePosition(int index, SpatialOrientation position)
         {
             if (index < 0 || index >= SavedPositions.Count)
             {

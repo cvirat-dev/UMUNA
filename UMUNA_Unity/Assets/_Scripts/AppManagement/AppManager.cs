@@ -1,68 +1,46 @@
 
-using System;
-using System.Collections.Generic;
-using Umuna.Core.SharedData;
-using Umuna.Core.Services.FileDataService;
 using UMUNA.Assets._Scripts.Services;
-using UMUNA.Configuration;
-using UMUNA.Data;
 using UMUNA.SavingSystem;
-using Umuna.Core.SharedData.Communication;
-using Umuna.Core.Services.Serialization;
 using System.Threading.Tasks;
+using Umuna.Core.Communication.Contracts;
 
 namespace UMUNA.AppManagement
 {
     /// <summary>
-    /// This class is responsible two main things:
-    /// 1) It creates all the necessary objects for the app to run.
-    /// 2) It provides access to the objects it creates.
+    /// - No configuration loading
+    /// - No manual service creation
+    /// - No MonoBehaviour inheritance
+    /// - Completely DI-constructed
     /// </summary>
     public class AppManager
     {
-        #region Fields
-        readonly UmunaData _umunaData;
-        readonly ExportNotes _exportNotes;
-        readonly SaveLoadSystem _saveLoadSystem;
-        readonly BindSystem _bindSystem;
-        readonly TcpClientService<MessageDto> _tcpClientService;
-        #endregion
+        private readonly ISaveLoadSystem saveLoadSystem;
+        private readonly ITcpClientService<MessageDto> tcpClientService;
 
         #region Properties
-        public SaveLoadSystem SaveLoadSystem => _saveLoadSystem;
-        public UmunaData UmunaData => _umunaData;
-        public BindSystem BindSystem => _bindSystem;
-        public ExportNotes ExportNotes => _exportNotes;
-        public TcpClientService<MessageDto> TcpClientService => _tcpClientService;
+        public ISaveLoadSystem SaveLoadSystem => saveLoadSystem;
+        public ITcpClientService<MessageDto> TcpClientService => tcpClientService;
         #endregion
 
-        #region Constructors
-        public AppManager()
+        public AppManager(
+            ISaveLoadSystem                 saveLoadSystem,
+            ITcpClientService<MessageDto>   tcpClientService)
         {
-            AppConfiguration appConfig = new Configurator<AppConfiguration>().Data;
-            _umunaData = new UmunaData();
-            _exportNotes = new ExportNotes();
-            _bindSystem = new BindSystem();
-            _saveLoadSystem = new SaveLoadSystem(UmunaData, ExportNotes, BindSystem, appConfig.FileSystemConfiguration.SerializationFormat);
-            _tcpClientService = new TcpClientService<MessageDto>(
-                SerializerFactory.Create<MessageDto>(appConfig.FileSystemConfiguration.SerializationFormat.Value),
-                appConfig.NetworkConfiguration
-            );
+            this.saveLoadSystem = saveLoadSystem;
+            this.tcpClientService = tcpClientService;
         }
-        #endregion
 
-        #region Methods
-        internal async Task Initialize()
+        public async Task Initialize()
         {
-            SaveLoadSystem.Load();
-            await TcpClientService.ConnectAsync();
-            await TcpClientService.SendJsonAsync(new MessageDto
+            saveLoadSystem.Load();
+            await tcpClientService.ConnectAsync();
+
+            await tcpClientService.SendJsonAsync(new MessageDto
             {
                 MessageType = MessageType.Info,
                 Sender = "UnityApp",
                 Payload = new { Content = "Unity App Connected" }
             });
         }
-        #endregion
     }
 }

@@ -1,44 +1,37 @@
-using Umuna.Core.SharedData.Common;
+using UMUNA.Assets._Scripts.Extensions;
 using UnityEngine;
 using UUP.CustomDataTypes;
+using SpatialOrientationCore = Umuna.Core.Domain.Data.SpatialOrientation;
 
 namespace UMUNA.Extensions
 {
     public static class SpatialOrientationExtensions
     {
-        public static void Set(this SpatialOrientation spatialOrientation, SpatialOrientationData spatialOrientationData)
+        public static void Set(this SpatialOrientation spatialOrientation, SpatialOrientationCore spatialOrientationCore)
         {
-            if (spatialOrientationData == null)
+            if (spatialOrientationCore == null)
             {
                 Debug.LogWarning("SpatialOrientationExtensions.Set: spatialOrientationData is null");
             }
-            spatialOrientation.Position.Set(spatialOrientationData.Position);
-            spatialOrientation.Rotation = Quaternion.Euler(spatialOrientationData.Rotation.ToVector3());
+            spatialOrientation.Position.Set(spatialOrientationCore.Position);
+            spatialOrientation.Rotation.Set(spatialOrientationCore.Rotation);
         }
 
-        public static SpatialOrientationData ToSpatialOrientationData(this SpatialOrientation spatialOrientation)
+        public static SpatialOrientationCore ToSpatialOrientationCore(this SpatialOrientation spatialOrientation)
         {
             if (spatialOrientation == null)
             {
                 Debug.LogWarning("SpatialOrientationExtensions.ToSpatialOrientationData: spatialOrientation is null");
                 return null;
             }
-            return new SpatialOrientationData
+            return new SpatialOrientationCore
             {
-                Position = new Vector3Data(
-                    spatialOrientation.Position.x,
-                    spatialOrientation.Position.y,
-                    spatialOrientation.Position.z
-                    ),
-                Rotation = new Vector3Data(
-                    spatialOrientation.Rotation.eulerAngles.x,
-                    spatialOrientation.Rotation.eulerAngles.y,
-                    spatialOrientation.Rotation.eulerAngles.z
-                    )
+                Position = spatialOrientation.Position.ToVector3Core(),
+                Rotation = spatialOrientation.Rotation.ToQuaternionCore()
             };
         }
 
-        public static SpatialOrientation ToSpatialOrientation(this SpatialOrientationData spatialOrientationData)
+        public static SpatialOrientation ToSpatialOrientation(this SpatialOrientationCore spatialOrientationData)
         {
             if (spatialOrientationData == null)
             {
@@ -47,16 +40,8 @@ namespace UMUNA.Extensions
             }
             return new SpatialOrientation
             {
-                Position = new Vector3(
-                    spatialOrientationData.Position.X,
-                    spatialOrientationData.Position.Y,
-                    spatialOrientationData.Position.Z
-                    ),
-                Rotation = Quaternion.Euler(
-                    spatialOrientationData.Rotation.X,
-                    spatialOrientationData.Rotation.Y,
-                    spatialOrientationData.Rotation.Z
-                    )
+                Position = spatialOrientationData.Position.ToVector3(),
+                Rotation = spatialOrientationData.Rotation.ToQuaternion()
             };
         }
     }

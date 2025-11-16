@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
-using Umuna.Core.Common.Math;
+using Umuna.Core.Domain.Data;
 
 namespace Umuna.Core.Domain.Interfaces
 {
     public interface ICameraData
     {
         int CurrentCameraIndex { get; set; }
-        SpatialOrientationData LastCameraPosition { get; set; }
-        List<SpatialOrientationData> SavedPositions { get; }
+        SpatialOrientation LastCameraPosition { get; set; }
+        List<SpatialOrientation> SavedPositions { get; }
 
-        void AddPosition(SpatialOrientationData position);
+        void AddPosition(SpatialOrientation position);
         void ClearPositions();
         void RemovePositionAt(int index);
         void SetSelectedCamera(int cameraIndex);
-        void UpdatePosition(int index, SpatialOrientationData position);
+        void UpdatePosition(int index, SpatialOrientation position);
     }
 }

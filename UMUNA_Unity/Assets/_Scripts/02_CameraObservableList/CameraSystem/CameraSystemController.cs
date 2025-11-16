@@ -1,5 +1,4 @@
 using System;
-using Umuna.Core.SharedData.Umuna;
 using UMUNA.EventManagement;
 using UnityEngine;
 using UnityEngine.Events;

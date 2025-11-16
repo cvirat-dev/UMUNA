@@ -1,32 +1,31 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Umuna.Core.SharedData;
-using Umuna.Core.Services;
 using Umuna.Core.Services.FileDataService;
-using Umuna.Core.Services.Serialization;
-using UMUNA.Configuration;
 using UMUNA.Data;
 using UnityEngine;
+using Umuna.Core.Services.Serialization;
+using System;
 
 namespace UMUNA.SavingSystem
 {
-    public class SaveLoadSystem
+    public class SaveLoadSystem : ISaveLoadSystem
     {
         #region Fields
         private ExportNotes _exportNotes;
-        private readonly BindSystem _bindSystem;
+        private readonly IBindSystem _bindSystem;
         private UmunaData _umunaData;
         private UmunaDataBinder _binder;
-        private readonly IFileSerializer<UmunaData> _umunaDataService;
-        private readonly IFileSerializer<ExportNotes> _exportNotesDataService;
-        private readonly SerializationFormat _fileonfig;
+
         #endregion
 
         #region Properties
-        public SerializationFormat FileConfiguration => _fileonfig;
-        public IFileSerializer<UmunaData> UmunaDataService => _umunaDataService;
-        public IFileSerializer<ExportNotes> ExportNotesDataService => _exportNotesDataService;
+        public AppConfiguration AppConfig { get; init; }
+        public IFileSerializer<UmunaData> UmunaDataService { get; init; }
+        public IFileSerializer<ExportNotes> ExportNotesDataService { get; init; }
+
+        public SerializerType SerializerType
+            => (SerializerType)Enum.Parse(typeof(SerializerType), AppConfig.FileSystemConfiguration.SerializationFormat.Value);
 
         public ExportNotes ExportNotes
         {
@@ -36,21 +35,35 @@ namespace UMUNA.SavingSystem
                 _exportNotes = value;
             }
         }
+
+
         #endregion
 
         #region Constructors
         public SaveLoadSystem(
-            UmunaData umunaData,
-            ExportNotes exportNotes,
-            BindSystem bindSystem,
-            SerializationFormat serializationFormat)
+            UmunaData           umunaData,
+            ExportNotes         exportNotes,
+            IBindSystem         bindSystem,
+            AppConfiguration    appConfig)
         {
             _umunaData = umunaData;
             _exportNotes = exportNotes;
             _bindSystem = bindSystem;
-            _fileonfig = serializationFormat;
-            _umunaDataService = FileSerializerFactory.Create<UmunaData>(nameof(UmunaData), serializationFormat.Value);
-            _exportNotesDataService = FileSerializerFactory.Create<ExportNotes>(nameof(ExportNotes), serializationFormat.Value);
+            AppConfig = appConfig;
+
+            UmunaDataService = FileSerializerFactory.Create<UmunaData>(
+                nameof(UmunaData), 
+                (SerializerType)Enum.Parse(
+                    typeof(SerializerType), 
+                    AppConfig.FileSystemConfiguration.SerializationFormat.Value,
+                    ignoreCase: true));
+            
+            ExportNotesDataService = FileSerializerFactory.Create<ExportNotes>(
+                nameof(ExportNotes), 
+                (SerializerType)Enum.Parse(
+                    typeof(SerializerType), 
+                    AppConfig.FileSystemConfiguration.SerializationFormat.Value,
+                    ignoreCase: true));
         }
         #endregion
 
@@ -86,7 +99,7 @@ namespace UMUNA.SavingSystem
         private void LoadData()
         {
             _umunaData = UmunaDataService.Load();
-            if(_binder == null)
+            if (_binder == null)
                 _bindSystem.Bind(_umunaData, out _binder);
             _binder.Bind(_umunaData);
             Debug.Log("Loaded data"); // Dont forget to add Logging at a later point

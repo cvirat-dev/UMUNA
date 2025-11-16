@@ -55,3 +55,4 @@ public class SerializationFormat
     [JsonProperty("Allowed")]
     public string[] Allowed { get; set; } = new[] { "json", "xml" };
 }
+

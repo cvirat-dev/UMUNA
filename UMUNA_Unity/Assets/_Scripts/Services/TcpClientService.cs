@@ -7,6 +7,13 @@ using UnityEngine;
 
 namespace UMUNA.Assets._Scripts.Services
 {
+    /// <summary>
+    /// A simple TCP client service for sending and receiving JSON messages.
+    /// - Uses <see cref="TcpClient"/> to connect to a TCP server.
+    /// - Specifies the server's IP and port via <see cref="NetworkConfiguration"/>.
+    /// - Initiates connection with <c>ConnectAsync()</c>.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class TcpClientService<T> : ITcpClientService<T> where T : class
     {
         #region Fields
@@ -18,10 +25,10 @@ namespace UMUNA.Assets._Scripts.Services
         #endregion
 
         #region Constructors
-        public TcpClientService(ISerializer<T> serializer, NetworkConfiguration networkConfig)
+        public TcpClientService(ISerializer<T> serializer, AppConfiguration appConfig)
         {
-            _serverIp = networkConfig.TcpConfig.ServerIp;
-            _serverPort = networkConfig.TcpConfig.Port;
+            _serverIp = appConfig.NetworkConfiguration.TcpConfig.ServerIp;
+            _serverPort = appConfig.NetworkConfiguration.TcpConfig.Port;
             _client = new TcpClient();
             _serializer = serializer;
         }
@@ -42,7 +49,7 @@ namespace UMUNA.Assets._Scripts.Services
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[TCP] Connection failed: {ex.Message}");
+                Debug.LogWarning($"[TCP] Connection failed: {ex.Message}");
             }
         }
 
