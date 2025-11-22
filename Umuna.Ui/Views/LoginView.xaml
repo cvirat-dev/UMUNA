@@ -5,7 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              d:DesignWidth="800" d:DesignHeight="450">
+
     <Grid Background="{StaticResource Brush.Background}" Margin="16">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -44,7 +46,11 @@
                 <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Password"/>
                 <PasswordBox x:Name="PwdBox"
                              Grid.Row="1" Grid.Column="1"
-                             Width="240"/>
+                             Width="240">
+                    <PasswordBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PwdBox}"/>
+                    </PasswordBox.InputBindings>
+                </PasswordBox>
 
                 <TextBlock Grid.Row="2" Grid.ColumnSpan="2"
                            Foreground="OrangeRed"

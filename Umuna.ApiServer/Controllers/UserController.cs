@@ -19,14 +19,14 @@ namespace Umuna.ApiServer.Controllers
                 return BadRequest(result.Message);
             }
             return CreatedAtAction(
-                nameof(GetUser), 
-                new { userId = result.Data!.Id }, 
+                nameof(GetUser),
+                new { id = result.Data!.Id }, // route param name matches [HttpGet("{id}")]
                 result.Data
             );
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetUser(string id)
         {
             var result = await _userService.GetUserByIdAsync(id);
             if (!result.Success)

@@ -118,9 +118,11 @@ namespace Umuna.Ui.ViewModels
              }
              finally
              {
-                 IsBusy = false;
-                 (CreateUserCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
-             }
+                IsBusy = false;
+                (CreateUserCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
+
+                NavigateToLoginView();
+            }
          }
      }
 }

@@ -6,6 +6,6 @@ namespace Umuna.ApiServer.Services
     public interface IUserService
     {
         Task<ServiceResult<UserDto>> AddUserAsync(UserDto dto);
-        Task<ServiceResult<UserDto>> GetUserByIdAsync(int id);
+        Task<ServiceResult<UserDto>> GetUserByIdAsync(string id);
     }
 }

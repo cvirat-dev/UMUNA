@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using Umuna.Core.Services.FileDataService;
 using Umuna.Ui.Constants;
 using Umuna.Ui.Models;
-using static System.Net.WebRequestMethods;
 
 namespace Umuna.Ui.ViewModels
 {

@@ -70,14 +70,18 @@
 						   VerticalAlignment="Center" 
 						   Text="Password:"
 						   Margin="0,0,10,12"/>
-				<PasswordBox Grid.Row="2" Grid.Column="1"
-							 x:Name="PasswordBox" 
-							 attached:PasswordBoxHelper.BindPassword="True"
-							 attached:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}"
-							 MinWidth="240"
-							 Margin="0,0,0,12"/>
+                <PasswordBox Grid.Row="2" Grid.Column="1"
+							x:Name="PasswordBox" 
+							attached:PasswordBoxHelper.BindPassword="True"
+							attached:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}"
+							MinWidth="240"
+							Margin="0,0,0,12">
+					<PasswordBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding CreateUserCommand}" CommandParameter="{Binding ElementName=PwdBox}"/>
+					</PasswordBox.InputBindings>
+                </PasswordBox>
 
-				<!-- Error Message -->
+                <!-- Error Message -->
 				<TextBlock Grid.Row="3" Grid.ColumnSpan="2"
 						   Foreground="OrangeRed"
 						   Text="{Binding ErrorMessage}"

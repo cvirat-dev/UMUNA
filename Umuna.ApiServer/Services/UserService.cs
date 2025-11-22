@@ -32,11 +32,14 @@ namespace Umuna.ApiServer.Services
                 return ServiceResult<UserDto>.Fail("User with this email already exists");
             }
 
-            // Map DTO to Entity
-            var user = new User
+            // Map DTO to Entity - ensure we set an ID (GUID) if not provided
+            var newUserId = string.IsNullOrWhiteSpace(dto.Id) ? Guid.NewGuid().ToString("N") : dto.Id;
+            User user = new()
             {
+                Id = newUserId,
                 Email = dto.Email,
                 Name = dto.Name,
+                Password = dto.Password,
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -48,17 +51,18 @@ namespace Umuna.ApiServer.Services
             {
                 Id = user.Id,
                 Email = user.Email,
-                Name = user.Name
+                Name = user.Name,
+                Password = user.Password
             };
 
             return ServiceResult<UserDto>.Ok(resultDto);
         }
 
-        public Task<ServiceResult<UserDto>> GetUserByIdAsync(int id)
+        public Task<ServiceResult<UserDto>> GetUserByIdAsync(string id)
         {
-            if (id <= 0)
+            if (string.IsNullOrWhiteSpace(id))
             {
-                return Task.FromResult(ServiceResult<UserDto>.Fail($"Invalid user ID: {id}."));
+                return Task.FromResult(ServiceResult<UserDto>.Fail($"Invalid user ID: '{id}'."));
             }
 
             User? user = _context.Users.Find(id);
@@ -71,7 +75,8 @@ namespace Umuna.ApiServer.Services
             {
                 Id = user.Id,
                 Name = user.Name,
-                Email = user.Email
+                Email = user.Email,
+                Password = user.Password
             };
             return Task.FromResult(ServiceResult<UserDto>.Ok(userDto));
         }
