@@ -73,15 +73,28 @@
         </Grid>
 
         <!-- CONTENT AREA -->
-
-        <Border Grid.Row="1"
-                BorderThickness="1"
-                CornerRadius="6"
-                Padding="8">
-            <Grid Name="MainGrid">
-            </Grid>
-        </Border>
-
+        <Grid Grid.Row="1" VerticalAlignment="Stretch"> <!-- changed from Center to Stretch to allow full height -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top"> <!-- align top inside expanded area -->
+                <TextBlock Text="Connected Devices:" 
+                            FontWeight="Bold"
+                            VerticalAlignment="Center"/>
+                <TextBox Text="Data" 
+                            Width="100" 
+                            IsReadOnly="True"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            BorderThickness="1"
+                            Padding="4,2"/>
+            </StackPanel>
+            <Border Grid.Column="1" BorderThickness="1" CornerRadius="6" Padding="8">
+                <Grid Name="MainGrid">
+                </Grid>
+            </Border>
+        </Grid>
 
         <!-- LOG / CONSOLE AREA -->
         <Border Grid.Row="2"
