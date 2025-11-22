@@ -49,8 +49,7 @@ namespace Umuna.Ui.ViewModels
         private async Task LoginAsync(PasswordBox? passwordBox)
         {
             ErrorMessage = string.Empty;
-
-            var password = passwordBox?.Password ?? string.Empty;
+            string password = passwordBox?.Password ?? string.Empty;
 
             if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(password))
             {
@@ -66,7 +65,7 @@ namespace Umuna.Ui.ViewModels
                 using var content = new StringContent(
                     JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
 
-                using var response = await _httpClient.PostAsync(ApiRoutes.AuthLogin, content);
+                using HttpResponseMessage response = await _httpClient.PostAsync(ApiRoutes.AuthLogin, content);
 
                 if (response.IsSuccessStatusCode)
                 {

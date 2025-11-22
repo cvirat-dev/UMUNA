@@ -6,6 +6,7 @@ namespace Umuna.Ui.Models
         public string MainWindowTitle { get; set; } = "Umuna Application";
         public Backend Backend { get; set; } = new();
         public TcpService TcpService { get; set; } = new();
+        public ExternalAppHost ExternalAppHost { get; set; } = new();
     }
 
     public class Backend
@@ -15,5 +16,10 @@ namespace Umuna.Ui.Models
     public class TcpService
     {
         public int Port { get; set; } = 5000;
+    }
+
+    public class ExternalAppHost
+    {
+        public string ExecutablePath { get; set; } = @"C:\Path\To\ExternalApp.exe";
     }
 }

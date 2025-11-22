@@ -21,11 +21,22 @@ namespace Umuna.Ui
             // Setup Dependency Injection
             var services = new ServiceCollection();
 
-            services.AddSingleton(provider => FileSerializerFactory.Create<AppConfig>(
-                AppConstants.ConfigFilePath, 
-                SerializerType.json));
+            services.AddSingleton<IFileSerializer<AppConfig>>(
+                provider => FileSerializerFactory.Create<AppConfig>(
+                    AppConstants.ConfigFilePath, 
+                    SerializerType.json
+                    )
+                );
             
             services.AddSingleton<ICommunicationService, TcpCommunicationService>();
+
+            // AppConfig injection
+            services.AddSingleton<AppConfig>(provider =>
+            {
+                IFileSerializer<AppConfig> serializer = provider.GetRequiredService<IFileSerializer<AppConfig>>();
+                AppConfig config = serializer.Load() ?? new AppConfig();
+                return config;
+            });
 
             // ViewModels
             services.AddSingleton<MainViewModel>();

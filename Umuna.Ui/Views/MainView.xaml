@@ -51,6 +51,26 @@
                         BorderThickness="1"
                         Padding="4,0"
                         Cursor="Hand"/>
+
+                <!-- Spacer -->
+                <TextBlock Text="|" Margin="10,0,10,0" VerticalAlignment="Center" Opacity="0.5"/>
+
+                <Button Content="StartHost"
+                        Command="{Binding StartHostCommand}"
+                        Width="100"
+                        Height="28"
+                        Margin="10,0,0,0"
+                        BorderThickness="1"
+                        Padding="4,0"
+                        Cursor="Hand"/>
+
+                <Button Content="StopHost" 
+                        Command="{Binding StopHostCommand}"
+                        Width="100"
+                        Height="28"
+                        BorderThickness="1"
+                        Padding="4,0"
+                        Cursor="Hand"/>
             </StackPanel>
 
             <!-- Right group: User display and Log off -->
@@ -73,12 +93,12 @@
         </Grid>
 
         <!-- CONTENT AREA -->
-        <Grid Grid.Row="1" VerticalAlignment="Stretch"> <!-- changed from Center to Stretch to allow full height -->
+        <Grid Grid.Row="1" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top"> <!-- align top inside expanded area -->
+            <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top">
                 <TextBlock Text="Connected Devices:" 
                             FontWeight="Bold"
                             VerticalAlignment="Center"/>
