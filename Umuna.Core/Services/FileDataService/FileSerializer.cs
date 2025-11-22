@@ -19,11 +19,8 @@ namespace Umuna.Core.Services.FileDataService
         }
 
         public string FileDirectory => _fileDescriptor.FileDirectory;
-
         public string FileExtension => _fileDescriptor.FileExtension;
-
         public string FileName => _fileDescriptor.FileName;
-
         public string FilePath => _fileDescriptor.FilePath;
 
         public FileSerializer(TSerializer serializer)
@@ -42,6 +39,9 @@ namespace Umuna.Core.Services.FileDataService
         {
             Serializer = serializer;
 
+            // Expand %ENV% variables early so rooted checks behave
+            relativePath = System.Environment.ExpandEnvironmentVariables(relativePath);
+
             if (!Path.HasExtension(relativePath))
             {
                 // If no extension is provided, use the serializer's default extension
@@ -52,7 +52,8 @@ namespace Umuna.Core.Services.FileDataService
                 // If the provided path has an extension but it's not the serializer's expected extension, throw an exception
                 throw new InvalidDataException($"File extension '{Path.GetExtension(relativePath)}' does not match serializer's expected extension '{serializer.GetExtension()}'.");
             }
-            if(Path.IsPathRooted(relativePath))
+
+            if (Path.IsPathRooted(relativePath))
             {
                 // If the path is absolute, use it directly
                 _fileDescriptor = FileDescriptor.FromPath(relativePath);
@@ -85,8 +86,27 @@ namespace Umuna.Core.Services.FileDataService
 
         public TData? Load()
         {
-            var fileContent = File.ReadAllText(FilePath);
-            return _serializer.Deserialize(fileContent);
+            try
+            {
+                if (!File.Exists(FilePath))
+                    return null;
+
+                var fileContent = File.ReadAllText(FilePath);
+                return _serializer.Deserialize(fileContent);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return null;
+            }
+            catch (FileNotFoundException)
+            {
+                return null;
+            }
+            catch (JsonException)
+            {
+                // Invalid JSON -> treat as no config
+                return null;
+            }
         }
 
         public TData? Load(string path)
@@ -113,6 +133,10 @@ namespace Umuna.Core.Services.FileDataService
             {
                 throw new System.ArgumentNullException(nameof(data), "Data cannot be null.");
             }
+
+            // Ensure target directory exists
+            Directory.CreateDirectory(FileDirectory);
+
             if (!overWrite && File.Exists(FilePath))
             {
                 throw new IOException($"File '{FilePath}' already exists and overwrite is not allowed.");
@@ -155,14 +179,14 @@ namespace Umuna.Core.Services.FileDataService
 
         public void VerifyExtension()
         {
-            if(string.Compare(FileExtension, _serializer.GetExtension(), System.StringComparison.OrdinalIgnoreCase) != 0)
+            if (string.Compare(FileExtension, _serializer.GetExtension(), System.StringComparison.OrdinalIgnoreCase) != 0)
             {
                 throw new InvalidDataException($"File extension '{FileExtension}' does not match serializer's expected extension '{_serializer.GetExtension()}'.");
             }
         }
 
         // Helper methods
-        public FileSerializer<TSerializer, TData> WithNewDirectory(string newDirectory) => 
+        public FileSerializer<TSerializer, TData> WithNewDirectory(string newDirectory) =>
             new FileSerializer<TSerializer, TData>(_serializer, _fileDescriptor.WithNewDirectory(newDirectory));
 
         public FileSerializer<TSerializer, TData> WithNewName(string newName) =>
