@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Umuna.ApiServer.Data;
 using Umuna.ApiServer.DTOs;
+using Umuna.Core.Domain.Data;
 
 namespace Umuna.ApiServer.Controllers
 {
@@ -13,8 +14,11 @@ namespace Umuna.ApiServer.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequestDto loginDto)
         {
-            var user = _context.Users.SingleOrDefault(
+            User? user = _context.Users.SingleOrDefault(
                 u => u.Name == loginDto.UserName && u.Password == loginDto.Password);
+
+            // Simulate authentication process
+            Task.Delay(2000).Wait();
 
             if (user == null)
                 return Unauthorized("Invalid username or password.");

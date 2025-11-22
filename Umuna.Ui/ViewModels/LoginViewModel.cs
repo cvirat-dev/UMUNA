@@ -34,12 +34,11 @@ namespace Umuna.Ui.ViewModels
         #endregion
 
         #region Constructors
-        public LoginViewModel(IFileSerializer<AppConfig> fileSerializer)
+        public LoginViewModel(AppConfig appConfig)
         {
             // Load configuration and prepare HttpClient with the configured BaseUrl
-            _config = fileSerializer.Load() ?? new AppConfig();
-
-            var baseUrl = _config.Backend.BaseUrl?.TrimEnd('/') + "/";
+            _config = appConfig;
+            string baseUrl = _config.Backend.BaseUrl?.TrimEnd('/') + "/";
             _httpClient = new HttpClient { BaseAddress = new Uri(baseUrl!) };
         }
         #endregion

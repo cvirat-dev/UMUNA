@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using Umuna.Core.Services.FileDataService;
 using Umuna.Ui.Constants;
 using Umuna.Ui.Models;
 
@@ -62,10 +61,10 @@ namespace Umuna.Ui.ViewModels
         // Event raised when navigation to login view is requested
         public event EventHandler? NavigationToLoginRequested;
 
-        public UserCreationViewModel(IFileSerializer<AppConfig> fileSerializer)
+        public UserCreationViewModel(AppConfig appConfig)
         {
-            var config = fileSerializer.Load() ?? new AppConfig();
-            var baseUrl = config.Backend.BaseUrl?.TrimEnd('/') + "/";
+            AppConfig config = appConfig;
+            string baseUrl = config.Backend.BaseUrl?.TrimEnd('/') + "/";
             _httpClient = new HttpClient { BaseAddress = new Uri(baseUrl!) };
 
             CreateUserCommand = new AsyncRelayCommand(CreateUserAsync, () => !IsBusy);
