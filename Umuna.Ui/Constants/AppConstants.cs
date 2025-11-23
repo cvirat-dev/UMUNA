@@ -1,30 +1,33 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
 using System.IO;
 
 namespace Umuna.Ui.Constants
 {
     public static class AppConstants
     {
-        const string APP_CONFIG_PATH_ENV = "APP_CONFIG_PATH";
-
         public const string AppTitle = "Umuna";
 
-        private static readonly Lazy<string> _configFilePath = new(() =>
+        public static IConfigurationRoot Config { get; } =
+            new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+                .AddEnvironmentVariables() // allows overrides via env vars
+                .Build();
+
+        public static string AppConfigPath => Expand(
+            Config["Paths:AppConfig"]!);
+
+        public static string LogConfigPath => Expand(
+            Config["Paths:LogConfig"]!);
+
+        private static string Expand(string value)
         {
-            string? raw = Environment.GetEnvironmentVariable(APP_CONFIG_PATH_ENV);
-            if (!string.IsNullOrEmpty(raw))
-                return Expand(raw);
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException("Configuration value cannot be null or empty.", nameof(value));
+            }
 
-            string localEnvFile = $"{APP_CONFIG_PATH_ENV}.env";
-            if (File.Exists(localEnvFile))
-                return Expand(File.ReadAllText(localEnvFile).Trim());
-
-            // fallback near the executable
-            return Path.Combine(AppContext.BaseDirectory, "AppConfig.json");
-        });
-
-        public static string ConfigFilePath => _configFilePath.Value;
-
-        private static string Expand(string value) => Environment.ExpandEnvironmentVariables(value);
+            return Environment.ExpandEnvironmentVariables(value);
+        }
     }
 }

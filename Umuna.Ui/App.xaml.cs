@@ -1,10 +1,19 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Win32;
+using Serilog;
+using System;
+using System.Configuration;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using Umuna.Core.Services.FileDataService;
 using Umuna.Core.Services.Serialization;
 using Umuna.Ui.Constants;
 using Umuna.Ui.Models;
 using Umuna.Ui.Services.Communication;
+using Umuna.Ui.Services.Logging;
 using Umuna.Ui.ViewModels;
 
 namespace Umuna.Ui
@@ -14,20 +23,53 @@ namespace Umuna.Ui
     /// </summary>
     public partial class App : Application
     {
-        public static IServiceProvider? Services { get; private set; }
+        private IServiceProvider? _serviceProvider;
+        private ILogger<App>? _logger;
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
+
+            // Initialize logging system (Serilog + LoggerFactory) before DI and log usage
+            LoggerService.Initialize();
+
+            // Configure services and logging
+            _serviceProvider = ConfigureServices();
+
+            // Get logger from DI container
+            _logger = _serviceProvider.GetRequiredService<ILogger<App>>();
+            _logger.LogInformation("Application starting up");
+
+            // Set up global exception handlers
+            SetupExceptionHandling();
+
+            // Show Main Window
+            var mainWindow = new MainWindow { DataContext = _serviceProvider.GetRequiredService<RootViewModel>() };
+            mainWindow.Show();
+        }
+
+        private IServiceProvider ConfigureServices()
+        {
             // Setup Dependency Injection
-            var services = new ServiceCollection();
+            ServiceCollection services = new();
+
+            services.AddLogging(builder =>
+            {
+                builder.ClearProviders();
+                builder.AddSerilog(dispose: true);
+            });
 
             services.AddSingleton<IFileSerializer<AppConfig>>(
                 provider => FileSerializerFactory.Create<AppConfig>(
-                    AppConstants.ConfigFilePath, 
+                    AppConstants.AppConfigPath,
                     SerializerType.json
                     )
                 );
-            
+
+            // Register configuration
+            services.AddSingleton<IConfiguration>(AppConstants.Config);
+
+            // Register  services
             services.AddSingleton<ICommunicationService, TcpCommunicationService>();
 
             // AppConfig injection
@@ -38,18 +80,66 @@ namespace Umuna.Ui
                 return config;
             });
 
-            // ViewModels
+            // Register ViewModels
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<UserCreationViewModel>();
             services.AddSingleton<RootViewModel>();
 
             // Build ServiceProvider
-            Services = services.BuildServiceProvider();
+            _serviceProvider = services.BuildServiceProvider();
 
-            // Show Main Window
-            var mainWindow = new MainWindow { DataContext = Services.GetRequiredService<RootViewModel>() };
-            mainWindow.Show();
+            return services.BuildServiceProvider();
+        }
+
+        private void SetupExceptionHandling()
+        {
+            if (_logger == null)
+            {
+                MessageBox.Show("Logger is not initialized. Cannot set up exception handling.",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // UI thread exceptions
+            DispatcherUnhandledException += (s, e) =>
+            {
+                _logger.LogCritical(e.Exception, "Unhandled UI thread exception");
+                MessageBox.Show($"An unexpected error occurred:\n\n{e.Exception.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                e.Handled = true;
+            };
+
+            // Non-UI thread exceptions
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                var exception = e.ExceptionObject as Exception;
+                _logger.LogCritical(exception, "Unhandled non-UI thread exception");
+            };
+
+            // Task exceptions
+            TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                _logger.LogCritical(e.Exception, "Unhandled Task exception");
+                e.SetObserved();
+            };
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            if (_logger == null)
+            {
+                base.OnExit(e);
+                return;
+            }
+
+            if (_logger.IsEnabled(LogLevel.Information))
+            {
+                _logger.LogInformation("Application shutting down with exit code {ExitCode}", e.ApplicationExitCode);
+                LoggerService.Shutdown();
+            }
+
+            base.OnExit(e);
         }
     }
 
