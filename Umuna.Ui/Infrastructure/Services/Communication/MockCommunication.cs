@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Umuna.Ui.Services.Communication
+namespace Umuna.Ui.Infrastructure.Services.Communication
 {
     public class MockCommunicationService : ICommunicationService
     {

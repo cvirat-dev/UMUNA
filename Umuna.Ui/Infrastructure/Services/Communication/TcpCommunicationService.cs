@@ -7,7 +7,7 @@ using Umuna.Core.Services.FileDataService;
 using Umuna.Ui.Infrastructure.Logging;
 using Umuna.Ui.Models;
 
-namespace Umuna.Ui.Services.Communication
+namespace Umuna.Ui.Infrastructure.Services.Communication
 {
     /// <summary>
     /// Simple TCP server for single-client messaging.

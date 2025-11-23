@@ -3,13 +3,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System.Windows;
+using System.Windows.Threading;
 using Umuna.Core.Services.FileDataService;
 using Umuna.Core.Services.Serialization;
 using Umuna.Ui.Constants;
 using Umuna.Ui.Infrastructure.Logging;
+using Umuna.Ui.Infrastructure.Services;
+using Umuna.Ui.Infrastructure.Services.Communication;
+using Umuna.Ui.Infrastructure.Services.Logging;
 using Umuna.Ui.Models;
-using Umuna.Ui.Services.Communication;
-using Umuna.Ui.Services.Logging;
 using Umuna.Ui.ViewModels;
 using Umuna.Ui.Views;
 
@@ -22,6 +24,7 @@ namespace Umuna.Ui
     {
         private IServiceProvider? _serviceProvider;
         private ILogger<App>? _logger;
+        private IErrorDialogService _errorDialogService;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -32,6 +35,7 @@ namespace Umuna.Ui
 
             // Configure services and logging
             _serviceProvider = ConfigureServices();
+            _errorDialogService = _serviceProvider.GetRequiredService<IErrorDialogService>();
 
             // Get logger from DI container
             _logger = _serviceProvider.GetRequiredService<ILogger<App>>();
@@ -41,7 +45,7 @@ namespace Umuna.Ui
             SetupExceptionHandling();
 
             // Show Main Window
-            var mainWindow = new MainWindow { DataContext = _serviceProvider.GetRequiredService<RootViewModel>() };
+            MainWindow mainWindow = new() { DataContext = _serviceProvider.GetRequiredService<RootViewModel>() };
             mainWindow.Show();
         }
 
@@ -68,6 +72,7 @@ namespace Umuna.Ui
 
             // Register  services
             services.AddSingleton<ICommunicationService, TcpCommunicationService>();
+            services.AddSingleton<IErrorDialogService, ErrorDialogService>();
 
             // AppConfig injection
             services.AddSingleton<AppConfig>(provider =>
@@ -95,35 +100,56 @@ namespace Umuna.Ui
 
         private void SetupExceptionHandling()
         {
-            if (_logger == null)
-            {
-                MessageBox.Show("Logger is not initialized. Cannot set up exception handling.",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             // UI thread exceptions
-            DispatcherUnhandledException += (s, e) =>
-            {
-                _logger.LogCritical(e.Exception, "Unhandled UI thread exception");
-                MessageBox.Show($"An unexpected error occurred:\n\n{e.Exception.Message}",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                e.Handled = true;
-            };
+            DispatcherUnhandledException += OnDispatcherUnhandledException;
 
             // Non-UI thread exceptions
-            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
-            {
-                Exception? exception = e.ExceptionObject as Exception;
-                _logger.LogCritical(exception, "Unhandled non-UI thread exception");
-            };
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
             // Task exceptions
-            TaskScheduler.UnobservedTaskException += (s, e) =>
+            TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
+        }
+
+        private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            _logger.LogCritical(e.Exception, "Unhandled UI thread exception");
+
+            _errorDialogService.ShowErrorAsync(
+                "Unexpected Error",
+                "An unexpected error occurred. The application may need to restart.",
+                e.Exception
+            ).Wait();
+
+            e.Handled = true; // Prevent crash
+        }
+
+        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception? exception = e.ExceptionObject as Exception;
+            _logger.LogCritical(exception, "Unhandled non-UI thread exception. Terminating: {IsTerminating}",
+                e.IsTerminating);
+
+            if (exception != null)
             {
-                _logger.LogCriticalWithCaller(s, e.Exception, "Unhandled Task exception");
-                e.SetObserved();
-            };
+                _errorDialogService.ShowErrorAsync(
+                    "Critical Error",
+                    "A critical error occurred. The application will close.",
+                    exception
+                ).Wait();
+            }
+        }
+
+        private void OnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            _logger.LogError(e.Exception, "Unobserved task exception");
+
+            _errorDialogService.ShowErrorAsync(
+                "Background Task Error",
+                "An error occurred in a background operation.",
+                e.Exception
+            ).Wait();
+
+            e.SetObserved(); // Prevent crash
         }
 
         protected override void OnExit(ExitEventArgs e)

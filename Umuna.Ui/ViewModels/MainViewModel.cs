@@ -2,8 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using Umuna.Ui.Infrastructure.Logging;
+using Umuna.Ui.Infrastructure.Services.Communication;
 using Umuna.Ui.Models;
-using Umuna.Ui.Services.Communication;
 
 namespace Umuna.Ui.ViewModels
 {

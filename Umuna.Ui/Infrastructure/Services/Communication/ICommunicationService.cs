@@ -1,5 +1,4 @@
-﻿
-namespace Umuna.Ui.Services.Communication
+﻿namespace Umuna.Ui.Infrastructure.Services.Communication
 {
     public interface ICommunicationService
     {

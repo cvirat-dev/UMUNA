@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows;
 using Umuna.Ui.Constants;
 
-namespace Umuna.Ui.Services.Logging
+namespace Umuna.Ui.Infrastructure.Services.Logging
 {
     public class LoggerService
     {

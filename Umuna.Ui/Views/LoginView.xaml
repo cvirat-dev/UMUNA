@@ -1,20 +1,19 @@
 ﻿<UserControl x:Class="Umuna.Ui.Views.LoginView"
-                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                xmlns:attached="clr-namespace:Umuna.Ui.Controls.Attached"
-                mc:Ignorable="d"
-                d:DesignWidth="800" d:DesignHeight="450">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:attached="clr-namespace:Umuna.Ui.Controls.Attached"
+             mc:Ignorable="d"
+             d:DesignWidth="800" d:DesignHeight="450">
 
     <Grid Background="{StaticResource Brush.Background}" Margin="16">
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- HEADER AREA (styling aligned with MainView's header) -->
+        <!-- HEADER AREA -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center">
             <TextBlock Text="UMUNA Login"
                        FontWeight="Bold" FontSize="16"
@@ -27,12 +26,12 @@
         <Border Grid.Row="1"
                 BorderThickness="1"
                 BorderBrush="{StaticResource Brush.Accent}"
-				Background="{StaticResource Brush.Surface}"
+                Background="{StaticResource Brush.Surface}"
                 CornerRadius="6"
-                Padding="24"				
+                Padding="24"
                 VerticalAlignment="Top"
-				MaxWidth="500"
-				HorizontalAlignment="Center">
+                MaxWidth="500"
+                HorizontalAlignment="Center">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -46,35 +45,37 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Username Field -->
-                <TextBlock Grid.Row="0" Grid.Column="0" 
-                            VerticalAlignment="Center" 
-                            Text="Username :"
-                            Margin="0,0,10,12"/>
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="Username :"
+                           Margin="0,0,10,12"/>
                 <TextBox Grid.Row="0" Grid.Column="1"
-                            Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"
-                            Width="240"
-                            Margin="0,0,0,12"/>
+                         Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"
+                         Width="240"
+                         Margin="0,0,0,12"/>
 
-                <!-- Email Field -->
-                <TextBlock Grid.Row="1" Grid.Column="0" 
-                           VerticalAlignment="Center" 
+                <!-- Password Field -->
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           VerticalAlignment="Center"
                            Text="Password:"/>
-                <PasswordBox x:Name="PwdBox" Grid.Row="1" Grid.Column="1"
-                            attached:PasswordBoxHelper.BindPassword="True"
-							attached:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}"
-                            Width="240"
-                            Margin="0,0,0,12">
-                    <PasswordBox.InputBindings>
-                        <KeyBinding Key="Enter" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PwdBox}"/>
-                    </PasswordBox.InputBindings>
-                </PasswordBox>
+                <PasswordBox x:Name="PwdBox"
+                             Grid.Row="1" Grid.Column="1"
+                             attached:PasswordBoxHelper.BindPassword="True"
+                             attached:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}"
+                             Width="240"
+                             Margin="0,0,0,12"/>
 
-                <Button Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" 
+                <!-- Login Button (acts as default, shows pressed visual on Enter) -->
+                <Button x:Name="LoginButton"
+                        Grid.Row="2" Grid.Column="1"
+                        VerticalAlignment="Center"
                         Width="100" Height="28"
                         Content="Login"
                         Margin="0,0,0,0"
+                        IsDefault="True"
                         Command="{Binding LoginCommand}"
-                        CommandParameter="{Binding ElementName=PwdBox}"/>
+                        CommandParameter="{Binding ElementName=PwdBox}">
+                </Button>
 
                 <TextBlock Grid.Row="3" Grid.ColumnSpan="2"
                            Foreground="OrangeRed"

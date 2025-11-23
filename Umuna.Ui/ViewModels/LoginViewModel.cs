@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Windows.Controls;
 using Umuna.Ui.Constants;
 using Umuna.Ui.Infrastructure.Logging;
+using Umuna.Ui.Infrastructure.Services;
 using Umuna.Ui.Models;
 
 namespace Umuna.Ui.ViewModels
@@ -16,6 +17,7 @@ namespace Umuna.Ui.ViewModels
         #region Fields
         private readonly HttpClient _httpClient;
         private readonly ILogger<LoginViewModel> _logger;
+        private readonly IErrorDialogService _errorDialogService;
         private readonly AppConfig _config;
         #endregion
 
@@ -36,9 +38,13 @@ namespace Umuna.Ui.ViewModels
         #endregion
 
         #region Constructors
-        public LoginViewModel(ILogger<LoginViewModel> logger, AppConfig appConfig)
+        public LoginViewModel(
+            ILogger<LoginViewModel>     logger,
+            IErrorDialogService         errorDialogService,
+            AppConfig                   appConfig)
         {
             _logger = logger;
+            _errorDialogService = errorDialogService;
             // Load configuration and prepare HttpClient with the configured BaseUrl
             _config = appConfig;
             string baseUrl = _config.Backend.BaseUrl?.TrimEnd('/') + "/";
@@ -83,11 +89,17 @@ namespace Umuna.Ui.ViewModels
             }
             catch (HttpRequestException ex)
             {
-                ErrorMessage = $"Unable to reach the server. Details: {ex.Message}";
+                await _errorDialogService.ShowErrorAsync(
+                    ex,
+                    "Unable to reach the server"
+                );
             }
             catch (Exception ex)
             {
-                ErrorMessage = $"Login failed: {ex.Message}";
+                await _errorDialogService.ShowErrorAsync(
+                    ex,
+                    "An unexpected error occurred during login"
+                );
             }
             finally
             {

@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using Umuna.Ui.Constants;
 using Umuna.Ui.Infrastructure.Logging;
+using Umuna.Ui.Infrastructure.Services;
 using Umuna.Ui.Models;
 
 namespace Umuna.Ui.ViewModels
@@ -16,6 +17,7 @@ namespace Umuna.Ui.ViewModels
         #region Fields
         private readonly HttpClient _httpClient;
         private readonly ILogger<UserCreationViewModel> _logger;
+        private readonly IErrorDialogService _errorDialogService;
         private string _userName = string.Empty;
         #endregion
 
@@ -72,9 +74,13 @@ namespace Umuna.Ui.ViewModels
         public event EventHandler? NavigationToLoginRequested;
         #endregion
 
-        public UserCreationViewModel(ILogger<UserCreationViewModel> logger, AppConfig appConfig)
+        public UserCreationViewModel(
+            ILogger<UserCreationViewModel>  logger,
+            IErrorDialogService             errorDialogService,
+            AppConfig                       appConfig)
         {
             _logger = logger;
+            _errorDialogService = errorDialogService;
             AppConfig config = appConfig;
             string baseUrl = config.Backend.BaseUrl?.TrimEnd('/') + "/";
             _httpClient = new HttpClient { BaseAddress = new Uri(baseUrl!) };
@@ -104,38 +110,38 @@ namespace Umuna.Ui.ViewModels
 
             try
             {
-            IsBusy = true;
-            (CreateUserCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
-            var payload = new { Name = UserName, Email, Password };
-            string json = JsonSerializer.Serialize(payload);
-            using StringContent content = new(json, Encoding.UTF8, "application/json");
-            using HttpResponseMessage response = await _httpClient.PostAsync(ApiRoutes.AddUser, content);
+                IsBusy = true;
+                (CreateUserCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
+                var payload = new { Name = UserName, Email, Password };
+                string json = JsonSerializer.Serialize(payload);
+                using StringContent content = new(json, Encoding.UTF8, "application/json");
+                using HttpResponseMessage response = await _httpClient.PostAsync(ApiRoutes.AddUser, content);
 
-            if (response.IsSuccessStatusCode)
-            {
-                SuccessMessage = "User created successfully.";
-                Password = string.Empty; // clear password field
-                return;
-            }
+                if (response.IsSuccessStatusCode)
+                {
+                    SuccessMessage = "User created successfully.";
+                    Password = string.Empty; // clear password field
+                    return;
+                }
 
-            string error = await response.Content.ReadAsStringAsync();
-            ErrorMessage = string.IsNullOrWhiteSpace(error) ? "Failed to create user." : error;
+                string error = await response.Content.ReadAsStringAsync();
+                ErrorMessage = string.IsNullOrWhiteSpace(error) ? "Failed to create user." : error;
             }
             catch (HttpRequestException ex)
             {
-            ErrorMessage = $"Network error: {ex.Message}";
+                await _errorDialogService.ShowErrorAsync(
+                    ex, "Network error occurred while creating user. Please check your connection and try again.");  
             }
             catch (System.Exception ex)
             {
-            ErrorMessage = $"Unexpected error: {ex.Message}";
+                await _errorDialogService.ShowErrorAsync(ex, "An unexpected error occurred while creating user.");
             }
             finally
             {
-            IsBusy = false;
-            (CreateUserCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
-
-            NavigateToLoginView();
-        }
+                IsBusy = false;
+                (CreateUserCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
+                NavigateToLoginView();
+            }
         }
     }
 }
