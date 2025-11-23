@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Windows.Input;
+using Microsoft.Extensions.Logging;
+using Umuna.Ui.Infrastructure.Logging;
 using Umuna.Ui.Models;
 using Umuna.Ui.Services.Communication;
 
@@ -9,17 +10,20 @@ namespace Umuna.Ui.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         #region Fields
+        private readonly ILogger<MainViewModel> _logger;
         private readonly ICommunicationService _communicationService;
 
+        [ObservableProperty]
+        private string _status = "Disconnected";
 
         [ObservableProperty]
-        private string status = "Disconnected";
+        private bool _isBusy;
 
         [ObservableProperty]
-        private bool isBusy;
+        private string _log = "Server starting...";
 
         [ObservableProperty]
-        private string log = "Server starting...";
+        private bool _isHostRunning;
         #endregion
 
         #region Events
@@ -32,8 +36,9 @@ namespace Umuna.Ui.ViewModels
         #endregion
 
         #region Constructors
-        public MainViewModel(ICommunicationService communicationService, AppConfig config)
+        public MainViewModel(ILogger<MainViewModel> logger, ICommunicationService communicationService, AppConfig config)
         {
+            _logger = logger;
             _communicationService = communicationService;
             _communicationService.MessageReceived += msg => Log += $"\nClient: {msg}";
             ExecutablePath = config.ExternalAppHost.ExecutablePath;
@@ -44,6 +49,7 @@ namespace Umuna.Ui.ViewModels
         [RelayCommand]
         private async Task ConnectAsync()
         {
+            _logger.Info("{Command} invoked", nameof(ConnectAsync));
             try
             {
                 IsBusy = true;
@@ -67,6 +73,7 @@ namespace Umuna.Ui.ViewModels
         [RelayCommand]
         private async Task DisconnectAsync()
         {
+            _logger.Info("{Command} invoked", nameof(DisconnectAsync));
             try
             {
                 IsBusy = true;
@@ -77,6 +84,7 @@ namespace Umuna.Ui.ViewModels
             }
             catch (Exception ex)
             {
+
                 Status = $"Disconnection failed: {ex.Message}";
             }
             finally
@@ -87,19 +95,33 @@ namespace Umuna.Ui.ViewModels
 
         [RelayCommand]
         private async Task StartHost()
-        {   
-            RequestStartHost?.Invoke(); 
+        {
+            _logger.Info("{Command} invoked", nameof(StartHost));
+
+            // Early exit if host is already running
+            if (IsHostRunning)
+            {
+                _logger.LogWarningWithCaller("Host is already running. StartHost command will not proceed.");
+                return;
+            }
+
+            RequestStartHost?.Invoke();
         }
 
         [RelayCommand]
         private async Task StopHost()
         {
+            _logger.Info("{Command} invoked", nameof(StopHost));
+
+            // Early exit if host is not running
+            if (!IsHostRunning)
+            {
+                _logger.LogWarningWithCaller("Host is not running. StopHost command will not proceed.");
+                return;
+            }
+
             RequestStopHost?.Invoke();
         }
         #endregion
-
-        #region Private Methods
-        #endregion
-
     }
 }

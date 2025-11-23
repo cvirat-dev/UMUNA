@@ -1,12 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Win32;
 using Serilog;
-using System;
-using System.Configuration;
-using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
 using Umuna.Core.Services.FileDataService;
 using Umuna.Core.Services.Serialization;
@@ -48,7 +43,7 @@ namespace Umuna.Ui
             mainWindow.Show();
         }
 
-        private IServiceProvider ConfigureServices()
+        private static ServiceProvider ConfigureServices()
         {
             // Setup Dependency Injection
             ServiceCollection services = new();
@@ -56,7 +51,7 @@ namespace Umuna.Ui
             services.AddLogging(builder =>
             {
                 builder.ClearProviders();
-                builder.AddSerilog(dispose: true);
+                builder.AddSerilog(dispose: false);
             });
 
             services.AddSingleton<IFileSerializer<AppConfig>>(
@@ -86,9 +81,7 @@ namespace Umuna.Ui
             services.AddSingleton<UserCreationViewModel>();
             services.AddSingleton<RootViewModel>();
 
-            // Build ServiceProvider
-            _serviceProvider = services.BuildServiceProvider();
-
+            // Build ServiceProvider once and return
             return services.BuildServiceProvider();
         }
 

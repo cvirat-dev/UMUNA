@@ -1,11 +1,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Windows.Controls;
-using Umuna.Core.Services.FileDataService;
 using Umuna.Ui.Constants;
+using Umuna.Ui.Infrastructure.Logging;
 using Umuna.Ui.Models;
 
 namespace Umuna.Ui.ViewModels
@@ -14,6 +15,7 @@ namespace Umuna.Ui.ViewModels
     {
         #region Fields
         private readonly HttpClient _httpClient;
+        private readonly ILogger<LoginViewModel> _logger;
         private readonly AppConfig _config;
         #endregion
 
@@ -34,8 +36,9 @@ namespace Umuna.Ui.ViewModels
         #endregion
 
         #region Constructors
-        public LoginViewModel(AppConfig appConfig)
+        public LoginViewModel(ILogger<LoginViewModel> logger, AppConfig appConfig)
         {
+            _logger = logger;
             // Load configuration and prepare HttpClient with the configured BaseUrl
             _config = appConfig;
             string baseUrl = _config.Backend.BaseUrl?.TrimEnd('/') + "/";
@@ -47,6 +50,7 @@ namespace Umuna.Ui.ViewModels
         [RelayCommand]
         private async Task LoginAsync(PasswordBox? passwordBox)
         {
+            _logger.Info("{Command} invoked", nameof(LoginAsync));
             ErrorMessage = string.Empty;
             string password = passwordBox?.Password ?? string.Empty;
 

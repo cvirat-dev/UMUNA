@@ -24,11 +24,22 @@ namespace Umuna.Ui.Services.Logging
                 .AddJsonFile(AppConstants.LogConfigPath, optional: false, reloadOnChange: true)
                 .Build();
 
+            LoggerConfiguration loggerConfiguration = new LoggerConfiguration()
+                .ReadFrom.Configuration(logConfiguration).Enrich.FromLogContext();
+
+#if DEBUG
+            // In debug mode, add more detailed information
+            loggerConfiguration
+                .MinimumLevel.Debug()
+                .WriteTo.Debug(outputTemplate:
+                    "{Timestamp:HH:mm:ss.fff} [{Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}");
+#else
+            // In release mode, keep it simpler
+            loggerConfiguration.MinimumLevel.Information();
+#endif
+
             // Configure Serilog with custom value expansion
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(logConfiguration)
-                .Enrich.FromLogContext()
-                .CreateLogger();
+            Log.Logger = loggerConfiguration.CreateLogger();
 
             // Create LoggerFactory
             _loggerFactory = LoggerFactory.Create(builder =>

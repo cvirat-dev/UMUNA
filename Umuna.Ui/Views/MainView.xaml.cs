@@ -34,6 +34,9 @@ namespace Umuna.Ui.Views
                 };
 
                 MainGrid.Children.Add(_host);
+
+                // Mark as running
+                vm.IsHostRunning = true;
             };
 
             vm.RequestStopHost += () =>
@@ -43,6 +46,9 @@ namespace Umuna.Ui.Views
                     MainGrid.Children.Remove(_host);
                     _host.Dispose();
                     _host = null;
+
+                    // Mark as not running
+                    vm.IsHostRunning = false;
                 }
             };
         }

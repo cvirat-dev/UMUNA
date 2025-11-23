@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -11,9 +12,13 @@ namespace Umuna.Ui.ViewModels
     // User creation logic ViewModel without source generator attributes (manual properties)
     public class UserCreationViewModel : ObservableObject
     {
+        #region Fields
         private readonly HttpClient _httpClient;
-
+        private readonly ILogger<UserCreationViewModel> _logger;
         private string _userName = string.Empty;
+        #endregion
+
+        #region Properties
         public string UserName
         {
             get => _userName;
@@ -54,15 +59,21 @@ namespace Umuna.Ui.ViewModels
             get => _isBusy;
             set => SetProperty(ref _isBusy, value);
         }
+        #endregion
 
+        #region Commands
         public IRelayCommand CreateUserCommand { get; }
         public IRelayCommand NavigateToLoginCommand { get; }
+        #endregion
 
+        #region Events
         // Event raised when navigation to login view is requested
         public event EventHandler? NavigationToLoginRequested;
+        #endregion
 
-        public UserCreationViewModel(AppConfig appConfig)
+        public UserCreationViewModel(ILogger<UserCreationViewModel> logger, AppConfig appConfig)
         {
+            _logger = logger;
             AppConfig config = appConfig;
             string baseUrl = config.Backend.BaseUrl?.TrimEnd('/') + "/";
             _httpClient = new HttpClient { BaseAddress = new Uri(baseUrl!) };
