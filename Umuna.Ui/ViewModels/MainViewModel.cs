@@ -123,5 +123,36 @@ namespace Umuna.Ui.ViewModels
             RequestStopHost?.Invoke();
         }
         #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Disconnect the Socket, Stop the Host, and prepare for log off.
+        /// </summary>
+        /// <returns></returns>
+        public async Task PrepareLogOff()
+        {
+            _logger.Info("{Method} invoked", nameof(PrepareLogOff));
+            try
+            {
+                IsBusy = true;
+                // Disconnect communication service
+                await DisconnectAsync();
+                // Stop host if running
+                if (IsHostRunning)
+                {
+                    RequestStopHost?.Invoke();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogErrorWithCaller(ex, "Error during {Method}", nameof(PrepareLogOff));
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+        #endregion
     }
 }

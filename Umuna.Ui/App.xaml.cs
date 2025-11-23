@@ -11,6 +11,7 @@ using Umuna.Ui.Models;
 using Umuna.Ui.Services.Communication;
 using Umuna.Ui.Services.Logging;
 using Umuna.Ui.ViewModels;
+using Umuna.Ui.Views;
 
 namespace Umuna.Ui
 {
@@ -77,10 +78,16 @@ namespace Umuna.Ui
             });
 
             // Register ViewModels
-            services.AddSingleton<MainViewModel>();
-            services.AddSingleton<LoginViewModel>();
-            services.AddSingleton<UserCreationViewModel>();
             services.AddSingleton<RootViewModel>();
+            services.AddSingleton<MainViewModel>();
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<UserCreationViewModel>();
+            services.AddSingleton<RootViewModel>();
+
+            // Register Views
+            services.AddSingleton<MainWindow>();
+            services.AddTransient<LoginView>();
+            services.AddTransient<UserCreationView>();
 
             // Build ServiceProvider once and return
             return services.BuildServiceProvider();

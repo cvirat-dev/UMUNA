@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -9,11 +10,7 @@ using Umuna.Ui.Models;
 namespace Umuna.Ui.Services.Communication
 {
     /// <summary>
-    /// A simple TCP communication service for sending and receiving messages.
-    /// This is the server side: 
-    /// - It uses <see cref="TcpListener"/> to listen for incoming connections.
-    /// - It calls <c>AcceptTcpClientAsync()</c> to accept a client connection.
-    /// - Can handle multple clients if needed.
+    /// Simple TCP server for single-client messaging.
     /// </summary>
     class TcpCommunicationService(ILogger<TcpCommunicationService> logger, IFileSerializer<AppConfig> fileSerializer) : ICommunicationService
     {
@@ -22,6 +19,7 @@ namespace Umuna.Ui.Services.Communication
         private TcpClient? _client;
         private AppConfig _config = fileSerializer.Load() ?? new AppConfig();
         private readonly ILogger<TcpCommunicationService> _logger = logger;
+        private CancellationTokenSource? _cts; // Cancels accept + read loops.
         #endregion
 
         #region Events
@@ -36,21 +34,23 @@ namespace Umuna.Ui.Services.Communication
                 return;
             }
 
+            _cts = new CancellationTokenSource();
+            var linkedToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cts.Token).Token;
+
             _logger.Info("Starting TCP server on {Address}:{Port}...", IPAddress.Loopback, _config.TcpService.Port);
 
             _listener = new TcpListener(IPAddress.Loopback, _config.TcpService.Port);
             _listener.Start();
             _logger.Info("TCP listener started and awaiting client connections.");
 
-            // Start accepting in background — don't await here
             _ = Task.Run(async () =>
             {
                 try
                 {
                     _logger.Debug("Waiting for TCP client to connect...");
-                    _client = await _listener.AcceptTcpClientAsync(cancellationToken);
+                    _client = await _listener.AcceptTcpClientAsync(linkedToken);
                     _logger.LogInformation("TCP client connected from {RemoteEndPoint}.", _client.Client.RemoteEndPoint);
-                    _ = ListenForMessagesAsync(_client, cancellationToken);
+                    _ = ListenForMessagesAsync(_client, linkedToken);
                 }
                 catch (OperationCanceledException)
                 {
@@ -58,19 +58,17 @@ namespace Umuna.Ui.Services.Communication
                 }
                 catch (ObjectDisposedException)
                 {
-                    // Listener disposed during shutdown
                     _logger.Debug("TCP listener disposed while waiting for a client.");
                 }
-                catch (SocketException ex) when (ex.ErrorCode == 995 || ex.ErrorCode == 10004) // WSA_OPERATION_ABORTED or WSAEINTR
+                catch (SocketException ex) when (ex.ErrorCode == 995 || ex.ErrorCode == 10004)
                 {
-                    // Listener.Stop() was called - this is expected during shutdown
                     _logger.Debug("TCP listener stopped during shutdown.");
                 }
                 catch (Exception ex)
                 {
                     _logger.LogErrorWithCaller(ex, "TCP listener stopped due to unexpected error.");
                 }
-            }, cancellationToken);
+            }, linkedToken);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken = default)
@@ -78,7 +76,10 @@ namespace Umuna.Ui.Services.Communication
             _logger.Info("Stopping TCP server...");
             try
             {
-                // Stop accepting new clients
+                // Cancel background operations first
+                _cts?.Cancel();
+
+                // Stop accepting
                 if (_listener != null)
                 {
                     _listener.Stop();
@@ -86,15 +87,22 @@ namespace Umuna.Ui.Services.Communication
                     _logger.Info("TCP listener stopped.");
                 }
 
-                // Close client connection
+                // Close client
                 if (_client != null)
                 {
                     try
                     {
                         if (_client.Connected)
                         {
-                            _client.GetStream().Close();
-                            _logger.Debug("TCP client stream closed.");
+                            try
+                            {
+                                _client.GetStream().Close();
+                                _logger.Debug("TCP client stream closed.");
+                            }
+                            catch (Exception ex)
+                            {
+                                _logger.LogDebug(ex, "Stream close produced an exception (ignored).");
+                            }
                         }
                         _client.Close();
                         _logger.Info("TCP client connection closed.");
@@ -105,12 +113,12 @@ namespace Umuna.Ui.Services.Communication
                     }
                     finally
                     {
+                        _client.Dispose();
                         _client = null;
                     }
                 }
 
-                // Give a small grace delay if background tasks are still cleaning up
-                await Task.Delay(100, cancellationToken);
+                await Task.Delay(50, cancellationToken);
 
                 _logger.Info("TCP server stopped gracefully.");
             }
@@ -118,13 +126,14 @@ namespace Umuna.Ui.Services.Communication
             {
                 _logger.Info("TCP server stop operation cancelled.");
             }
-            catch (SocketException ex)
-            {
-                _logger.LogDebug(ex, "SocketException encountered during TCP stop (likely during shutdown).");
-            }
             catch (Exception ex)
             {
                 _logger.LogErrorWithCaller(ex, "Unexpected error while stopping TCP server.");
+            }
+            finally
+            {
+                _cts?.Dispose();
+                _cts = null;
             }
         }
 
@@ -133,7 +142,7 @@ namespace Umuna.Ui.Services.Communication
             if (_client?.Connected != true)
             {
                 _logger.Warning("Send skipped: no TCP client connected.");
-                return; // Nothing to send if no client is connected
+                return;
             }
 
             try
@@ -156,7 +165,18 @@ namespace Umuna.Ui.Services.Communication
         private async Task ListenForMessagesAsync(TcpClient client, CancellationToken cancellationToken)
         {
             _logger.Debug("Starting to listen for TCP messages...");
-            NetworkStream stream = client.GetStream();
+            NetworkStream stream;
+
+            try
+            {
+                stream = client.GetStream();
+            }
+            catch (ObjectDisposedException)
+            {
+                _logger.Debug("Client stream already disposed before listen loop started.");
+                return;
+            }
+
             var buffer = new byte[1024];
 
             try
@@ -182,6 +202,11 @@ namespace Umuna.Ui.Services.Communication
             catch (ObjectDisposedException)
             {
                 _logger.Debug("TCP stream disposed, stopping listen loop.");
+            }
+            catch (IOException ioEx) when (ioEx.InnerException is SocketException se && (se.ErrorCode == 995 || se.ErrorCode == 10004))
+            {
+                // Expected if shutdown closed the socket while ReadAsync was pending
+                _logger.Debug("Read aborted due to shutdown (SocketError {Code}).", se.ErrorCode);
             }
             catch (Exception ex)
             {

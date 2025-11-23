@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using Umuna.Ui.Models.Root;
 
 namespace Umuna.Ui.ViewModels
@@ -7,6 +8,7 @@ namespace Umuna.Ui.ViewModels
     public partial class RootViewModel : ObservableObject
     {
         #region Fields
+        private readonly ILogger<RootViewModel> _logger;
         private readonly MainViewModel _mainViewModel;
         private readonly LoginViewModel _loginViewModel;
         private readonly UserCreationViewModel _userCreationViewModel;
@@ -26,8 +28,13 @@ namespace Umuna.Ui.ViewModels
         #endregion
 
         #region Constructors
-        public RootViewModel(MainViewModel mainViewModel, LoginViewModel loginViewModel, UserCreationViewModel userCreationViewModel)
+        public RootViewModel(
+            ILogger<RootViewModel>  logger, 
+            MainViewModel           mainViewModel, 
+            LoginViewModel          loginViewModel, 
+            UserCreationViewModel   userCreationViewModel)
         {
+            _logger = logger;
             _mainViewModel = mainViewModel;
             _loginViewModel = loginViewModel;
             _userCreationViewModel = userCreationViewModel;
@@ -47,7 +54,7 @@ namespace Umuna.Ui.ViewModels
             try
             {
                 // Try to gracefully disconnect if possible
-                await _mainViewModel.DisconnectCommand.ExecuteAsync(null);
+                await _mainViewModel.PrepareLogOff();
             }
             catch
             {
