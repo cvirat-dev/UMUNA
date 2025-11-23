@@ -20,7 +20,7 @@ namespace Umuna.Ui.Infrastructure.Logging
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            if(!logger.IsEnabled(LogLevel.Trace))
+            if (!logger.IsEnabled(LogLevel.Trace))
             {
                 return;
             }
@@ -43,7 +43,7 @@ namespace Umuna.Ui.Infrastructure.Logging
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            if(!logger.IsEnabled(LogLevel.Debug))
+            if (!logger.IsEnabled(LogLevel.Debug))
             {
                 return;
             }
@@ -66,7 +66,7 @@ namespace Umuna.Ui.Infrastructure.Logging
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            if(!logger.IsEnabled(LogLevel.Information))
+            if (!logger.IsEnabled(LogLevel.Information))
             {
                 return;
             }
@@ -89,7 +89,7 @@ namespace Umuna.Ui.Infrastructure.Logging
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            if(!logger.IsEnabled(LogLevel.Warning))
+            if (!logger.IsEnabled(LogLevel.Warning))
             {
                 return;
             }
@@ -113,12 +113,30 @@ namespace Umuna.Ui.Infrastructure.Logging
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            if(!logger.IsEnabled(LogLevel.Error))
+            if (!logger.IsEnabled(LogLevel.Error))
             {
                 return;
             }
             logger.LogError(exception, "[{MemberName}] {SourceFile}:line {LineNumber} - {Message}",
                 memberName, System.IO.Path.GetFileName(sourceFilePath), sourceLineNumber, message);
+        }
+
+        // Critical level with caller info
+        public static void LogCriticalWithCaller(
+            this ILogger logger,
+            object? sender,
+            Exception exception,
+            string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            if (!logger.IsEnabled(LogLevel.Critical))
+            {
+                return;
+            }
+            logger.LogCritical(exception, "[{MemberName}] {SourceFile}:line {LineNumber} - {Message} (Sender: {Sender})",
+                memberName, System.IO.Path.GetFileName(sourceFilePath), sourceLineNumber, message, sender?.GetType().FullName);
         }
     }
 }

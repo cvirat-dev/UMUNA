@@ -6,6 +6,7 @@ using System.Windows;
 using Umuna.Core.Services.FileDataService;
 using Umuna.Core.Services.Serialization;
 using Umuna.Ui.Constants;
+using Umuna.Ui.Infrastructure.Logging;
 using Umuna.Ui.Models;
 using Umuna.Ui.Services.Communication;
 using Umuna.Ui.Services.Logging;
@@ -106,14 +107,14 @@ namespace Umuna.Ui
             // Non-UI thread exceptions
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
             {
-                var exception = e.ExceptionObject as Exception;
+                Exception? exception = e.ExceptionObject as Exception;
                 _logger.LogCritical(exception, "Unhandled non-UI thread exception");
             };
 
             // Task exceptions
             TaskScheduler.UnobservedTaskException += (s, e) =>
             {
-                _logger.LogCritical(e.Exception, "Unhandled Task exception");
+                _logger.LogCriticalWithCaller(s, e.Exception, "Unhandled Task exception");
                 e.SetObserved();
             };
         }

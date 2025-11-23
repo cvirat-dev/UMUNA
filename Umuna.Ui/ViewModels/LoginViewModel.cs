@@ -76,7 +76,7 @@ namespace Umuna.Ui.ViewModels
                     return;
                 }
 
-                var error = await response.Content.ReadAsStringAsync();
+                string error = await response.Content.ReadAsStringAsync();
                 ErrorMessage = string.IsNullOrWhiteSpace(error)
                     ? $"Login failed: {(int)response.StatusCode} {response.ReasonPhrase}"
                     : error;

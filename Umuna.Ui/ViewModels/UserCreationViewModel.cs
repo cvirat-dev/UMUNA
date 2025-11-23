@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Umuna.Ui.Constants;
+using Umuna.Ui.Infrastructure.Logging;
 using Umuna.Ui.Models;
 
 namespace Umuna.Ui.ViewModels
@@ -89,50 +90,52 @@ namespace Umuna.Ui.ViewModels
         }
 
         private async Task CreateUserAsync()
-         {
-             ErrorMessage = string.Empty;
-             SuccessMessage = string.Empty;
+        {
+            _logger.Info("{Command} invoked", nameof(CreateUserAsync));
 
-             if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
-             {
-                 ErrorMessage = "All fields are required.";
-                 return;
-             }
+            ErrorMessage = string.Empty;
+            SuccessMessage = string.Empty;
 
-             try
-             {
-                 IsBusy = true;
-                 (CreateUserCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
-                 var payload = new { Name = UserName, Email, Password };
-                 var json = JsonSerializer.Serialize(payload);
-                 using var content = new StringContent(json, Encoding.UTF8, "application/json");
-                 using var response = await _httpClient.PostAsync(ApiRoutes.AddUser, content);
-
-                 if (response.IsSuccessStatusCode)
-                 {
-                     SuccessMessage = "User created successfully.";
-                     Password = string.Empty; // clear password field
-                     return;
-                 }
-
-                 var error = await response.Content.ReadAsStringAsync();
-                 ErrorMessage = string.IsNullOrWhiteSpace(error) ? "Failed to create user." : error;
-             }
-             catch (HttpRequestException ex)
-             {
-                ErrorMessage = $"Network error: {ex.Message}";
-             }
-             catch (System.Exception ex)
-             {
-                ErrorMessage = $"Unexpected error: {ex.Message}";
-             }
-             finally
-             {
-                IsBusy = false;
-                (CreateUserCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
-
-                NavigateToLoginView();
+            if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
+            {
+                ErrorMessage = "All fields are required.";
+                return;
             }
-         }
-     }
+
+            try
+            {
+            IsBusy = true;
+            (CreateUserCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
+            var payload = new { Name = UserName, Email, Password };
+            string json = JsonSerializer.Serialize(payload);
+            using StringContent content = new(json, Encoding.UTF8, "application/json");
+            using HttpResponseMessage response = await _httpClient.PostAsync(ApiRoutes.AddUser, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                SuccessMessage = "User created successfully.";
+                Password = string.Empty; // clear password field
+                return;
+            }
+
+            string error = await response.Content.ReadAsStringAsync();
+            ErrorMessage = string.IsNullOrWhiteSpace(error) ? "Failed to create user." : error;
+            }
+            catch (HttpRequestException ex)
+            {
+            ErrorMessage = $"Network error: {ex.Message}";
+            }
+            catch (System.Exception ex)
+            {
+            ErrorMessage = $"Unexpected error: {ex.Message}";
+            }
+            finally
+            {
+            IsBusy = false;
+            (CreateUserCommand as AsyncRelayCommand)?.NotifyCanExecuteChanged();
+
+            NavigateToLoginView();
+        }
+        }
+    }
 }

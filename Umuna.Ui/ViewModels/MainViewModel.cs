@@ -122,6 +122,13 @@ namespace Umuna.Ui.ViewModels
 
             RequestStopHost?.Invoke();
         }
+
+        [RelayCommand]
+        private async Task Crash()
+        {
+            _logger.Info("{Command} invoked", nameof(Crash));
+            throw new Exception("Boom!"); // Caught by DispatcherUnhandledException
+        }
         #endregion
     }
 }
