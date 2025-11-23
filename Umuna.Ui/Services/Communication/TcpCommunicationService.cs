@@ -61,9 +61,14 @@ namespace Umuna.Ui.Services.Communication
                     // Listener disposed during shutdown
                     _logger.Debug("TCP listener disposed while waiting for a client.");
                 }
+                catch (SocketException ex) when (ex.ErrorCode == 995 || ex.ErrorCode == 10004) // WSA_OPERATION_ABORTED or WSAEINTR
+                {
+                    // Listener.Stop() was called - this is expected during shutdown
+                    _logger.Debug("TCP listener stopped during shutdown.");
+                }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "TCP listener stopped due to unexpected error.");
+                    _logger.LogErrorWithCaller(ex, "TCP listener stopped due to unexpected error.");
                 }
             }, cancellationToken);
         }
@@ -119,7 +124,7 @@ namespace Umuna.Ui.Services.Communication
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unexpected error while stopping TCP server.");
+                _logger.LogErrorWithCaller(ex, "Unexpected error while stopping TCP server.");
             }
         }
 
@@ -144,7 +149,7 @@ namespace Umuna.Ui.Services.Communication
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error sending TCP message.");
+                _logger.LogErrorWithCaller(ex, "Error sending TCP message.");
             }
         }
 
@@ -180,7 +185,7 @@ namespace Umuna.Ui.Services.Communication
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error while listening for TCP messages.");
+                _logger.LogErrorWithCaller(ex, "Error while listening for TCP messages.");
             }
         }
 
