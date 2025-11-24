@@ -61,7 +61,7 @@
                 <PasswordBox x:Name="PwdBox"
                              Grid.Row="1" Grid.Column="1"
                              attached:PasswordBoxHelper.BindPassword="True"
-                             attached:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}"
+                             attached:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Width="240"
                              Margin="0,0,0,12"/>
 
@@ -69,6 +69,7 @@
                 <Button x:Name="LoginButton"
                         Grid.Row="2" Grid.Column="1"
                         VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
                         Width="100" Height="28"
                         Content="Login"
                         Margin="0,0,0,0"
@@ -76,6 +77,15 @@
                         Command="{Binding LoginCommand}"
                         CommandParameter="{Binding ElementName=PwdBox}">
                 </Button>
+                
+                <!-- Cancel Button -->
+                <Button Grid.Row="2" Grid.Column="1"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Width="100" Height="28"
+                        Content="Cancel"
+                        Margin="110,0,0,0"
+                        Command="{Binding CancelCommand}"/>
 
                 <TextBlock Grid.Row="3" Grid.ColumnSpan="2"
                            Foreground="OrangeRed"
@@ -83,5 +93,6 @@
                            TextWrapping="Wrap" />
             </Grid>
         </Border>
+
     </Grid>
 </UserControl>

@@ -5,7 +5,7 @@ using Umuna.Ui.Models.Root;
 
 namespace Umuna.Ui.ViewModels
 {
-    public partial class RootViewModel : ObservableObject
+    public partial class RootViewModel : ViewModelBase
     {
         #region Fields
         private readonly ILogger<RootViewModel> _logger;

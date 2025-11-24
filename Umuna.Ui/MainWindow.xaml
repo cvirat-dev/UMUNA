@@ -24,18 +24,98 @@
         </DataTemplate>
     </Window.Resources>
 
-    <Window.Style>
-        <Style TargetType="{x:Type Window}">
-            <Style.Triggers>
-                <!-- Bind wait cursor to the active view model's IsBusy -->
-                <DataTrigger Binding="{Binding CurrentViewModel.IsBusy}" Value="True">
-                    <Setter Property="Cursor" Value="Wait" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Style>
-
     <Grid>
-        <ContentControl Content="{Binding CurrentViewModel}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ContentControl Grid.Row="0" Content="{Binding CurrentViewModel}" />
+
+        <Border Grid.Row="1"
+                Background="{StaticResource Brush.Surface}"
+                BorderBrush="{StaticResource Brush.Accent}"
+                BorderThickness="0,1,0,0"
+                Height="28">
+            <Grid Margin="8,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <!-- StackPanel visibility toggling only -->
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentViewModel.IsBusy}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+
+                    <Viewbox Width="16" Height="16" Margin="0,0,6,0">
+                        <Canvas Width="24" Height="24" RenderTransformOrigin="0.5,0.5">
+                            <Canvas.RenderTransform>
+                                <RotateTransform Angle="0"/>
+                            </Canvas.RenderTransform>
+                            <Canvas.Style>
+                                <Style TargetType="Canvas">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentViewModel.IsBusy}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard Name="SpinnerStoryboard">
+                                                    <Storyboard RepeatBehavior="Forever">
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                            From="0" To="360" Duration="0:0:1.5" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <StopStoryboard BeginStoryboardName="SpinnerStoryboard"/>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Canvas.Style>
+                            <Path Data="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"
+                                  Fill="{StaticResource Brush.Accent}"/>
+                        </Canvas>
+                    </Viewbox>
+
+                    <TextBlock Text="{Binding CurrentViewModel.StatusMessage, FallbackValue='Processing...'}"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource Brush.Accent}"/>
+                </StackPanel>
+
+                <TextBlock Grid.Column="0"
+                           Text="Ready"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentViewModel.IsBusy}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <TextBlock Grid.Column="2"
+                           Text="{Binding CurrentViewModel.UserName, StringFormat='User: {0}'}"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+                           Margin="8,0,0,0"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

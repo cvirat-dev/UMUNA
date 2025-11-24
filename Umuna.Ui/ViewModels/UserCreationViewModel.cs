@@ -1,4 +1,3 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
@@ -12,7 +11,7 @@ using Umuna.Ui.Models;
 namespace Umuna.Ui.ViewModels
 {
     // User creation logic ViewModel without source generator attributes (manual properties)
-    public class UserCreationViewModel : ObservableObject
+    public class UserCreationViewModel : ViewModelBase
     {
         #region Fields
         private readonly HttpClient _httpClient;

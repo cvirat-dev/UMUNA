@@ -3,15 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:converters="clr-namespace:Umuna.Ui.Infrastructure.Converters"
         xmlns:local="clr-namespace:Umuna.Ui.Views"
         mc:Ignorable="d"
         Title="{Binding ErrorTitle}"
-        Width="500" 
+        Width="500"
         MinHeight="200"
         MaxHeight="600"
+        SizeToContent="Height"
+        ResizeMode="CanResize"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize"
         ShowInTaskbar="False"
         Background="{StaticResource Brush.Background}">
     <Window.Resources>
@@ -22,16 +24,15 @@
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Error Icon and Message -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
-            <!-- Using TextBlock with warning symbol instead of image -->
-            <TextBlock Text="⚠" FontSize="48" Foreground="#D32F2F" 
-                       Margin="0,0,15,0" VerticalAlignment="Top"/>
-
+            <Image Source="Assets/Icons/error.png" 
+                   Width="32" Height="32"
+                   Margin="0,0,15,0" VerticalAlignment="Top"/>
             <TextBlock Text="{Binding ErrorMessage}" 
                        TextWrapping="Wrap" 
                        VerticalAlignment="Center"
@@ -60,15 +61,15 @@
                     Orientation="Horizontal" 
                     HorizontalAlignment="Right">
 
-            <Button Content="Copy Details" 
+            <Button Content="Copy Details" Margin="0,0,8,0" 
                     Click="OnCopyDetailsClick"
                     Visibility="{Binding ExceptionDetails, Converter={StaticResource NullToVisibilityConverter}}"/>
 
-            <Button Content="Retry" 
+            <Button Content="Retry" Margin="0,0,8,0" 
                     Click="OnRetryClick"
                     Visibility="{Binding ShowRetryButton, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-            <Button Content="Close" 
+            <Button Content="Close" Margin="0,0,8,0" 
                     Click="OnCloseClick" 
                     IsDefault="True"/>
         </StackPanel>
