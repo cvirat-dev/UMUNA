@@ -1,80 +1,55 @@
 using Microsoft.EntityFrameworkCore;
-using Umuna.Core.Contracts.Models;
 using Umuna.Server.Domain.Entities;
 using Umuna.Server.Infrastructure.Database;
 
 namespace Umuna.Server.Infrastructure.Repositories
 {
-    public class UserSettingsRepository : IUserSettingsRepository
+    public class UserSettingsRepository(UmunaDbContext context) : IUserSettingsRepository
     {
-        private readonly UmunaDbContext _context;
+        private readonly UmunaDbContext _context = context;
 
-        public UserSettingsRepository(UmunaDbContext context)
+        public async Task<UserSettings?> GetById(int id)
         {
-            _context = context;
+            return await _context.Settings
+                .Include(s => s.User)
+                .FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<ServiceResult> AddAsync(UserSettings settings)
+        public async Task<List<UserSettings>> GetAll()
         {
-            try
-            {
-                _context.Settings.Add(settings);
-                await _context.SaveChangesAsync();
-                return ServiceResult.Ok();
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult.Fail(ex.Message);
-            }
+            return await _context.Settings
+                .Include(s => s.User)
+                .ToListAsync();
         }
 
-        public async Task<ServiceResult> DeleteAsync(UserSettings settings)
+        public async Task Add(UserSettings entity)
         {
-            try
+            await _context.Settings.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(UserSettings entity)
+        {
+            entity.UpdatedAt = DateTime.UtcNow;
+            _context.Settings.Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var settings = await _context.Settings.FindAsync(id);
+            if (settings != null)
             {
                 _context.Settings.Remove(settings);
                 await _context.SaveChangesAsync();
-                return ServiceResult.Ok();
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult.Fail(ex.Message);
             }
         }
 
-        public async Task<ServiceResult<UserSettings>> GetByUserIdAsync(int userId)
+        public async Task<UserSettings?> GetByUserIdAsync(int userId)
         {
-            try
-            {
-                var settings = await _context.Settings
-                                             .SingleOrDefaultAsync(s => s.UserId == userId);
-                if (settings != null)
-                {
-                    return ServiceResult<UserSettings>.Ok(settings);
-                }
-                else
-                {
-                    return ServiceResult<UserSettings>.Fail("User settings not found");
-                }
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult<UserSettings>.Fail(ex.Message);
-            }
-        }
-
-        public async Task<ServiceResult> UpdateAsync(UserSettings settings)
-        {
-            try
-            {
-                _context.Settings.Update(settings);
-                await _context.SaveChangesAsync();
-                return ServiceResult.Ok();
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult.Fail(ex.Message);
-            }
+            return await _context.Settings
+                .Include(s => s.User)
+                .FirstOrDefaultAsync(s => s.UserId == userId);
         }
     }
 }

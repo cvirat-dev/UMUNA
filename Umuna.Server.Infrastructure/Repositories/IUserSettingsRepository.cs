@@ -1,13 +1,9 @@
-using Umuna.Core.Contracts.Models;
 using Umuna.Server.Domain.Entities;
 
 namespace Umuna.Server.Infrastructure.Repositories
 {
-    public interface IUserSettingsRepository
+    public interface IUserSettingsRepository : ICrudRepository<UserSettings>
     {
-        Task<ServiceResult<UserSettings>> GetByUserIdAsync(int userId);
-        Task<ServiceResult> AddAsync(UserSettings settings);
-        Task<ServiceResult> UpdateAsync(UserSettings settings);
-        Task<ServiceResult> DeleteAsync(UserSettings settings);
+        Task<UserSettings?> GetByUserIdAsync(int userId);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Umuna.Core.Contracts.Models;
 using Umuna.Server.Domain.Entities;
 using Umuna.Server.Infrastructure.Database;
 
@@ -9,81 +8,41 @@ namespace Umuna.Server.Infrastructure.Repositories
     {
         private readonly UmunaDbContext _context = context;
 
-        public async Task<ServiceResult> AddAsync(User user)
+        public async Task<User?> GetById(int id)
         {
-            try
-            {
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-                return ServiceResult.Ok();
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult.Fail(ex.Message);
-            }
+            return await _context.Users
+                .Include(u => u.Settings)
+                .Include(u => u.CameraPositions)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        Task<ServiceResult> IUserRepository.DeleteAsync(User user)
+        public async Task<List<User>> GetAll()
         {
-            try
+            return await _context.Users
+                .Include(u => u.Settings)
+                .Include(u => u.CameraPositions)
+                .ToListAsync();
+        }
+
+        public async Task Add(User entity)
+        {
+            await _context.Users.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(User entity)
+        {
+            _context.Users.Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user != null)
             {
                 _context.Users.Remove(user);
-                _context.SaveChangesAsync();
-                return Task.FromResult(ServiceResult.Ok());
-
-            }
-            catch (Exception ex)
-            {
-                return Task.FromResult(ServiceResult.Fail(ex.Message));
-            }
-        }
-
-        Task<ServiceResult<List<User>>> IUserRepository.GetAllAsync()
-        {
-            try
-            {
-                var users = _context.Users
-                                .ToListAsync();
-                return Task.FromResult(ServiceResult<List<User>>.Ok(users.Result));
-            }
-            catch (Exception ex)
-            {
-                return Task.FromResult(ServiceResult<List<User>>.Fail(ex.Message));
-            }
-        }
-
-        Task<ServiceResult<User>> IUserRepository.GetByIdAsync(int id)
-        {
-            try
-            {
-                var user = _context.Users
-                               .FirstOrDefaultAsync(u => u.Id == id);
-                if (user.Result != null)
-                {
-                    return Task.FromResult(ServiceResult<User>.Ok(user.Result));
-                }
-                else
-                {
-                    return Task.FromResult(ServiceResult<User>.Fail("User not found"));
-                }
-            }
-            catch (Exception ex)
-            {
-                return Task.FromResult(ServiceResult<User>.Fail(ex.Message));
-            }
-        }
-
-        Task<ServiceResult> IUserRepository.UpdateAsync(User user)
-        {
-            try
-            {
-                _context.Users.Update(user);
-                _context.SaveChangesAsync();
-                return Task.FromResult(ServiceResult.Ok());
-            }
-            catch (Exception ex)
-            {
-                return Task.FromResult(ServiceResult.Fail(ex.Message));
+                await _context.SaveChangesAsync();
             }
         }
     }

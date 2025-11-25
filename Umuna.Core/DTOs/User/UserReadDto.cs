@@ -4,7 +4,7 @@ using Umuna.Core.Contracts.DTOs.CameraPositions;
 
 namespace Umuna.Core.Contracts.DTOs.User
 {
-    public class UserReadDto
+    public class UserReadDto : IReadDto
     {
         public int Id { get; set; }              // Server-generated ID
         public string Name { get; set; } = null!;

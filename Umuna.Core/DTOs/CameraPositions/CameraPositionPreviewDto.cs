@@ -7,6 +7,6 @@ namespace Umuna.Core.Contracts.DTOs.CameraPositions
     public class CameraPositionPreviewDto
     {
         public int Id { get; set; }              // Server-generated ID
-        public string PositionName { get; set; } = null!;
+        public string Name { get; set; } = null!;
     }
 }

@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Umuna.Core.Contracts.Models;
 using Umuna.Server.Domain.Entities;
 using Umuna.Server.Infrastructure.Database;
 
@@ -9,117 +8,48 @@ namespace Umuna.Server.Infrastructure.Repositories
     {
         private readonly UmunaDbContext _context = context;
 
-        public async Task<ServiceResult> AddAsync(CameraPosition cameraPosition)
+        public async Task Add(CameraPosition entity)
         {
-            try
-            {
-                _context.CameraPositions.Add(cameraPosition);
-                await _context.SaveChangesAsync();
-                return ServiceResult.Ok();
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult.Fail(ex.Message);
-            }
+            if (entity == null) return;
+            entity.CreatedAt = DateTime.UtcNow;
+            _context.CameraPositions.Add(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<ServiceResult> DeleteAsync(CameraPosition cameraPosition)
+        public async Task Delete(int id)
         {
-            try
-            {
-                _context.CameraPositions.Remove(cameraPosition);
-                await _context.SaveChangesAsync();
-                return ServiceResult.Ok();
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult.Fail(ex.Message);
-            }
+            CameraPosition? existing = await _context.CameraPositions.FirstOrDefaultAsync(cp => cp.Id == id);
+            if (existing == null) return;
+            _context.CameraPositions.Remove(existing);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<ServiceResult<List<CameraPosition>>> GetAllAsync()
+        public async Task<List<CameraPosition>> GetAll()
         {
-            try
-            {
-                var cameraPositions = await _context.CameraPositions.ToListAsync();
-                return ServiceResult<List<CameraPosition>>.Ok(cameraPositions);
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult<List<CameraPosition>>.Fail(ex.Message);
-            }
+            return await _context.CameraPositions.ToListAsync();
         }
 
-        public async Task<ServiceResult<CameraPosition>> GetFirstByIdAsync(int id)
+        public async Task<CameraPosition?> GetById(int id)
         {
-            try
-            {
-                var cameraPosition = await _context.CameraPositions
-                                                    .FirstOrDefaultAsync(cp => cp.Id == id);
-                if (cameraPosition != null)
-                {
-                    return ServiceResult<CameraPosition>.Ok(cameraPosition);
-                }
-                else
-                {
-                    return ServiceResult<CameraPosition>.Fail("Camera position not found");
-                }
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult<CameraPosition>.Fail(ex.Message);
-            }
+            return await _context.CameraPositions.FirstOrDefaultAsync(cp => cp.Id == id);
         }
 
-        public async Task<ServiceResult<List<CameraPosition>>> GetByUserIdAsync(int userId)
+        public async Task<List<CameraPosition>> GetByUserId(int userId)
         {
-            try
-            {
-                var cameraPositions = await _context.CameraPositions
-                                                     .Where(cp => cp.UserId == userId)
-                                                     .ToListAsync();
-                return ServiceResult<List<CameraPosition>>.Ok(cameraPositions);
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult<List<CameraPosition>>.Fail(ex.Message);
-            }
+            return await _context.CameraPositions.Where(cp => cp.UserId == userId).ToListAsync();
         }
 
-        public async Task<ServiceResult<CameraPosition>> GetDefaultForUserAsync(int userId)
+        public async Task<CameraPosition?> GetDefaultForUser(int userId)
         {
-            try
-            {
-                var cameraPosition = await _context.CameraPositions
-                                                    .Where(cp => cp.UserId == userId && cp.IsDefault)
-                                                    .FirstOrDefaultAsync();
-                if (cameraPosition != null)
-                {
-                    return ServiceResult<CameraPosition>.Ok(cameraPosition);
-                }
-                else
-                {
-                    return ServiceResult<CameraPosition>.Fail("Default camera position not found");
-                }
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult<CameraPosition>.Fail(ex.Message);
-            }
+            return await _context.CameraPositions.FirstOrDefaultAsync(cp => cp.UserId == userId && cp.IsDefault);
         }
 
-        public async Task<ServiceResult> UpdateAsync(CameraPosition cameraPosition)
+        public async Task Update(CameraPosition entity)
         {
-            try
-            {
-                _context.CameraPositions.Update(cameraPosition);
-                await _context.SaveChangesAsync();
-                return ServiceResult.Ok();
-            }
-            catch (Exception ex)
-            {
-                return ServiceResult.Fail(ex.Message);
-            }
+            if (entity == null) return;
+            entity.UpdatedAt = DateTime.UtcNow;
+            _context.CameraPositions.Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

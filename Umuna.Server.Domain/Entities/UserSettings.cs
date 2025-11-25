@@ -1,6 +1,6 @@
 namespace Umuna.Server.Domain.Entities
 {
-    public class UserSettings
+    public class UserSettings : IEntityDto
     {
         public int Id { get; set; }
         public DateTime UpdatedAt { get; set; }

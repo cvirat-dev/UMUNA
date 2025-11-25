@@ -9,5 +9,5 @@
         // Optional: update only when provided
         public string? Password { get; set; }
 
-    }
+        }
 }

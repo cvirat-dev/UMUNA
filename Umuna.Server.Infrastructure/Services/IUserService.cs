@@ -1,11 +1,8 @@
 using Umuna.Core.Contracts.DTOs.User;
-using Umuna.Core.Contracts.Models;
 
 namespace Umuna.Server.Infrastructure.Services
 {
-    public interface IUserService
+    public interface IUserService : ICrudService<UserCreateDto, UserUpdateDto, UserReadDto>
     {
-        Task<ServiceResult<UserCreateDto>> AddUserAsync(UserCreateDto userDto);
-        Task<ServiceResult<UserCreateDto>> GetUserByIdAsync(string id);
     }
 }
