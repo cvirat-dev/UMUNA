@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36121.58
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11217.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "UMUNA_Unity\Assembly-CSharp.csproj", "{B121BAE9-F82B-06A8-F932-ECD403B078A6}"
 EndProject
@@ -11,13 +11,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UUP", "UMUNA_Unity\UUP.cspr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UUP.Editor", "UMUNA_Unity\UUP.Editor.csproj", "{4F6D729A-863F-E4C6-D928-736B38CEF816}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core", "Umuna.Core\Umuna.Core.csproj", "{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core.Contracts", "Umuna.Core\Umuna.Core.Contracts.csproj", "{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core.Tests", "Umuna.Core.Tests\Umuna.Core.Tests\Umuna.Core.Tests.csproj", "{525CF902-A046-D3DE-A39A-7E24EC1189DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.ApiServer", "Umuna.ApiServer\Umuna.ApiServer.csproj", "{3EC597D3-7576-48CE-A20D-6C922817BFE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Server.Api", "Umuna.Server.Api\Umuna.Server.Api.csproj", "{3EC597D3-7576-48CE-A20D-6C922817BFE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Ui", "Umuna.Ui\Umuna.Ui.csproj", "{9B466BE6-7DE1-444B-870E-2DAC4DB5735F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core.Services", "Umuna.Core.Serialization\Umuna.Core.Services.csproj", "{1965FBE6-BFE5-4435-8B4E-14A5F7EB2A85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core.Messages", "Umuna.Core.Messages\Umuna.Core.Messages.csproj", "{387F283B-B8F4-4D6C-B462-DD378B8089BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Server.Domain", "Umuna.Server.Domain\Umuna.Server.Domain.csproj", "{4B129ED1-6EA6-4308-946D-BBB68B62FF44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Server.Infrastructure", "Umuna.Server.Infrastructure\Umuna.Server.Infrastructure.csproj", "{6EA607BF-43AC-4C14-A87F-FE1F9179A400}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +65,22 @@ Global
 		{9B466BE6-7DE1-444B-870E-2DAC4DB5735F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B466BE6-7DE1-444B-870E-2DAC4DB5735F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B466BE6-7DE1-444B-870E-2DAC4DB5735F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1965FBE6-BFE5-4435-8B4E-14A5F7EB2A85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1965FBE6-BFE5-4435-8B4E-14A5F7EB2A85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1965FBE6-BFE5-4435-8B4E-14A5F7EB2A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1965FBE6-BFE5-4435-8B4E-14A5F7EB2A85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{387F283B-B8F4-4D6C-B462-DD378B8089BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{387F283B-B8F4-4D6C-B462-DD378B8089BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{387F283B-B8F4-4D6C-B462-DD378B8089BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{387F283B-B8F4-4D6C-B462-DD378B8089BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B129ED1-6EA6-4308-946D-BBB68B62FF44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B129ED1-6EA6-4308-946D-BBB68B62FF44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B129ED1-6EA6-4308-946D-BBB68B62FF44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B129ED1-6EA6-4308-946D-BBB68B62FF44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EA607BF-43AC-4C14-A87F-FE1F9179A400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EA607BF-43AC-4C14-A87F-FE1F9179A400}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EA607BF-43AC-4C14-A87F-FE1F9179A400}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EA607BF-43AC-4C14-A87F-FE1F9179A400}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

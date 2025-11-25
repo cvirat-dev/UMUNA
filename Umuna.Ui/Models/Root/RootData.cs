@@ -1,9 +1,9 @@
-﻿using Umuna.Core.Domain.Data;
+﻿using Umuna.Core.Contracts.DTOs.User;
 
 namespace Umuna.Ui.Models.Root
 {
     public class RootData
     {
-        public User User { get; set; } = new User();
+        public UserCreateDto User { get; set; } = new UserCreateDto();
     }
 }

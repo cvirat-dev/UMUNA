@@ -111,7 +111,7 @@
                 </TextBlock>
 
                 <TextBlock Grid.Column="2"
-                           Text="{Binding CurrentViewModel.UserName, StringFormat='User: {0}'}"
+                           Text="{Binding CurrentUser, StringFormat='User: {0}'}"
                            VerticalAlignment="Center"
                            Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
                            Margin="8,0,0,0"/>
