@@ -1,7 +1,8 @@
 ﻿using Umuna.Server.Domain.Entities;
 using Umuna.Core.Contracts.DTOs.User;
+using Umuna.Server.Api.Mappings;
 
-namespace Umuna.ApiServer.Mappings.Data
+namespace Umuna.Server.Api.Mappings.Data
 {
     public class PlayerDataMap : IDtoMapper<UserCreateDto, User>
     {

@@ -1,30 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
-using Umuna.ApiServer.DTOs.Requests;
-using Umuna.Server.Infrastructure.Database;
-using Umuna.Server.Domain.Entities;
+using Umuna.Core.Contracts.Constants.Api;
+using Umuna.Core.Contracts.DTOs.Requests;
+using Umuna.Core.Contracts.DTOs.User;
+using Umuna.Core.Contracts.Models;
+using Umuna.Server.Infrastructure.Services;
 
-namespace Umuna.ApiServer.Controllers
+namespace Umuna.Server.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class AuthController(UmunaDbContext context) : ControllerBase
+    [Route(ApiRoutes.Auth.Base)]
+    public class AuthController(IAuthService authService) : ControllerBase
     {
-        private readonly UmunaDbContext _context = context;
+        private readonly IAuthService _authService = authService;
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequestDto loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginDto)
         {
-            User? user = _context.Users.SingleOrDefault(
-                u => u.Name == loginDto.UserName && u.PasswordHash == loginDto.Password);
+            ServiceResult<UserReadDto> result = await _authService.Authenticate(loginDto);
 
-            // Simulate authentication process
-            Task.Delay(2000).Wait();
-
-            if (user == null)
+            if (!result.Success)
                 return Unauthorized("Invalid username or password.");
 
-            return Ok(
-                new { Message = "Login successful", UserName = user.Name, UserId = user.Id });
+            return Ok(result.Data);
         }
     }
 }

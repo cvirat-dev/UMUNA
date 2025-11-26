@@ -6,9 +6,18 @@ using Umuna.Server.Infrastructure.Repositories;
 
 namespace Umuna.Server.Infrastructure.Services
 {
-    public class CameraPositionService(ICameraPositionRepository cameraPositionRepository) : ICameraPositionService
+    public class CameraPositionService(
+        ICameraPositionRepository cameraPositionRepository,
+        IEntityToDtoMapper<CameraPosition, CameraPositionReadDto, CameraPositionCreateDto, CameraPositionUpdateDto> entityToDtoMapper
+        ) : ICameraPositionService
     {
         private readonly ICameraPositionRepository _cameraPositionRepository = cameraPositionRepository;
+        private readonly IEntityToDtoMapper<
+            CameraPosition,
+            CameraPositionReadDto,
+            CameraPositionCreateDto,
+            CameraPositionUpdateDto>
+            _entityToDtoMapper = entityToDtoMapper;
 
         public async Task<ServiceResult<CameraPositionReadDto>> Add(CameraPositionCreateDto createDto)
         {
@@ -26,9 +35,10 @@ namespace Umuna.Server.Infrastructure.Services
 
             try
             {
-                CameraPosition cameraPosition = createDto.ToEntity();
+                CameraPosition cameraPosition = _entityToDtoMapper.ToEntity(createDto);
                 await _cameraPositionRepository.Add(cameraPosition);
-                return ServiceResult<CameraPositionReadDto>.Ok(cameraPosition.ToDto());
+                CameraPositionReadDto dto = _entityToDtoMapper.ToDto(cameraPosition);
+                return ServiceResult<CameraPositionReadDto>.Ok(dto);
             }
             catch (Exception ex)
             {
@@ -36,18 +46,15 @@ namespace Umuna.Server.Infrastructure.Services
             }
         }
 
-        public async Task<ServiceResult> Delete(string id)
+        public async Task<ServiceResult> Delete(int id)
         {
-            if (!int.TryParse(id, out var cameraPositionId))
-                return ServiceResult.Fail("Invalid camera position ID format.");
-
             try
             {
-                CameraPosition? cameraPosition = await _cameraPositionRepository.GetById(cameraPositionId);
+                CameraPosition? cameraPosition = await _cameraPositionRepository.GetById(id);
                 if (cameraPosition == null)
                     return ServiceResult.Fail("Camera position not found.");
 
-                await _cameraPositionRepository.Delete(cameraPositionId);
+                await _cameraPositionRepository.Delete(id);
                 return ServiceResult.Ok();
             }
             catch (Exception ex)
@@ -61,7 +68,8 @@ namespace Umuna.Server.Infrastructure.Services
             try
             {
                 List<CameraPosition> cameraPositions = await _cameraPositionRepository.GetAll();
-                return ServiceResult<List<CameraPositionReadDto>>.Ok(cameraPositions.ToDtoList());
+                List<CameraPositionReadDto> dtos = _entityToDtoMapper.ToDtoList(cameraPositions);
+                return ServiceResult<List<CameraPositionReadDto>>.Ok(dtos);
             }
             catch (Exception ex)
             {
@@ -69,18 +77,16 @@ namespace Umuna.Server.Infrastructure.Services
             }
         }
 
-        public async Task<ServiceResult<CameraPositionReadDto>> GetById(string id)
+        public async Task<ServiceResult<CameraPositionReadDto>> GetById(int id)
         {
-            if (!int.TryParse(id, out var cameraPositionId))
-                return ServiceResult<CameraPositionReadDto>.Fail("Invalid camera position ID format.");
-
             try
             {
-                var cameraPosition = await _cameraPositionRepository.GetById(cameraPositionId);
+                CameraPosition? cameraPosition = await _cameraPositionRepository.GetById(id);
                 if (cameraPosition == null)
                     return ServiceResult<CameraPositionReadDto>.Fail("Camera position not found.");
 
-                return ServiceResult<CameraPositionReadDto>.Ok(cameraPosition.ToDto());
+                CameraPositionReadDto dto = _entityToDtoMapper.ToDto(cameraPosition);
+                return ServiceResult<CameraPositionReadDto>.Ok(dto);
             }
             catch (Exception ex)
             {
@@ -88,15 +94,13 @@ namespace Umuna.Server.Infrastructure.Services
             }
         }
 
-        public async Task<ServiceResult<List<CameraPositionReadDto>>> GetByUserId(string userId)
+        public async Task<ServiceResult<List<CameraPositionReadDto>>> GetByUserId(int userId)
         {
-            if (!int.TryParse(userId, out var userIdInt))
-                return ServiceResult<List<CameraPositionReadDto>>.Fail("Invalid user ID format.");
-
             try
             {
-                List<CameraPosition> cameraPositions = await _cameraPositionRepository.GetByUserId(userIdInt);
-                return ServiceResult<List<CameraPositionReadDto>>.Ok(cameraPositions.ToDtoList());
+                List<CameraPosition> cameraPositions = await _cameraPositionRepository.GetByUserId(userId);
+                List<CameraPositionReadDto> dtos = _entityToDtoMapper.ToDtoList(cameraPositions);
+                return ServiceResult<List<CameraPositionReadDto>>.Ok(dtos);
             }
             catch (Exception ex)
             {
@@ -104,18 +108,16 @@ namespace Umuna.Server.Infrastructure.Services
             }
         }
 
-        public async Task<ServiceResult<CameraPositionReadDto>> GetDefaultForUser(string userId)
+        public async Task<ServiceResult<CameraPositionReadDto>> GetDefaultForUser(int userId)
         {
-            if (!int.TryParse(userId, out var userIdInt))
-                return ServiceResult<CameraPositionReadDto>.Fail("Invalid user ID format.");
-
             try
             {
-                var cameraPosition = await _cameraPositionRepository.GetDefaultForUser(userIdInt);
+                CameraPosition? cameraPosition = await _cameraPositionRepository.GetDefaultForUser(userId);
                 if (cameraPosition == null)
                     return ServiceResult<CameraPositionReadDto>.Fail("No default camera position found for user.");
 
-                return ServiceResult<CameraPositionReadDto>.Ok(cameraPosition.ToDto());
+                CameraPositionReadDto dto = _entityToDtoMapper.ToDto(cameraPosition);
+                return ServiceResult<CameraPositionReadDto>.Ok(dto);
             }
             catch (Exception ex)
             {
@@ -123,22 +125,21 @@ namespace Umuna.Server.Infrastructure.Services
             }
         }
 
-        public async Task<ServiceResult<CameraPositionReadDto>> Update(string id, CameraPositionUpdateDto updateDto)
+        public async Task<ServiceResult<CameraPositionReadDto>> Update(int id, CameraPositionUpdateDto updateDto)
         {
-            if (!int.TryParse(id, out var cameraPositionId))
-                return ServiceResult<CameraPositionReadDto>.Fail("Invalid camera position ID format.");
-
             if (updateDto == null)
                 return ServiceResult<CameraPositionReadDto>.Fail("Update DTO is null.");
 
             try
             {
-                CameraPosition? cameraPosition = await _cameraPositionRepository.GetById(cameraPositionId);
+                CameraPosition? cameraPosition = await _cameraPositionRepository.GetById(id);
                 if (cameraPosition == null)
                     return ServiceResult<CameraPositionReadDto>.Fail("Camera position not found.");
 
-                await _cameraPositionRepository.Update(cameraPosition.Update(updateDto));
-                return ServiceResult<CameraPositionReadDto>.Ok(cameraPosition.ToDto());
+                _entityToDtoMapper.UpdateEntity(cameraPosition, updateDto);
+                await _cameraPositionRepository.Update(cameraPosition);
+                CameraPositionReadDto dto = _entityToDtoMapper.ToDto(cameraPosition);
+                return ServiceResult<CameraPositionReadDto>.Ok(dto);
             }
             catch (Exception ex)
             {

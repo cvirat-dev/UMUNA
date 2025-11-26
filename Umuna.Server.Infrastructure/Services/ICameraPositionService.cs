@@ -8,7 +8,7 @@ namespace Umuna.Server.Infrastructure.Services
         CameraPositionUpdateDto, 
         CameraPositionReadDto>
     {
-        Task<ServiceResult<List<CameraPositionReadDto>>> GetByUserId(string userId);
-        Task<ServiceResult<CameraPositionReadDto>> GetDefaultForUser(string userId);
+        Task<ServiceResult<List<CameraPositionReadDto>>> GetByUserId(int userId);
+        Task<ServiceResult<CameraPositionReadDto>> GetDefaultForUser(int userId);
     }
 }

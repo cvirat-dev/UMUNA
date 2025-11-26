@@ -1,40 +1,122 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Umuna.Core.Contracts.Models;
+using Umuna.Core.Contracts.Constants.Api;
+using Umuna.Core.Contracts.DTOs.CameraPositions;
 using Umuna.Core.Contracts.DTOs.User;
+using Umuna.Core.Contracts.DTOs.UserSettings;
+using Umuna.Core.Contracts.Models;
 using Umuna.Server.Infrastructure.Services;
 
-namespace Umuna.ApiServer.Controllers
+namespace Umuna.Server.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class UserController(IUserService userService) : ControllerBase
+    [Route(ApiRoutes.Users.Base)]
+    public class UserController(
+        IUserService userService,
+        ICameraPositionService cameraPositionService,
+        IUserSettingsService userSettingsService) : ControllerBase
     {
         private readonly IUserService _userService = userService;
+        private readonly ICameraPositionService _cameraPositionService = cameraPositionService;
+        private readonly IUserSettingsService _userSettingsService = userSettingsService;
 
-        [HttpPost("adduser")]
-        public async Task<IActionResult> AddUser([FromBody] UserCreateDto userDataDto)
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            var result = await _userService.AddUserAsync(userDataDto);
+            ServiceResult<List<UserReadDto>> result = await _userService.GetAll();
             if (!result.Success)
             {
                 return BadRequest(result.Message);
             }
-            return CreatedAtAction(
-                nameof(GetUser),
-                new { id = result.Data!.Name }, // route param name matches [HttpGet("{id}")]
-                result.Data
-            );
+            return Ok(result.Data);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(string id)
+        public async Task<IActionResult> GetUser(int id)
         {
-            ServiceResult<UserCreateDto> result = await _userService.GetUserByIdAsync(id);
+            ServiceResult<UserReadDto> result = await _userService.GetById(id);
             if (!result.Success)
             {
                 return NotFound(result.Message);
             }
             return Ok(result.Data);
+        }
+
+        [HttpGet("{id}/camera-positions")]
+        public async Task<IActionResult> GetCameraPositionsByUser(int id)
+        {
+            ServiceResult<List<CameraPositionReadDto>> result = await _cameraPositionService.GetByUserId(id);
+            
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result.Data);
+        }
+
+        [HttpGet("{id}/camera-positions/default")]
+        public async Task<IActionResult> GetDefaultCameraPositionByUser(int id)
+        {
+            ServiceResult<CameraPositionReadDto> result = await _cameraPositionService.GetDefaultForUser(id);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result.Data);
+        }
+
+        [HttpGet("{id}/settings")]
+        public async Task<IActionResult> GetUserSettingsByUser(int id)
+        {
+            ServiceResult<SettingsReadDto> result = await _userSettingsService.GetByUserId(id);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result.Data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] UserCreateDto userDataDto)
+        {
+            ServiceResult<UserReadDto> result = await _userService.Add(userDataDto);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            UserReadDto? data = result.Data;
+            if(data == null)
+            {
+                return BadRequest("User creation failed.");
+            }
+
+            return CreatedAtAction(
+                ApiRoutes.Users.WithId(data.Id),
+                new { id = data.Name },
+                data
+            );
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] UserUpdateDto updateDto)
+        {
+            ServiceResult<UserReadDto> result = await _userService.Update(id, updateDto);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            ServiceResult result = await _userService.Delete(id);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            return NoContent();
         }
 
     }

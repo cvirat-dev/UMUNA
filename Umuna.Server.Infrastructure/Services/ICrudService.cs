@@ -8,10 +8,10 @@ namespace Umuna.Server.Infrastructure.Services
         where TUpdateDto : class
         where TReadDto : class, IReadDto
     {
-        Task<ServiceResult<TReadDto>> GetById(string id);
+        Task<ServiceResult<TReadDto>> GetById(int id);
         Task<ServiceResult<List<TReadDto>>> GetAll();
         Task<ServiceResult<TReadDto>> Add(TCreateDto createDto);
-        Task<ServiceResult<TReadDto>> Update(string id, TUpdateDto updateDto);
-        Task<ServiceResult> Delete(string id);
+        Task<ServiceResult<TReadDto>> Update(int id, TUpdateDto updateDto);
+        Task<ServiceResult> Delete(int id);
     }
 }

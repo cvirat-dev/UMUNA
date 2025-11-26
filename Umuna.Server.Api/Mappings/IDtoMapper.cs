@@ -1,4 +1,4 @@
-﻿namespace Umuna.ApiServer.Mappings
+﻿namespace Umuna.Server.Api.Mappings
 {
     public interface IDtoMapper<TDto, TDomainData>
         where TDto : class

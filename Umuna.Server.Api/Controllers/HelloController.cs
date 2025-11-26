@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Umuna.ApiServer.Controllers
+namespace Umuna.Server.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

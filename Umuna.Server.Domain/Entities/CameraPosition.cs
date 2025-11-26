@@ -5,7 +5,7 @@ namespace Umuna.Server.Domain.Entities
     /// The CameraPosition entity represents a saved camera position and orientation for a user.
     /// This DB-Entity still stores individual float properties for position and rotation to optimize querying and indexing.
     /// </summary>
-    public class CameraPosition : IEntityDto
+    public class CameraPosition : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

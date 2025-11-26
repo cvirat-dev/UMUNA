@@ -3,7 +3,7 @@ using Umuna.Server.Domain.Entities;
 
 namespace Umuna.Server.Infrastructure.Repositories
 {
-    public interface ICrudRepository<T> where T : IEntityDto
+    public interface ICrudRepository<T> where T : IEntity
     {
         Task<T?> GetById(int id);
         Task<List<T>> GetAll();

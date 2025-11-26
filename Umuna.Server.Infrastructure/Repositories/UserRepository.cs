@@ -38,12 +38,20 @@ namespace Umuna.Server.Infrastructure.Repositories
 
         public async Task Delete(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            User? user = await _context.Users.FindAsync(id);
             if (user != null)
             {
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public Task<User?> GetByName(string username)
+        {
+            return _context.Users
+                .Include(u => u.Settings)
+                .Include(u => u.CameraPositions)
+                .SingleOrDefaultAsync(u => u.Name == username);
         }
     }
 }

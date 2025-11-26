@@ -4,13 +4,14 @@ using Umuna.Server.Domain.Entities;
 
 namespace Umuna.Server.Domain.Mappings
 {
-    public static class CameraPositionMap
+    public class CameraPositionMapper : IEntityToDtoMapper<CameraPosition, CameraPositionReadDto, CameraPositionCreateDto, CameraPositionUpdateDto>
     {
-        public static CameraPositionReadDto ToDto(this CameraPosition entity)
+        public CameraPositionReadDto ToDto(CameraPosition entity)
         {
             return new CameraPositionReadDto
             {
                 Id = entity.Id,
+                UserId = entity.UserId,
                 PositionName = entity.Name,
                 Position = new PositionDto
                 {
@@ -27,20 +28,20 @@ namespace Umuna.Server.Domain.Mappings
                 },
                 CreatedAt = entity.CreatedAt,
                 UpdatedAt = entity.UpdatedAt ?? entity.CreatedAt,
-                UserId = entity.UserId
             };
         }
-
-        public static List<CameraPositionReadDto> ToDtoList(this IEnumerable<CameraPosition> entities)
+        
+        public List<CameraPositionReadDto> ToDtoList(IEnumerable<CameraPosition> entities)
         {
-            return [.. entities.Select(e => e.ToDto())];
+            return entities.Select(e => ToDto(e)).ToList();
         }
-
-        public static CameraPosition ToEntity(this CameraPositionReadDto dto)
+        
+        public CameraPosition ToEntity(CameraPositionReadDto dto)
         {
             return new CameraPosition
             {
                 Id = dto.Id,
+                UserId = dto.UserId,
                 Name = dto.PositionName,
                 PositionX = dto.Position.X,
                 PositionY = dto.Position.Y,
@@ -51,11 +52,10 @@ namespace Umuna.Server.Domain.Mappings
                 RotationW = dto.Rotation.W,
                 CreatedAt = dto.CreatedAt,
                 UpdatedAt = dto.UpdatedAt,
-                UserId = dto.UserId
             };
         }
-
-        public static CameraPosition ToEntity(this CameraPositionCreateDto dto)
+        
+        public CameraPosition ToEntity(CameraPositionCreateDto dto)
         {
             return new CameraPosition
             {
@@ -67,12 +67,13 @@ namespace Umuna.Server.Domain.Mappings
                 RotationY = dto.Rotation.Y,
                 RotationZ = dto.Rotation.Z,
                 RotationW = dto.Rotation.W,
+                CreatedAt = DateTime.UtcNow,
             };
         }
-
-        public static CameraPosition Update(this CameraPosition entity, CameraPositionUpdateDto dto)
+        
+        public void UpdateEntity(CameraPosition entity, CameraPositionUpdateDto dto)
         {
-            entity.Name = dto.PositionName ?? entity.Name;
+            entity.Name = dto.PositionName;
             entity.PositionX = dto.Position.X;
             entity.PositionY = dto.Position.Y;
             entity.PositionZ = dto.Position.Z;
@@ -80,7 +81,7 @@ namespace Umuna.Server.Domain.Mappings
             entity.RotationY = dto.Rotation.Y;
             entity.RotationZ = dto.Rotation.Z;
             entity.RotationW = dto.Rotation.W;
-            return entity;
+            entity.UpdatedAt = DateTime.UtcNow;
         }
     }
 }

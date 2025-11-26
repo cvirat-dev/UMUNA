@@ -1,9 +1,10 @@
 namespace Umuna.Server.Domain.Entities
 {
-    public class UserSettings : IEntityDto
+    public class UserSettings : IEntity
     {
         public int Id { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime CreatedAt { get ; set ; }
+        public DateTime? UpdatedAt { get; set; }
         
         // Camera settings
         public float CameraRotationSpeed { get; set; }
