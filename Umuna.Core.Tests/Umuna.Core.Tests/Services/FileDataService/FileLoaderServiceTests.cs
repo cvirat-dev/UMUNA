@@ -1,104 +1,133 @@
-using Umuna.Core.SharedData;
+using Microsoft.Extensions.Configuration;
 using Umuna.Core.Services.FileDataService;
-using Umuna.Core.Services.Serialization.Json;
+using Umuna.Core.Tests.Mocking;
 using Umuna.Core.Tests.TestHelpers;
+
+[assembly: DoNotParallelize]
 
 namespace Umuna.Core.Tests.Services.FileDataService
 {
     [TestClass]
     public class FileLoaderServiceTests
     {
-        private JsonSerializer<UmunaData> _serializer;
-        private FileSerializer<JsonSerializer<UmunaData>, UmunaData> _fileLoaderService;
-        private UmunaData _testData;
-        private List<string> _testFilePaths = new List<string>();
+        readonly Filedataserviceconfig _fileDataServiceConfig = DoConfiguration();
+        IFileSerializer<MockData>? MockSerializer { get; set; }
+        
+            string[]? FilePathList { get; set; }
+        string TempDir { get; set; } = string.Empty;
 
         [TestInitialize]
         public void Setup()
         {
-            _serializer = new();
-            _fileLoaderService = new FileSerializer<JsonSerializer<UmunaData>, UmunaData>(_serializer, nameof(FileLoaderServiceTests));
-            _fileLoaderService = _fileLoaderService.WithNewDirectory(Path.Combine(_fileLoaderService.FileDirectory, "Tests"));
-            _testData = TestDataFactory.CreateTestData();
+            FilePathList = _fileDataServiceConfig.FilePathList;
+            TempDir = _fileDataServiceConfig.TempDir;
 
-            // Delete all files in the export directory before each test
-            PathHelpers.DeleteAllFiles(_fileLoaderService.FilePath);
+            if (!Directory.Exists(TempDir))
+                throw new DirectoryNotFoundException($"The temporary directory path '{TempDir}' does not exist.");
+        }
 
-            //_fileLoaderService.OpenInExplorer();
+        private static Filedataserviceconfig DoConfiguration()
+        {
+            var rootConfig = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                .Build();
+
+            var configPathValue = rootConfig["configPaths:FileDataService"];
+            var configPath = configPathValue is not null
+                ? Environment.ExpandEnvironmentVariables(configPathValue)
+                : string.Empty;
+
+            if (!Path.Exists(configPath))
+                throw new DirectoryNotFoundException($"The configuration path '{configPath}' does not exist.");
+
+            var config = new ConfigurationBuilder()
+                .AddJsonFile(configPath, optional: false, reloadOnChange: false)
+                .Build();
+
+            Filedataserviceconfig fileDataServiceConfig = new();
+            config.GetSection(nameof(Filedataserviceconfig)).Bind(fileDataServiceConfig);
+            return fileDataServiceConfig;
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            foreach (var filePath in _testFilePaths)
+            foreach(var file in Directory.GetFiles(TempDir))
             {
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
+                File.Delete(file);
             }
         }
 
         [TestMethod]
         public void Save_ValidData_CreatesFile()
         {
-            // Act + Assert
-            _fileLoaderService = _fileLoaderService.WithNewName(nameof(Save_ValidData_CreatesFile));
-            _testFilePaths.Add(_fileLoaderService.FilePath);
-            _fileLoaderService.Save(_testData);
+            // Act
+            string fileLocation = Path.Combine(TempDir, nameof(Save_ValidData_CreatesFile));
+            MockSerializer = FileSerializerFactory.Create<MockData>(fileLocation);
+            MockSerializer.Save(new MockData());
+
+            // Assert
+            Assert.IsTrue(File.Exists(MockSerializer.FilePath));
         }
 
         [TestMethod]
-        public void Save_FileExistsAndOverwriteFalse_ReturnsFalse()
+        public void Save_FileExistsAndOverwriteFalse_ThrowsException()
         {
             // Arrange
-            _fileLoaderService = _fileLoaderService.WithNewName(nameof(Save_FileExistsAndOverwriteFalse_ReturnsFalse));
-            _testFilePaths.Add(_fileLoaderService.FilePath);
-            bool success = true;
+            string filePath = Path.Combine(TempDir, nameof(Save_FileExistsAndOverwriteFalse_ThrowsException));
+            MockSerializer = FileSerializerFactory.Create<MockData>(filePath);
+            MockSerializer.Save(new MockData());
 
             // Act
+            bool caughtException = false;
             try
             {
-                _fileLoaderService.Save(_testData);
+                MockSerializer.Save(new MockData(), overwrite: false);
             }
             catch (IOException)
             {
-                success = false;
+                caughtException = true;
             }
 
             // Assert
-            Assert.IsFalse(success);
+            Assert.IsTrue(caughtException);
         }
 
         [TestMethod]
         public void Load_FileExists_ReturnsData()
         {
             // Arrange
-            _fileLoaderService = _fileLoaderService.WithNewName(nameof(Load_FileExists_ReturnsData));
-            _testFilePaths.Add(_fileLoaderService.FilePath);
-            _fileLoaderService.Save(_testData);
+            string filePath = Path.Combine(TempDir, nameof(Load_FileExists_ReturnsData));
+            MockSerializer = FileSerializerFactory.Create<MockData>(filePath);
+            var data = MockFactory.GetMockData();
+            MockSerializer.Save(data);
 
             // Act
-            UmunaData? result = _fileLoaderService.Load();
+            var loaded = MockSerializer.Load();
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual("DemoPlayer", result.UserData.PlayerName);
-            Assert.AreEqual("123456789", result.UserData.PlayerId);
-            Assert.AreEqual("DemoGame", result.GameName);
+            Assert.IsNotNull(loaded);
+            Assert.IsNotNull(loaded.metadata);
+            Assert.AreEqual(data.metadata.version, loaded.metadata.version);
+            Assert.IsTrue(File.Exists(MockSerializer.FilePath));
         }
 
         [TestMethod]
-        public void Load_FileIsCorrupted_ReturnsError()
+        public void Load_FileIsCorrupted_ReturnsNull()
         {
             // Arrange
-            _fileLoaderService = _fileLoaderService.WithNewName(nameof(Load_FileIsCorrupted_ReturnsError));
-            _testFilePaths.Add(_fileLoaderService.FilePath);
-            System.IO.File.WriteAllText(_fileLoaderService.FilePath, "This is not valid JSON");
+            string filePath = Path.Combine(TempDir, nameof(Load_FileIsCorrupted_ReturnsNull));
+            MockSerializer = FileSerializerFactory.Create<MockData>(filePath);
+
+            // Write invalid/corrupted content to file
+            File.WriteAllText(MockSerializer.FilePath, "this is not valid json");
+
             // Act
-            UmunaData? result = _fileLoaderService.Load(_fileLoaderService.FilePath);
-            // Assert
-            Assert.IsNull(result);
+            var loaded = MockSerializer.Load();
+
+            // Assert - corrupted content should result in null load
+            Assert.IsNull(loaded);
         }
     }
 }

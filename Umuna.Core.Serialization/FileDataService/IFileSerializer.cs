@@ -6,12 +6,12 @@
         /// <summary>
         /// Saves the specified data to the underlying storage.
         /// </summary>
-        /// <remarks>If <paramref name="overWrite"/> is <see langword="false"/> and the data already
+        /// <remarks>If <paramref name="overwrite"/> is <see langword="false"/> and the data already
         /// exists,  the method will not save the new data and will throw an exception </remarks>
         /// <param name="data">The data to be saved. Cannot be null.</param>
-        /// <param name="overWrite">A value indicating whether to overwrite existing data if it already exists. <see langword="true"/> to
+        /// <param name="overwrite">A value indicating whether to overwrite existing data if it already exists. <see langword="true"/> to
         /// overwrite; otherwise, <see langword="false"/>.</param>
-        void Save(T data, bool overWrite = true);
+        void Save(T data, bool overwrite = true);
 
         /// <summary>
         /// Serializes the specified data object into a string representation and returns it.

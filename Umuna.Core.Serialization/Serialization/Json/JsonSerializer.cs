@@ -91,7 +91,7 @@ namespace Umuna.Core.Services.Serialization.Json
 
         public T? Deserialize(string json) => JsonConvert.DeserializeObject<T>(json, _settings);
 
-        public string Serialize(T obj) => JsonConvert.SerializeObject(obj, _settings);
+        public string Serialize(T? obj) => JsonConvert.SerializeObject(obj, _settings);
         #endregion
     }
 }

@@ -6,21 +6,6 @@ namespace Umuna.Core.Services.FileDataService
 {
     public static class FileSerializerFactory
     {
-        public static IFileSerializer<TData> Create<TData>(SerializerType serializerType = SerializerType.json) where TData : class
-        {
-            switch (serializerType)
-            {
-                case SerializerType.json:
-                    var jsonSerializer = new JsonSerializer<TData>();
-                    return new FileSerializer<JsonSerializer<TData>, TData>(jsonSerializer);
-                case SerializerType.xml:
-                    var xmlSerializer = new XmlSerializer<TData>();
-                    return new FileSerializer<XmlSerializer<TData>, TData>(xmlSerializer);
-                default:
-                    throw new System.NotImplementedException($"Serializer type {serializerType} is not implemented.");
-            }
-        }
-
         /// <summary>
         /// Creates a file serializer for the specified data type and file path.
         /// </summary>
@@ -35,10 +20,10 @@ namespace Umuna.Core.Services.FileDataService
             {
                 case SerializerType.json:
                     var jsonSerializer = new JsonSerializer<TData>();
-                    return new FileSerializer<JsonSerializer<TData>, TData>(jsonSerializer, relativePath: path);
+                    return new FileSerializer<JsonSerializer<TData>, TData>(jsonSerializer, path);
                 case SerializerType.xml:
                     var xmlSerializer = new XmlSerializer<TData>();
-                    return new FileSerializer<XmlSerializer<TData>, TData>(xmlSerializer, relativePath: path);
+                    return new FileSerializer<XmlSerializer<TData>, TData>(xmlSerializer, path);
                 default:
                     throw new System.NotImplementedException($"Serializer type {serializerType} is not implemented.");
             }

@@ -10,7 +10,7 @@
         /// <param name="data">The data object to serialize. This must be a valid instance of type <typeparamref name="T"/>.</param>
         /// <returns>A string containing the serialized representation of the <paramref name="data"/> object, or <see
         /// langword="null"/> if the serialization fails or the input is <see langword="null"/>.</returns>
-        string? Serialize(T data);
+        string? Serialize(T? data);
         /// <summary>
         /// Deserializes a string representation back into an object of type <typeparamref name="T"/>.
         /// </summary>

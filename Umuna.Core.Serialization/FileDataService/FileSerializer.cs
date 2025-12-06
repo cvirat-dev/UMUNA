@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.IO;
-using Umuna.Core.Services.Helpers;
 using Umuna.Core.Services.Serialization;
 
 namespace Umuna.Core.Services.FileDataService
@@ -23,48 +23,52 @@ namespace Umuna.Core.Services.FileDataService
         public string FileName => _fileDescriptor.FileName;
         public string FilePath => _fileDescriptor.FilePath;
 
-        public FileSerializer(TSerializer serializer)
-        {
-            Serializer = serializer;
-            _fileDescriptor = new FileDescriptor(DirectoryHelper.GetMainDirectory(), "data", serializer.GetExtension());
-        }
-
         public FileSerializer(TSerializer serializer, FileDescriptor fileDescriptor)
         {
             Serializer = serializer;
             _fileDescriptor = fileDescriptor;
         }
 
-        public FileSerializer(TSerializer serializer, string relativePath)
+        public FileSerializer(TSerializer serializer, string filePath)
         {
-            Serializer = serializer;
+            Serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
 
-            // Expand %ENV% variables early so rooted checks behave
-            relativePath = System.Environment.ExpandEnvironmentVariables(relativePath);
+            if (string.IsNullOrWhiteSpace(filePath))
+                throw new ArgumentException("File path cannot be null or empty.", nameof(filePath));
 
-            if (!Path.HasExtension(relativePath))
+            // Expand environment variables
+            filePath = Environment.ExpandEnvironmentVariables(filePath);
+
+            // Ensure correct extension first
+            string expectedExt = "." + serializer.GetExtension();
+            string actualExt = Path.GetExtension(filePath);
+
+            if (string.IsNullOrEmpty(actualExt))
             {
-                // If no extension is provided, use the serializer's default extension
-                relativePath += $".{serializer.GetExtension()}";
+                filePath += expectedExt;
             }
-            else if (!relativePath.EndsWith($".{serializer.GetExtension()}", System.StringComparison.OrdinalIgnoreCase))
+            else if (!actualExt.Equals(expectedExt, StringComparison.OrdinalIgnoreCase))
             {
-                // If the provided path has an extension but it's not the serializer's expected extension, throw an exception
-                throw new InvalidDataException($"File extension '{Path.GetExtension(relativePath)}' does not match serializer's expected extension '{serializer.GetExtension()}'.");
+                throw new InvalidDataException(
+                    $"File extension '{actualExt}' does not match serializer's expected extension '{expectedExt}'.");
             }
 
-            if (Path.IsPathRooted(relativePath))
+            // Now determine directory safely
+            string? directory = Path.GetDirectoryName(filePath);
+            if (string.IsNullOrEmpty(directory))
+                throw new ArgumentException("File path must include a directory.", nameof(filePath));
+
+            // Create directory if needed
+            try
             {
-                // If the path is absolute, use it directly
-                _fileDescriptor = FileDescriptor.FromPath(relativePath);
-                return;
+                Directory.CreateDirectory(directory);
             }
-            else
+            catch (Exception ex)
             {
-                // Combine the main directory with the relative path to create the full file path
-                var fullPath = Path.Combine(DirectoryHelper.GetMainDirectory(), relativePath);
-                _fileDescriptor = FileDescriptor.FromPath(fullPath);
+                throw new IOException($"Failed to create directory '{directory}'.", ex);
             }
+
+            _fileDescriptor = FileDescriptor.FromPath(filePath);
         }
 
         public void Delete()

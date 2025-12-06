@@ -63,10 +63,10 @@ namespace Umuna.Core.Services.Serialization.Xml
         #endregion
 
         #region Public Methods
-        public string Serialize(T obj)
+        public string Serialize(T? obj)
         {
             if (obj == null)
-                throw new ArgumentNullException(nameof(obj));
+                return Constants.NULL;
 
             using var stringWriter = new StringWriter();
             using var xmlWriter = XmlWriter.Create(stringWriter, Settings);
