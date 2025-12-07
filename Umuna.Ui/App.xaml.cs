@@ -21,9 +21,9 @@ namespace Umuna.Ui
     /// </summary>
     public partial class App : Application
     {
-        private IServiceProvider? _serviceProvider;
-        private ILogger<App>? _logger;
-        private IErrorDialogService? _errorDialogService;
+        public IServiceProvider ServiceProvider { get; private set; } = default!;
+        public ILogger<App> Logger { get; private set; } = default!;
+        public IErrorDialogService ErrorDialogService { get; private set; } = default!;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -33,18 +33,18 @@ namespace Umuna.Ui
             LoggerService.Initialize();
 
             // Configure services and logging
-            _serviceProvider = ConfigureServices();
-            _errorDialogService = _serviceProvider.GetRequiredService<IErrorDialogService>();
+            ServiceProvider = ConfigureServices();
+            ErrorDialogService = ServiceProvider.GetRequiredService<IErrorDialogService>();
 
             // Get logger from DI container
-            _logger = _serviceProvider.GetRequiredService<ILogger<App>>();
-            _logger.LogInformation("Application starting up");
+            Logger = ServiceProvider.GetRequiredService<ILogger<App>>();
+            Logger.LogInformation("Application starting up");
 
             // Set up global exception handlers
             SetupExceptionHandling();
 
             // Show Main Window
-            MainWindow mainWindow = new() { DataContext = _serviceProvider.GetRequiredService<RootViewModel>() };
+            MainWindow mainWindow = new() { DataContext = ServiceProvider.GetRequiredService<RootViewModel>() };
             mainWindow.Show();
         }
 
@@ -111,9 +111,9 @@ namespace Umuna.Ui
 
         private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            _logger.LogCritical(e.Exception, "Unhandled UI thread exception");
+            Logger.LogCritical(e.Exception, "Unhandled UI thread exception");
 
-            _errorDialogService.ShowErrorAsync(
+            ErrorDialogService.ShowErrorAsync(
                 "Unexpected Error",
                 "An unexpected error occurred. The application may need to restart.",
                 e.Exception
@@ -125,12 +125,12 @@ namespace Umuna.Ui
         private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception? exception = e.ExceptionObject as Exception;
-            _logger.LogCritical(exception, "Unhandled non-UI thread exception. Terminating: {IsTerminating}",
+            Logger.LogCritical(exception, "Unhandled non-UI thread exception. Terminating: {IsTerminating}",
                 e.IsTerminating);
 
             if (exception != null)
             {
-                _errorDialogService.ShowErrorAsync(
+                ErrorDialogService.ShowErrorAsync(
                     "Critical Error",
                     "A critical error occurred. The application will close.",
                     exception
@@ -138,11 +138,11 @@ namespace Umuna.Ui
             }
         }
 
-        private void OnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
-            _logger.LogError(e.Exception, "Unobserved task exception");
+            Logger.LogError(e.Exception, "Unobserved task exception");
 
-            _errorDialogService.ShowErrorAsync(
+            ErrorDialogService.ShowErrorAsync(
                 "Background Task Error",
                 "An error occurred in a background operation.",
                 e.Exception
@@ -153,15 +153,15 @@ namespace Umuna.Ui
 
         protected override void OnExit(ExitEventArgs e)
         {
-            if (_logger == null)
+            if (Logger == null)
             {
                 base.OnExit(e);
                 return;
             }
 
-            if (_logger.IsEnabled(LogLevel.Information))
+            if (Logger.IsEnabled(LogLevel.Information))
             {
-                _logger.LogInformation("Application shutting down with exit code {ExitCode}", e.ApplicationExitCode);
+                Logger.LogInformation("Application shutting down with exit code {ExitCode}", e.ApplicationExitCode);
                 LoggerService.Shutdown();
             }
 
