@@ -1,5 +1,4 @@
-﻿
-namespace Umuna.Core.Contracts.DTOs.CameraPositions
+﻿namespace Umuna.Core.Contracts.Api.CameraPositions
 {
     /// <summary>
     /// The preview DTO for camera positions, containing only essential information.

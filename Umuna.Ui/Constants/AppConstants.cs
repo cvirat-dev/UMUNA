@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System.IO;
 
 namespace Umuna.Ui.Constants
 {
@@ -30,4 +29,5 @@ namespace Umuna.Ui.Constants
             return Environment.ExpandEnvironmentVariables(value);
         }
     }
+
 }

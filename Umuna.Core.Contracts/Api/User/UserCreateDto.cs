@@ -1,4 +1,4 @@
-﻿namespace Umuna.Core.Contracts.DTOs.User
+﻿namespace Umuna.Core.Contracts.Api.User
 {
     public class UserCreateDto
     {

@@ -1,4 +1,4 @@
-﻿using Umuna.Core.Contracts.DTOs.User;
+﻿using Umuna.Core.Contracts.Api.User;
 
 namespace Umuna.Ui.Models.Root
 {

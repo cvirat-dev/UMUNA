@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Umuna.Core.Contracts.DTOs
+namespace Umuna.Core.Contracts.Api
 {
     public interface IReadDto
     {

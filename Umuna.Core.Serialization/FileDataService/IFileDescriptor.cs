@@ -1,4 +1,4 @@
-﻿namespace Umuna.Core.Services.FileDataService
+﻿namespace Umuna.Core.Serialization.FileDataService
 {
     public interface IFileDescriptor
     {

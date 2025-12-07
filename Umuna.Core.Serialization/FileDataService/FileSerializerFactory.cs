@@ -1,8 +1,8 @@
-using Umuna.Core.Services.Serialization;
-using Umuna.Core.Services.Serialization.Json;
-using Umuna.Core.Services.Serialization.Xml;
+using Umuna.Core.Serialization.Serialization;
+using Umuna.Core.Serialization.Serialization.Json;
+using Umuna.Core.Serialization.Serialization.Xml;
 
-namespace Umuna.Core.Services.FileDataService
+namespace Umuna.Core.Serialization.FileDataService
 {
     public static class FileSerializerFactory
     {

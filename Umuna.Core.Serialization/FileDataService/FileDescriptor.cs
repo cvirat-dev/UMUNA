@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Umuna.Core.Services.FileDataService
+namespace Umuna.Core.Serialization.FileDataService
 {
     public class FileDescriptor : IFileDescriptor
     {

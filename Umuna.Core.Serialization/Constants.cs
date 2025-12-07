@@ -1,5 +1,4 @@
-
-namespace Umuna.Core.Services
+namespace Umuna.Core.Serialization
 {
     public static class Constants
     {

@@ -1,4 +1,4 @@
-namespace Umuna.Core.Contracts.DTOs.UserSettings
+namespace Umuna.Core.Contracts.Api.UserSettings
 {
     public class SettingsCreateDto
     {

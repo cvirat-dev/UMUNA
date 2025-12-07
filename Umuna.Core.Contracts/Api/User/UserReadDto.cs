@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Umuna.Core.Contracts.DTOs.CameraPositions;
+using Umuna.Core.Contracts.Api;
+using Umuna.Core.Contracts.Api.CameraPositions;
 
-namespace Umuna.Core.Contracts.DTOs.User
+namespace Umuna.Core.Contracts.Api.User
 {
     public class UserReadDto : IReadDto
     {

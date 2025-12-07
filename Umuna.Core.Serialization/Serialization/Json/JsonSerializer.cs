@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Umuna.Core.Services.Serialization.Json
+namespace Umuna.Core.Serialization.Serialization.Json
 {
     [SerializerOfType(SerializerType.json)]
     public class JsonSerializer<T> : SerializerBase, ISerializer<T> where T : class

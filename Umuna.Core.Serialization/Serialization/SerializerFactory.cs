@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Umuna.Core.Services.Serialization
+namespace Umuna.Core.Serialization.Serialization
 {
     public static class SerializerFactory
     {

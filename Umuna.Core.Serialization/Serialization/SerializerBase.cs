@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Umuna.Core.Services.Serialization
+namespace Umuna.Core.Serialization.Serialization
 {
     public abstract class SerializerBase
     {

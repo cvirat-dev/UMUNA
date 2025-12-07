@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using Umuna.Core.Services.FileDataService;
+using Umuna.Core.Serialization.FileDataService;
 using Umuna.Ui.Infrastructure.Logging;
 using Umuna.Ui.Models;
 

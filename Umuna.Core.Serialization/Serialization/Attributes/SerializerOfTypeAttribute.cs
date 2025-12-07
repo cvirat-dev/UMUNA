@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Umuna.Core.Services.Serialization.Attributes
+namespace Umuna.Core.Serialization.Serialization.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class SerializerOfTypeAttribute : Attribute

@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
-using Umuna.Core.Services.Serialization;
+using Umuna.Core.Serialization.Serialization;
 
-namespace Umuna.Core.Services.FileDataService
+namespace Umuna.Core.Serialization.FileDataService
 {
     public class FileSerializer<TSerializer, TData> : IFileSerializer<TData>
         where TSerializer : class, ISerializer<TData>, new()

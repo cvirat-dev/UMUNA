@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Windows.Controls;
+using Umuna.Core.Contracts.Api.Requests;
 using Umuna.Ui.Constants;
 using Umuna.Ui.Infrastructure.Logging;
 using Umuna.Ui.Infrastructure.Services;
@@ -85,7 +86,7 @@ namespace Umuna.Ui.ViewModels
             {
                 IsBusy = true;
 
-                var payload = new { UserName, Password = password };
+                LoginRequestDto payload = new() { UserName = UserName, Password = password };
                 using var content = new StringContent(
                     JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
 

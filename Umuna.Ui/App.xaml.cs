@@ -4,10 +4,9 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using System.Windows;
 using System.Windows.Threading;
-using Umuna.Core.Services.FileDataService;
-using Umuna.Core.Services.Serialization;
+using Umuna.Core.Serialization.FileDataService;
+using Umuna.Core.Serialization.Serialization;
 using Umuna.Ui.Constants;
-using Umuna.Ui.Infrastructure.Logging;
 using Umuna.Ui.Infrastructure.Services;
 using Umuna.Ui.Infrastructure.Services.Communication;
 using Umuna.Ui.Infrastructure.Services.Logging;
@@ -24,7 +23,7 @@ namespace Umuna.Ui
     {
         private IServiceProvider? _serviceProvider;
         private ILogger<App>? _logger;
-        private IErrorDialogService _errorDialogService;
+        private IErrorDialogService? _errorDialogService;
 
         protected override void OnStartup(StartupEventArgs e)
         {

@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Umuna.Core.Services.Serialization.Xml
+namespace Umuna.Core.Serialization.Serialization.Xml
 {
     [SerializerOfType(SerializerType.xml)]
     public class XmlSerializer<T> : SerializerBase, ISerializer<T> where T : class

@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UUP", "UMUNA_Unity\UUP.cspr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UUP.Editor", "UMUNA_Unity\UUP.Editor.csproj", "{4F6D729A-863F-E4C6-D928-736B38CEF816}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core.Contracts", "Umuna.Core\Umuna.Core.Contracts.csproj", "{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core.Contracts", "Umuna.Core.Contracts\Umuna.Core.Contracts.csproj", "{EF8AEDFA-2AFE-4A57-B1E1-38CD932E940E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core.Tests", "Umuna.Core.Tests\Umuna.Core.Tests\Umuna.Core.Tests.csproj", "{525CF902-A046-D3DE-A39A-7E24EC1189DC}"
 EndProject
@@ -19,9 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Server.Api", "Umuna.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Ui", "Umuna.Ui\Umuna.Ui.csproj", "{9B466BE6-7DE1-444B-870E-2DAC4DB5735F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core.Services", "Umuna.Core.Serialization\Umuna.Core.Services.csproj", "{1965FBE6-BFE5-4435-8B4E-14A5F7EB2A85}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core.Messages", "Umuna.Core.Messages\Umuna.Core.Messages.csproj", "{387F283B-B8F4-4D6C-B462-DD378B8089BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Core.Serialization", "Umuna.Core.Serialization\Umuna.Core.Serialization.csproj", "{1965FBE6-BFE5-4435-8B4E-14A5F7EB2A85}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umuna.Server.Domain", "Umuna.Server.Domain\Umuna.Server.Domain.csproj", "{4B129ED1-6EA6-4308-946D-BBB68B62FF44}"
 EndProject
@@ -69,10 +67,6 @@ Global
 		{1965FBE6-BFE5-4435-8B4E-14A5F7EB2A85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1965FBE6-BFE5-4435-8B4E-14A5F7EB2A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1965FBE6-BFE5-4435-8B4E-14A5F7EB2A85}.Release|Any CPU.Build.0 = Release|Any CPU
-		{387F283B-B8F4-4D6C-B462-DD378B8089BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{387F283B-B8F4-4D6C-B462-DD378B8089BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{387F283B-B8F4-4D6C-B462-DD378B8089BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{387F283B-B8F4-4D6C-B462-DD378B8089BF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4B129ED1-6EA6-4308-946D-BBB68B62FF44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4B129ED1-6EA6-4308-946D-BBB68B62FF44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B129ED1-6EA6-4308-946D-BBB68B62FF44}.Release|Any CPU.ActiveCfg = Release|Any CPU

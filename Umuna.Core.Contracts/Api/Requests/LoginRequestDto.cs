@@ -1,4 +1,4 @@
-namespace Umuna.Core.Contracts.DTOs.Requests
+namespace Umuna.Core.Contracts.Api.Requests
 {
     public class LoginRequestDto
     {

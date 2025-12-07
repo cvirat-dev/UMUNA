@@ -1,4 +1,4 @@
-﻿namespace Umuna.Core.Contracts.Models
+﻿namespace Umuna.Core.Contracts.Common
 {
     public class ServiceResult<T> where T : class
     {
