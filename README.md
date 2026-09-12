@@ -1,3 +1,8 @@
+[WIP] Work in progress
+
+UMUNA - Unity MUltiplayer NAvigation
+
+
 Tested using Unity 6, Visual Studio 2022, Windows OS
 
 Todos when starting:
